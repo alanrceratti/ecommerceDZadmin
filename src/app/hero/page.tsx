@@ -1,12 +1,18 @@
 "use client";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn, signOut, Session } from "next-auth/react";
 
 function Hero() {
-	const { data: session } = useSession();
-	if (session) {
+	const { data: session, status } = useSession<Session>();
+	const sessionOrNull: Session | {} = session;
+
+	if (status === "loading") {
+		return <div>Loading...</div>;
+	}
+
+	if (sessionOrNull) {
 		return (
 			<>
-				Signed in as {session?.user?.email} <br />
+				Signed in as {sessionOrNull?.user?.email} <br />
 				<button onClick={() => signOut()}>Sign out</button>
 			</>
 		);

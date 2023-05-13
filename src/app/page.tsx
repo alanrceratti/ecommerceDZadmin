@@ -4,10 +4,8 @@ import Hero from "./hero/page";
 
 export default function App() {
 	return (
-		<>
-			<SessionProvider>
-				<Hero />
-			</SessionProvider>
-		</>
+		<SessionProvider>
+			<Hero />
+		</SessionProvider>
 	);
 }
