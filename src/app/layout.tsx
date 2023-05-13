@@ -28,10 +28,10 @@ const unisansthin = localFont({
 	variable: "--font-unisansthin",
 });
 
-export const metadata = {
-	title: "Drone Zone",
-	description: "Start to fly",
-};
+// export const metadata = {
+// 	title: "Drone Zone",
+// 	description: "Start to fly",
+// };
 
 interface RootLayoutProps {
 	children: React.ReactNode;
