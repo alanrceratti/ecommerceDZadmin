@@ -1,12 +1,12 @@
 "use client";
 import { SessionProvider } from "next-auth/react";
-import Home from "./home/page";
+import Hero from "./hero/page";
 
 export default function App() {
 	return (
 		<>
 			<SessionProvider>
-				<Home />
+				<Hero />
 			</SessionProvider>
 		</>
 	);

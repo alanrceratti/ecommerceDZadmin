@@ -1,7 +1,7 @@
 "use client";
 import { useSession, signIn, signOut } from "next-auth/react";
 
-function Home() {
+function Hero() {
 	const { data: session } = useSession();
 	if (session) {
 		return (
@@ -33,4 +33,4 @@ function Home() {
 	);
 }
 
-export default Home;
+export default Hero;
