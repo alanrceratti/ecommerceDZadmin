@@ -1,9 +1,9 @@
 "use client";
-import { useSession, signIn, signOut, Session } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 function Hero() {
-	const { data: session, status } = useSession<Session>();
-	const sessionOrNull: Session | {} = session;
+	const { data: session, status } = useSession();
+	const sessionOrNull: any | {} = session;
 
 	if (status === "loading") {
 		return <div>Loading...</div>;
