@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
+import { NextAuthProvider } from "./providers";
 
 const poppins = Poppins({
 	subsets: ["latin"],
@@ -44,7 +45,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
 			<body
 				className={`${poppins.variable} ${unisansheavy.variable} ${unisansthin.variable}`}
 			>
-				{children}
+				<NextAuthProvider>{children}</NextAuthProvider>
 			</body>
 		</html>
 	);
