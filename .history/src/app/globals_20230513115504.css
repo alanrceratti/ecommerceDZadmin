@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+	font-family: Bold;
+	src: url("/public/fonts/UniSansHeavy.otf");
+}
+@font-face {
+	font-family: Italic;
+	src: url("/public/fonts/UniSansHeavyItalic.otf");
+}
+
+@font-face {
+	font-family: Thin;
+	src: url("/public/fonts/UniSansHeavyItalic.otf");
+}

@@ -1,0 +1,15 @@
+export default function Home() {
+	return (
+		<main>
+			<h1 className="font-unisansheavy font-bold text-5xl ">
+				ALANNNNNNNNN
+			</h1>
+			<h1 className="font-unisansitalic font-bold text-5xl ">
+				ALANNNNNNNNN
+			</h1>
+			<h1 className="font-unisansthin font-bold text-5xl ">
+				ALANNNNNNNNN
+			</h1>
+		</main>
+	);
+}
