@@ -1,6 +1,8 @@
+"use client";
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
+import { SessionProvider } from "next-auth/react";
 
 const poppins = Poppins({
 	subsets: ["latin"],
@@ -25,32 +27,29 @@ const unisansthin = localFont({
 	],
 	variable: "--font-unisansthin",
 });
-const unisansitalic = localFont({
-	src: [
-		{
-			path: "../../public/fonts/UniSansHeavyItalic.otf",
-		},
-	],
-	variable: "--font-unisansitalic",
-});
 
 export const metadata = {
 	title: "Drone Zone",
 	description: "Start to fly",
 };
 
-export default function RootLayout({
-	children,
-}: {
+interface RootLayoutProps {
 	children: React.ReactNode;
-}) {
+}
+
+const RootLayout = ({ children }: RootLayoutProps) => {
 	return (
 		<html lang="en">
+			<head>
+				<title>Drone Zone</title>
+			</head>
 			<body
-				className={`${poppins.variable} ${unisansheavy.variable} ${unisansitalic.variable} ${unisansthin.variable}`}
+				className={`${poppins.variable} ${unisansheavy.variable} ${unisansthin.variable}`}
 			>
-				{children}
+				<SessionProvider>{children}</SessionProvider>
 			</body>
 		</html>
 	);
-}
+};
+
+export default RootLayout;

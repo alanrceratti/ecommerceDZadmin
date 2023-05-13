@@ -1,7 +1,34 @@
-export default function Home() {
+"use client";
+import { useSession, signIn, signOut } from "next-auth/react";
+
+export default function app() {
+	const { data: session } = useSession();
+	if (session) {
+		return (
+			<>
+				Signed in as {session?.user?.email} <br />
+				<button onClick={() => signOut()}>Sign out</button>
+			</>
+		);
+	}
 	return (
-		<main>
-			<h1>Alan</h1>
-		</main>
+		<>
+			<div className="bg-black800 w-screen h-screen flex items-center">
+				<div className="text-center w-full">
+					<button
+						className="bg-orange p-2 mx-2 rounded-md font-poppins"
+						onClick={() => signIn("google")}
+					>
+						Login with Google
+					</button>
+					<button
+						className="bg-orange p-2 mx-2 rounded-md font-poppins"
+						onClick={() => signIn("github")}
+					>
+						Login with Github
+					</button>
+				</div>
+			</div>
+		</>
 	);
 }
