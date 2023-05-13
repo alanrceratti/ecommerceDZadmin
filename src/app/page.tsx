@@ -17,13 +17,13 @@ export default function app() {
 				<div className="text-center w-full">
 					<button
 						className="bg-orange p-2 mx-2 rounded-md font-poppins"
-						onClick={() => signIn("google")}
+						onClick={async () => await signIn("google")}
 					>
 						Login with Google
 					</button>
 					<button
 						className="bg-orange p-2 mx-2 rounded-md font-poppins"
-						onClick={() => signIn("github")}
+						onClick={async () => await signIn("github")}
 					>
 						Login with Github
 					</button>
