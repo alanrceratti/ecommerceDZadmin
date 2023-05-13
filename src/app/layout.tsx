@@ -1,8 +1,6 @@
-"use client";
 import "./globals.css";
 import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
-import { SessionProvider } from "next-auth/react";
 
 const poppins = Poppins({
 	subsets: ["latin"],
@@ -46,7 +44,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
 			<body
 				className={`${poppins.variable} ${unisansheavy.variable} ${unisansthin.variable}`}
 			>
-				<SessionProvider>{children}</SessionProvider>
+				{children}
 			</body>
 		</html>
 	);
