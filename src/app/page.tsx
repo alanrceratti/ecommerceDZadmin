@@ -1,7 +1,7 @@
 "use client";
 import { useSession, signIn, signOut } from "next-auth/react";
 
-export default function app() {
+export default function App() {
 	const { data: session } = useSession();
 	if (session) {
 		return (
