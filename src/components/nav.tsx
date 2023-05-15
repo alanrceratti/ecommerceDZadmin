@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 export default function Nav() {
 	const inactiveLink = "flex gap-1 p-1 w-full";
@@ -52,7 +53,9 @@ export default function Nav() {
 					href={"/products"}
 					id="products"
 					className={
-						pathname === "/products" ? activeLink : inactiveLink
+						pathname === "/products" || pathname === "/products/new"
+							? activeLink
+							: inactiveLink
 					}
 				>
 					<svg
@@ -121,6 +124,12 @@ export default function Nav() {
 					Settings
 				</Link>
 			</nav>
+			<button
+				className="m-4 bg-black h-fit px-8 py-2 text-center rounded-md font-bold"
+				onClick={() => signOut()}
+			>
+				Sign out
+			</button>
 		</aside>
 	);
 }

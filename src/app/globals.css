@@ -16,3 +16,20 @@ html {
 	--scroll-behavior: smooth !important;
 	scroll-behavior: smooth !important;
 }
+
+input,
+textarea {
+	@apply border-2 border-gray-300 outline-none rounded-md bg-slate-100 text-black px-1 ml-1 w-full mb-2;
+}
+input:focus,
+textarea:focus {
+	@apply border-orange;
+}
+
+h1 {
+	@apply text-orange text-lg;
+}
+
+.btn-primary {
+	@apply px-6 py-2 bg-orange rounded-md font-bold;
+}
