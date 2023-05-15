@@ -1,15 +1,16 @@
 "use client";
 
-import Hero from "./hero/page";
-// import { getServerSession } from "next-auth";
-// import { authOptions } from "../../lib/auth";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../lib/auth";
 
-export default function App() {
-	// const session = getServerSession(authOptions);
+import Hero from "./(pages)/hero/page";
+
+export default async function App() {
+	// const session = await getServerSession(authOptions);
 	// console.log(session);
 	return (
 		<main>
-			<Hero />;
+			<Hero />
 		</main>
 	);
 }
