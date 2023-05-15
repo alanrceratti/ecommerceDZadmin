@@ -8,12 +8,15 @@ function Layout({ children }: { children: ReactNode }) {
 
 	if (session) {
 		return (
-			<section className="bg-black800 min-h-screen text-white">
-				<div className="flex h-screen  ">
-					<Nav />
-					<div className="flex flex-grow gap-3 bg-gray-600  my-2 mr-2 rounded-md mt-3 ">
-						<h1 className="mx-2 ">{children}</h1>
-						<button className="flex" onClick={() => signOut()}>
+			<section className="bg-black800 min-h-screen text-white flex">
+				<Nav />
+				<div className="flex h-screen w-screen  ">
+					<div className="flex w-full gap-3 bg-gray-600  my-2 mr-2 rounded-md mt-3 justify-between ">
+						<h1 className="m-4 ">{children}</h1>
+						<button
+							className="flex m-4 bg-black h-fit px-8 py-4 text-center rounded-md font-bold"
+							onClick={() => signOut()}
+						>
 							Sign out
 						</button>
 					</div>

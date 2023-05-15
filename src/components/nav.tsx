@@ -9,7 +9,7 @@ export default function Nav() {
 
 	return (
 		<aside className="p-4 pr-0">
-			<Link className="flex gap-1 mb-4  mr-5" href={"/"}>
+			<Link className="flex gap-1 mb-4 min-w-[170px]  mr-5" href={"/"}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"
