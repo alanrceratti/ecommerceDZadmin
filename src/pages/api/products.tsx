@@ -10,6 +10,10 @@ export default async function handle(
 	// Establish a connection to MongoDB using Mongoose
 	await mongooseConnect();
 
+	if (req.method === "GET") {
+		res.json(await Product.find());
+	}
+
 	// Check if the HTTP method is POST
 	if (req.method === "POST") {
 		// Extract the name, description, and price from the request body

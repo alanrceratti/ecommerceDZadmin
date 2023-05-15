@@ -33,3 +33,17 @@ h1 {
 .btn-primary {
 	@apply px-6 py-2 bg-orange rounded-md font-bold;
 }
+table.basic {
+	@apply w-full;
+}
+
+table.basic tr {
+	@apply border border-white p-1;
+}
+table.basic td {
+	@apply py-2;
+}
+
+table.basic a {
+	@apply px-5 py-2 rounded-md gap-1 font-semibold inline-flex;
+}
