@@ -1,51 +1,36 @@
 "use client";
-import { NewProductsProps } from "@/app/types";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
-export default function ProductForm({
-	_id,
-	name: currentName,
-	description: currentDescription,
-	price: currentPrice,
-}: NewProductsProps) {
-	const [name, setName] = useState(currentName || "");
-	const [description, setDescription] = useState(currentDescription || "");
-	const [price, setPrice] = useState(currentPrice || "");
+export default function NewProduct() {
+	const [name, setName] = useState("");
+	const [description, setDescription] = useState("");
+	const [price, setPrice] = useState("");
 	const [goToProducts, setGoToProducts] = useState(false);
 	const router = useRouter();
 
-	function goBack() {
-		router.push("/products");
-		return null;
-	}
-
-	async function saveProduct(
+	async function createProduct(
 		event: FormEvent<HTMLFormElement>
 	): Promise<void> {
 		event.preventDefault();
 		const data = { name, description, price };
-		if (_id) {
-			await axios.put("/api/products", { ...data, _id });
-		} else {
-			try {
-				await axios.post("/api/products", data);
-			} catch (error) {
-				console.log("productForm page error:", error);
-			}
+		try {
+			await axios.post("/api/products", data);
+			setGoToProducts(true);
+		} catch (error) {
+			console.log(error);
 		}
-		setGoToProducts(true);
 	}
 
 	if (goToProducts) {
-		router.push("/products");
-		return null;
+		return router.push("/products");
 	}
 	return (
 		<>
 			<div className=" items-center px-2 m-4 max-w-[500px] ml-auto mr-auto">
-				<form onSubmit={saveProduct}>
+				<form onSubmit={createProduct}>
+					<h1>New Product</h1>
 					<label htmlFor="product">
 						Product name
 						<input
@@ -83,17 +68,9 @@ export default function ProductForm({
 							aria-required="true"
 						/>
 					</label>
-					<div className="w-full text-center ">
-						<button type="submit" className="btn-primary my-4 mx-4">
-							Save
-						</button>
-						<button
-							onClick={goBack}
-							className="btn-primary m-auto "
-						>
-							Back
-						</button>
-					</div>
+					<button type="submit" className="btn-primary">
+						Save
+					</button>
 				</form>
 			</div>
 		</>

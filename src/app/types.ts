@@ -12,8 +12,8 @@ export interface DataProps {
 }
 
 export interface NewProductsProps {
-	name: string;
-	description: string;
-	price: number;
-	_id: string;
+	name?: string;
+	description?: string;
+	price?: number;
+	_id?: string;
 }
