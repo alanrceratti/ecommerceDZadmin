@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { DataProps } from "@/app/types";
 
-interface Props {
-	session: DataProps | null;
-}
+// interface Props {
+// 	session: DataProps | null;
+// }
 
 export default function Products() {
 	const [products, setProducts] = useState([]);

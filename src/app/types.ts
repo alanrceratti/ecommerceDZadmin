@@ -15,5 +15,6 @@ export interface NewProductsProps {
 	name?: string;
 	description?: string;
 	price?: number;
+	images?: string[];
 	_id?: string;
 }
