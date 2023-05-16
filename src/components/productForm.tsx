@@ -3,10 +3,20 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
-export default function NewProduct() {
-	const [name, setName] = useState("");
-	const [description, setDescription] = useState("");
-	const [price, setPrice] = useState("");
+interface NewProductProps {
+	name: string;
+	description: string;
+	price: number;
+}
+
+export default function ProductForm({
+	name: currentName,
+	description: currentDescription,
+	price: currentPrice,
+}: NewProductProps) {
+	const [name, setName] = useState(currentName || "");
+	const [description, setDescription] = useState(currentDescription || "");
+	const [price, setPrice] = useState(currentPrice || "");
 	const [goToProducts, setGoToProducts] = useState(false);
 	const router = useRouter();
 
@@ -31,7 +41,6 @@ export default function NewProduct() {
 		<>
 			<div className=" items-center px-2 m-4 max-w-[500px] ml-auto mr-auto">
 				<form onSubmit={createProduct}>
-					<h1>New Product</h1>
 					<label htmlFor="product">
 						Product name
 						<input

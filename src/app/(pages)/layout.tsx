@@ -10,7 +10,7 @@ function Layout({ children }: { children: ReactNode }) {
 		return (
 			<section className="bg-black800 min-h-screen text-white flex">
 				<Nav />
-				<div className=" w-full bg-gray-600 my-2 mr-2 rounded-md mt-3 flex justify-between  ">
+				<div className=" w-full bg-gray-900 my-2 mr-2 rounded-md mt-3 flex justify-between  ">
 					<div className="w-full h-full">{children}</div>
 				</div>
 			</section>

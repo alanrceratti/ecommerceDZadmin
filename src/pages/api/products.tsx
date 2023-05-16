@@ -11,7 +11,11 @@ export default async function handle(
 	await mongooseConnect();
 
 	if (req.method === "GET") {
-		res.json(await Product.find());
+		if (req.query?.id) {
+			res.json(await Product.findOne({ _id: req.query.id }));
+		} else {
+			res.json(await Product.find());
+		}
 	}
 
 	// Check if the HTTP method is POST

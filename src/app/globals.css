@@ -47,3 +47,7 @@ table.basic td {
 table.basic a {
 	@apply px-5 py-2 rounded-md gap-1 font-semibold inline-flex;
 }
+
+h1 {
+	@apply items-center px-2 m-4 max-w-[500px] ml-auto mr-auto font-semibold;
+}
