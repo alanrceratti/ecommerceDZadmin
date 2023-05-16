@@ -3,13 +3,7 @@ import { useParams } from "next/dist/client/components/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import ProductForm from "@/components/productForm";
-
-interface NewProductProps {
-	name: string;
-	description: string;
-	price: number;
-	_id: string;
-}
+import { NewProductsProps } from "@/app/types";
 
 export default function EditProduct() {
 	const { id } = useParams() as { id: string };
@@ -22,7 +16,7 @@ export default function EditProduct() {
 			.then((response) => setProductsInfo(response.data));
 	}, [id]);
 
-	const [productsInfo, setProductsInfo] = useState<NewProductProps>();
+	const [productsInfo, setProductsInfo] = useState<NewProductsProps>();
 
 	return (
 		<>

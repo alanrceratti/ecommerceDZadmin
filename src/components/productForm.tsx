@@ -23,6 +23,11 @@ export default function ProductForm({
 	const [goToProducts, setGoToProducts] = useState(false);
 	const router = useRouter();
 
+	function goBack() {
+		router.push("/products");
+		return null;
+	}
+
 	async function saveProduct(
 		event: FormEvent<HTMLFormElement>
 	): Promise<void> {
@@ -85,9 +90,17 @@ export default function ProductForm({
 							aria-required="true"
 						/>
 					</label>
-					<button type="submit" className="btn-primary">
-						Save
-					</button>
+					<div className="w-full text-center ">
+						<button type="submit" className="btn-primary my-4 mx-4">
+							Save
+						</button>
+						<button
+							onClick={goBack}
+							className="btn-primary m-auto "
+						>
+							Back
+						</button>
+					</div>
 				</form>
 			</div>
 		</>

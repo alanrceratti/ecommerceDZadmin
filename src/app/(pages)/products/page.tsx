@@ -32,10 +32,10 @@ export default function Products() {
 					<tbody>
 						{products.map((product: DataProps, index: number) => (
 							<tr key={index}>
-								<td className="border">{product.name}</td>
-								<td>
+								<td className="border w-1/2">{product.name}</td>
+								<td className="text-center">
 									<Link
-										className="bg-orange items-center"
+										className="bg-orange items-center mr-4"
 										href={"/products/edit/" + product._id}
 									>
 										<svg
@@ -54,11 +54,10 @@ export default function Products() {
 										</svg>
 										Edit
 									</Link>
-								</td>
-								<td>
+
 									<Link
 										className="bg-red-800 items-center"
-										href={"/products/delete" + product._id}
+										href={"/products/delete/" + product._id}
 									>
 										<svg
 											xmlns="http://www.w3.org/2000/svg"
