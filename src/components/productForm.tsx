@@ -50,8 +50,15 @@ export default function ProductForm({
 		if (files && files?.length > 0) {
 			const data = new FormData();
 			Array.from(files).forEach((file) => data.append("file", file));
-			const res = await axios.post("/api/upload", data);
-			console.log(res.data);
+
+			try {
+				const res = await axios.post("/api/upload", data, {
+					headers: { "Content-Type": "multipart/form-data" },
+				});
+				console.log(res.data);
+			} catch (error) {
+				console.log("Error uploading images:", error);
+			}
 		}
 	}
 	return (
