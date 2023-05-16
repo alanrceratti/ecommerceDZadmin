@@ -7,9 +7,11 @@ interface NewProductProps {
 	name: string;
 	description: string;
 	price: number;
+	_id: string;
 }
 
 export default function ProductForm({
+	_id,
 	name: currentName,
 	description: currentDescription,
 	price: currentPrice,
@@ -17,20 +19,25 @@ export default function ProductForm({
 	const [name, setName] = useState(currentName || "");
 	const [description, setDescription] = useState(currentDescription || "");
 	const [price, setPrice] = useState(currentPrice || "");
+	// const [id, setId] = useState(current_id || "");
 	const [goToProducts, setGoToProducts] = useState(false);
 	const router = useRouter();
 
-	async function createProduct(
+	async function saveProduct(
 		event: FormEvent<HTMLFormElement>
 	): Promise<void> {
 		event.preventDefault();
 		const data = { name, description, price };
-		try {
-			await axios.post("/api/products", data);
-			setGoToProducts(true);
-		} catch (error) {
-			console.log(error);
+		if (_id) {
+			await axios.put("/api/products", { ...data, _id });
+		} else {
+			try {
+				await axios.post("/api/products", data);
+			} catch (error) {
+				console.log("productForm page error:", error);
+			}
 		}
+		setGoToProducts(true);
 	}
 
 	if (goToProducts) {
@@ -40,7 +47,7 @@ export default function ProductForm({
 	return (
 		<>
 			<div className=" items-center px-2 m-4 max-w-[500px] ml-auto mr-auto">
-				<form onSubmit={createProduct}>
+				<form onSubmit={saveProduct}>
 					<label htmlFor="product">
 						Product name
 						<input

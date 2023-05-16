@@ -33,4 +33,10 @@ export default async function handle(
 		// Send the created product document as the response
 		res.json(productDoc);
 	}
+
+	if (req.method === "PUT") {
+		const { name, description, price, _id } = req.body;
+		await Product.updateOne({ _id }, { name, description, price });
+		res.json(true);
+	}
 }
