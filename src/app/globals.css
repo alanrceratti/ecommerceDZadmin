@@ -41,7 +41,7 @@ table.basic tr {
 	@apply border border-white p-1;
 }
 table.basic td {
-	@apply py-2;
+	@apply py-2 pl-2;
 }
 
 table.basic a {

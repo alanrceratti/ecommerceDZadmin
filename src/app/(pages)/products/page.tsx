@@ -18,11 +18,14 @@ export default function Products() {
 	}, []);
 
 	return (
-		<div className="items-center m-4">
-			<Link href={"/products/new"} className="btn-primary">
+		<div className="items-center m-4 px-4 max-w-[700px] ml-auto mr-auto">
+			<Link
+				href={"/products/new"}
+				className="btn-primary !bg-amber-500 font-unisansthin "
+			>
 				Add new product
 			</Link>
-			<table className="basic mt-4 ">
+			<table className="basic mt-4   ">
 				<thead className="border-gray-900">
 					<tr>
 						<td>Product name</td>
@@ -33,9 +36,9 @@ export default function Products() {
 						{products.map((product: DataProps, index: number) => (
 							<tr key={index}>
 								<td className="border w-1/2">{product.name}</td>
-								<td className="text-center">
+								<td className="text-center flex gap-2 justify-center mx-2">
 									<Link
-										className="bg-orange items-center mr-4"
+										className="bg-orange items-center "
 										href={"/products/edit/" + product._id}
 									>
 										<svg

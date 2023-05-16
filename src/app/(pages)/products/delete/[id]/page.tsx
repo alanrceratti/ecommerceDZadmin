@@ -25,15 +25,25 @@ export default function DeleteProduct() {
 			.then((response) => setProductInfo(response.data));
 	}, [id]);
 
+	async function deleteProduct() {
+		await axios.delete("/api/products?id=" + id);
+		goBack();
+	}
+
 	return (
 		<>
 			<h1 className="ml-auto mr-auto text-center">
-				Do you really want to delete product{" "}
-				{productInfo && productInfo?.name}
+				Do you really want to delete product &nbsp;&quot;
+				{productInfo?.name}&quot;
 			</h1>
-			<div className="flex justify-center">
-				<button className="btn-primary mx-2">Yes</button>
-				<button onClick={goBack} className="btn-primary !bg-red-700">
+			<div className="flex justify-center gap-4">
+				<button
+					onClick={deleteProduct}
+					className="btn-primary !bg-red-700 "
+				>
+					Yes
+				</button>
+				<button onClick={goBack} className="btn-primary ">
 					NO
 				</button>
 			</div>
