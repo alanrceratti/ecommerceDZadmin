@@ -11,7 +11,7 @@ interface NewProductProps {
 }
 
 export default function EditProduct() {
-	const { id } = useParams();
+	const { id } = useParams() as { id: string };
 	useEffect(() => {
 		if (!id) {
 			return;
