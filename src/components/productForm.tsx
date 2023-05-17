@@ -3,7 +3,9 @@ import { NewProductsProps } from "@/app/types";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { FormEvent, MouseEvent, useState } from "react";
+import Spinner from "./spinner";
+import { ItemInterface, ReactSortable } from "react-sortablejs";
 
 export default function ProductForm({
 	_id,
@@ -17,16 +19,17 @@ export default function ProductForm({
 	const [price, setPrice] = useState(currentPrice || "");
 	const [images, setImages] = useState(currentImages || []);
 	const [goToProducts, setGoToProducts] = useState(false);
+	const [isUploading, setIsUploading] = useState(false);
 	const router = useRouter();
 
 	function goBack() {
 		router.push("/products");
-		return null;
 	}
 
 	async function saveProduct(
-		event: FormEvent<HTMLFormElement>
+		event: MouseEvent<HTMLButtonElement>
 	): Promise<void> {
+		console.log("salvandooooo");
 		event.preventDefault();
 		const data = { name, description, price, images };
 		if (_id) {
@@ -40,15 +43,14 @@ export default function ProductForm({
 		}
 		setGoToProducts(true);
 	}
-
 	if (goToProducts) {
 		router.push("/products");
-		return null;
 	}
 
 	async function uploadImages(e: React.ChangeEvent<HTMLInputElement>) {
 		const files = e.target?.files;
 		if (files && files?.length > 0) {
+			setIsUploading(true);
 			const data = new FormData();
 			Array.from(files).forEach((file) => data.append("file", file));
 
@@ -63,12 +65,18 @@ export default function ProductForm({
 			} catch (error) {
 				console.log("Error uploading images:", error);
 			}
+			setIsUploading(false);
 		}
 	}
+	function updateImagesOrder(newOrder: ItemInterface[]): void {
+		const updatedImages = newOrder.map((item) => item.link);
+		setImages(updatedImages);
+	}
+
 	return (
 		<>
 			<div className=" items-center px-2 m-4 max-w-[500px] ml-auto mr-auto">
-				<form onSubmit={saveProduct}>
+				<form>
 					<label htmlFor="product">
 						Product name
 						<input
@@ -98,22 +106,36 @@ export default function ProductForm({
 					</label>
 					<label>Photos</label>
 					<div className="flex flex-wrap gap-2 h-auto  ">
-						{images?.length > 0 &&
-							images?.map((link) => (
-								<div
-									key={link}
-									className="h-32 w-28 relative  "
-								>
-									<Image
-										src={link}
-										alt="test"
-										className="rounded-md absolute "
-										loading="lazy"
-										fill={true}
-									/>
-								</div>
-							))}
-						<label className="w-24 h-24 border border-gray-400 bg-gray-700 flex text-gray-400 rounded-md cursor-pointer">
+						<ReactSortable
+							list={images.map((link, index) => ({
+								id: index.toString(),
+								link,
+							}))}
+							setList={updateImagesOrder}
+							className="flex flex-wrap gap-1"
+						>
+							{images?.length > 0 &&
+								images?.map((link) => (
+									<div
+										key={link}
+										className="h-24 w-24 relative  "
+									>
+										<Image
+											src={link}
+											alt="test"
+											className="rounded-md absolute "
+											loading="lazy"
+											fill={true}
+										/>
+									</div>
+								))}
+						</ReactSortable>
+						{isUploading && (
+							<div className="flex items-center">
+								<Spinner />
+							</div>
+						)}
+						<label className="w-20 h-24 border border-gray-400 bg-gray-700 flex text-gray-400 rounded-md cursor-pointer">
 							<div className="w-full h-full flex justify-center items-center">
 								<div className="text-center">
 									<svg
@@ -139,7 +161,6 @@ export default function ProductForm({
 								onChange={uploadImages}
 							/>
 						</label>
-						<h2>No photos</h2>
 					</div>
 					<label htmlFor="price">
 						Price
@@ -154,18 +175,20 @@ export default function ProductForm({
 							required
 						/>
 					</label>
-					<div className="w-full text-center ">
-						<button type="submit" className="btn-primary my-4 mx-4">
-							Save
-						</button>
-						<button
-							onClick={goBack}
-							className="btn-primary m-auto "
-						>
-							Back
-						</button>
-					</div>
 				</form>
+				<div>
+					<button
+						type="button"
+						onClick={saveProduct}
+						className="btn-primary my-4 mr-4"
+					>
+						Save
+					</button>
+
+					<button onClick={goBack} className="btn-primary m-auto">
+						Back
+					</button>
+				</div>
 			</div>
 		</>
 	);
