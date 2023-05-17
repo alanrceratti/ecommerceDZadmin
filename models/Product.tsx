@@ -8,6 +8,8 @@ const ProductSchema = new Schema({
 	description: String,
 	// Define the "price" field as a required number
 	price: { type: Number, require: true },
+
+	images: { type: [String] },
 });
 
 // Create a model for the "Product" collection using the schema

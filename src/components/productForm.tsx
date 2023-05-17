@@ -1,6 +1,7 @@
 "use client";
 import { NewProductsProps } from "@/app/types";
 import axios from "axios";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
@@ -27,7 +28,7 @@ export default function ProductForm({
 		event: FormEvent<HTMLFormElement>
 	): Promise<void> {
 		event.preventDefault();
-		const data = { name, description, price };
+		const data = { name, description, price, images };
 		if (_id) {
 			await axios.put("/api/products", { ...data, _id });
 		} else {
@@ -96,10 +97,21 @@ export default function ProductForm({
 						></textarea>
 					</label>
 					<label>Photos</label>
-					<div>
+					<div className="flex flex-wrap gap-2 h-auto  ">
 						{images?.length > 0 &&
-							images?.map((link, index) => (
-								<div key={index}>{link}sadasdasddsa</div>
+							images?.map((link) => (
+								<div
+									key={link}
+									className="h-32 w-28 relative  "
+								>
+									<Image
+										src={link}
+										alt="test"
+										className="rounded-md absolute "
+										loading="lazy"
+										fill={true}
+									/>
+								</div>
 							))}
 						<label className="w-24 h-24 border border-gray-400 bg-gray-700 flex text-gray-400 rounded-md cursor-pointer">
 							<div className="w-full h-full flex justify-center items-center">

@@ -7,7 +7,10 @@ const nextConfig = {
 		],
 	},
 	images: {
-		domains: ["lh3.googleusercontent.com"],
+		domains: [
+			"lh3.googleusercontent.com",
+			"dronezone-admin.s3.amazonaws.com",
+		],
 		formats: ["image/avif", "image/webp"],
 	},
 };
