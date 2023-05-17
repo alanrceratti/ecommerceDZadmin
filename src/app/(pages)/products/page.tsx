@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { DataProps } from "@/app/types";
 
-// interface Props {
-// 	session: DataProps | null;
-// }
+interface Props {
+	session: DataProps | null;
+}
 
 export default function Products() {
 	const [products, setProducts] = useState([]);
@@ -33,8 +33,8 @@ export default function Products() {
 				</thead>
 				{products ? (
 					<tbody>
-						{products.map((product: DataProps, index: number) => (
-							<tr key={index}>
+						{products.map((product: DataProps, index) => (
+							<tr key={index + product.name}>
 								<td className="border w-1/2">{product.name}</td>
 								<td className="text-center flex gap-2 justify-center mx-2">
 									<Link
