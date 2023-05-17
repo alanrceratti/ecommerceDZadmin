@@ -65,7 +65,7 @@ export default async function handle(
 				ContentType: mime.lookup(file.path) || undefined,
 			})
 		);
-		console.log(file.fieldName, file.path, file.originalFilename);
+
 		const link = `https://${bucketName}.s3.amazonaws.com/${randomName}`;
 		links.push(link);
 	}
