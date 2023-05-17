@@ -32,12 +32,6 @@ function Layout({ children }: { children: ReactNode }) {
 					>
 						Login with Github
 					</button>
-					<button
-						className="bg-orange p-2 mx-2 rounded-md font-poppins"
-						onClick={async () => await signOut()}
-					>
-						Log out
-					</button>
 				</div>
 			</div>
 		</section>
