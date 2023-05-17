@@ -52,9 +52,12 @@ export default function ProductForm({
 			Array.from(files).forEach((file) => data.append("file", file));
 
 			try {
-				const res = await axios.post("/api/upload", data, {
-					headers: { "Content-Type": "multipart/form-data" },
+				const res = await axios.post("/api/upload", data);
+				// headers: { "Content-Type": "multipart/form-data" },
+				setImages((oldImages) => {
+					return [...oldImages, ...res.data.links];
 				});
+
 				console.log(res.data);
 			} catch (error) {
 				console.log("Error uploading images:", error);
@@ -75,6 +78,7 @@ export default function ProductForm({
 							onChange={(event) => setName(event.target.value)}
 							aria-label="Product name"
 							aria-required="true"
+							required
 						/>
 					</label>
 					<label htmlFor="description">
@@ -88,10 +92,15 @@ export default function ProductForm({
 								setDescription(event.target.value)
 							}
 							aria-label="Description"
+							required
 						></textarea>
 					</label>
 					<label>Photos</label>
 					<div>
+						{images?.length > 0 &&
+							images?.map((link, index) => (
+								<div key={index}>{link}sadasdasddsa</div>
+							))}
 						<label className="w-24 h-24 border border-gray-400 bg-gray-700 flex text-gray-400 rounded-md cursor-pointer">
 							<div className="w-full h-full flex justify-center items-center">
 								<div className="text-center">
@@ -130,6 +139,7 @@ export default function ProductForm({
 							onChange={(event) => setPrice(event.target.value)}
 							aria-label="Price"
 							aria-required="true"
+							required
 						/>
 					</label>
 					<div className="w-full text-center ">
