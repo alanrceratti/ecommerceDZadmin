@@ -38,10 +38,20 @@ table.basic {
 }
 
 table.basic tr {
-	@apply border border-white p-1;
+	@apply border border-black w-full p-1;
 }
 table.basic td {
 	@apply py-2 pl-2;
+}
+table.basic thead > tr > td {
+	@apply bg-gray-950;
+}
+table.basic tbody > tr > td {
+	@apply border-black w-full;
+}
+
+table.basic thead {
+	@apply bg-gray-800;
 }
 
 table.basic a {

@@ -14,4 +14,4 @@ const ProductSchema = new Schema({
 
 // Create a model for the "Product" collection using the schema
 // If the model already exists (e.g., during hot-reloading), use the existing model
-export const Product = models.Product || model("Product", ProductSchema);
+export const Product = models?.Product || model("Product", ProductSchema);

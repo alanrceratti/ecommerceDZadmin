@@ -6,37 +6,36 @@ interface Categories {
 	name: string;
 }
 
-export default function CategoriesPage() {
-	const [name, setName] = useState<string>("");
-	const [categories, setCategories] = useState([]);
+export default function Categories() {
+	const [name, setName] = useState<Categories>({ name: "" });
+	const [categories, setCategories] = useState<Categories[]>([]);
 
 	async function saveCategory(
 		event: MouseEvent<HTMLButtonElement>
 	): Promise<void> {
 		event.preventDefault();
 		await axios.post("/api/categories", { name });
-		setName("");
-	}
-	function fetchCategories() {
-		axios.get("/api/categories").then((response) => {
-			setCategories(response.data);
-		});
+		setName((prevState) => ({ ...prevState, name: "" }));
 	}
 
 	useEffect(() => {
-		fetchCategories();
+		axios.get("/api/categories").then((response) => {
+			setCategories(response.data);
+		});
 	}, []);
 
 	return (
-		<section className="items-center m-4 px-4 max-w-[700px] ml-auto mr-auto">
+		<section className="mx-4">
 			<h1>Categories</h1>
 			<label>Add Categories</label>
 			<form className="flex gap-2 max-w-[500px] py-4 ">
 				<input
-					value={name}
+					value={name.name}
 					placeholder={"Category name"}
 					className="m-0"
-					onChange={(event) => setName(event.target.value)}
+					onChange={(event) =>
+						setName({ ...name, name: event.target.value })
+					}
 				></input>
 			</form>
 			<button
@@ -49,7 +48,7 @@ export default function CategoriesPage() {
 			<table className="basic">
 				<thead>
 					<tr>
-						<td>Categories</td>
+						<td>Categoridsdes</td>
 					</tr>
 				</thead>
 				<tbody>
