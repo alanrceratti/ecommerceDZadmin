@@ -29,7 +29,6 @@ export default function ProductForm({
 	async function saveProduct(
 		event: MouseEvent<HTMLButtonElement>
 	): Promise<void> {
-		console.log("salvandooooo");
 		event.preventDefault();
 		const data = { name, description, price, images };
 		if (_id) {
