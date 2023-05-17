@@ -1,6 +1,6 @@
 "use client";
 import Nav from "@/components/nav";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { ReactNode } from "react";
 
 function Layout({ children }: { children: ReactNode }) {
@@ -31,6 +31,12 @@ function Layout({ children }: { children: ReactNode }) {
 						onClick={async () => await signIn("github")}
 					>
 						Login with Github
+					</button>
+					<button
+						className="bg-orange p-2 mx-2 rounded-md font-poppins"
+						onClick={async () => await signOut("github")}
+					>
+						Log out
 					</button>
 				</div>
 			</div>
