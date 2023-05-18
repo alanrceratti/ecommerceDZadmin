@@ -24,4 +24,11 @@ export default async function handle(
 		await Category.updateOne({ _id }, { name });
 		res.json(true);
 	}
+
+	if (req.method === "DELETE") {
+		if (req.query?.id) {
+			await Category.deleteOne({ _id: req.query.id });
+			res.json(true);
+		}
+	}
 }

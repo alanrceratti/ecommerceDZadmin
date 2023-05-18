@@ -13,7 +13,7 @@ export default function CategoriesPage() {
 	const [categories, setCategories] = useState<Categories[]>([]);
 	const [editName, setEditName] = useState("");
 	const [categoryID, setCategoryID] = useState("");
-	const [activeEditIndex, setActiveEditIndex] = useState<number | null>(null);
+	const [activeIndex, setActiveIndex] = useState<number | null>(null);
 	const [ModalDelete, setModalDelete] = useState(false);
 
 	async function saveCategory(event: MouseEvent<HTMLButtonElement>) {
@@ -38,30 +38,46 @@ export default function CategoriesPage() {
 	}, []);
 
 	const handleEdit = (index: number) => {
+		setActiveIndex(index);
 		setCategoryID(categories[index]._id);
-		setActiveEditIndex(index);
 		setEditName(categories[index].name);
+	};
+
+	useEffect(() => {
+		console.log("activeIndex:", activeIndex, categoryID);
+	}, [activeIndex]);
+
+	const handleDelete = (index: number) => {
+		setModalDelete(true);
+		setActiveIndex(index);
+		setCategoryID(categories[index]._id);
 	};
 
 	async function handleSave(event: MouseEvent<HTMLButtonElement>) {
 		event.preventDefault();
-		if (categoryID) {
+		if (activeIndex !== null) {
 			try {
 				await axios.put("/api/categories", {
 					name: editName,
 					_id: categoryID,
 				});
-				setActiveEditIndex(null);
+				setActiveIndex(null);
 				fetchCategories();
 			} catch (error) {
 				console.log("category iddd error:", error);
 			}
 		}
 	}
+	async function deleteCategory() {
+		await axios.delete("/api/categories?id=" + categoryID);
+		setModalDelete(false);
+		setActiveIndex(null);
+		fetchCategories();
+	}
 
 	return (
 		<section className="items-center m-4 px-4 max-w-[700px] ml-auto mr-auto">
-			<h1>Categories</h1>
+			<h1 className="relative">Categories</h1>
 			<label>Add Categories</label>
 			<form className="flex gap-2 max-w-[500px] py-4 ">
 				<input
@@ -88,7 +104,7 @@ export default function CategoriesPage() {
 						{categories.length &&
 							categories.map((category: Categories, index) => (
 								<tr key={index + category.name}>
-									{activeEditIndex === index ? (
+									{activeIndex === index ? (
 										<td>
 											<input
 												value={editName}
@@ -104,7 +120,7 @@ export default function CategoriesPage() {
 									)}
 
 									<td className="text-center flex gap-2 justify-center mx-2">
-										{activeEditIndex !== index ? (
+										{activeIndex !== index ? (
 											<button
 												className="btn-primary bg-orange items-center flex"
 												onClick={() =>
@@ -153,9 +169,7 @@ export default function CategoriesPage() {
 
 										<button
 											className="btn-primary !bg-red-800 items-center flex"
-											onClick={() =>
-												setModalDelete(!ModalDelete)
-											}
+											onClick={() => handleDelete(index)}
 										>
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
@@ -178,12 +192,32 @@ export default function CategoriesPage() {
 							))}
 					</tbody>
 				</thead>
+
+				{ModalDelete ? (
+					<div className="absolute top-1/3 left-auto shadow-[0px_20px_20px_1000px_#000000b9]">
+						<div className="bg-white text-black w-[380px] h-32 rounded-md font-semibold text-center ">
+							<h2>
+								Are you sure you want to delete this category?
+							</h2>
+
+							<div className="flex gap-2 justify-center my-4 ">
+								<button
+									className="btn-primary !bg-red-700"
+									onClick={deleteCategory}
+								>
+									Yes
+								</button>
+								<button
+									className="btn-primary"
+									onClick={() => setModalDelete(false)}
+								>
+									No
+								</button>
+							</div>
+						</div>
+					</div>
+				) : null}
 			</table>
-			<div className="absolute">
-				<div>
-					<h2></h2>Are you sure you want to delete this category?
-				</div>
-			</div>
 		</section>
 	);
 }
