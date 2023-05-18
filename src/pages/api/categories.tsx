@@ -19,5 +19,9 @@ export default async function handle(
 		res.json(categoryDoc);
 	}
 
-
+	if (req.method === "PUT") {
+		const { name, _id } = req.body;
+		await Category.updateOne({ _id }, { name });
+		res.json(true);
+	}
 }

@@ -5,59 +5,28 @@ import { MouseEvent, useEffect, useState } from "react";
 
 interface Categories {
 	name: string;
-	_id: string;
 }
 
 export default function CategoriesPage() {
 	const [name, setName] = useState<string>("");
-	const [categories, setCategories] = useState<Categories[]>([]);
+	const [categories, setCategories] = useState([]);
 	const [editName, setEditName] = useState("");
-	const [categoryID, setCategoryID] = useState("");
-	const [activeEditIndex, setActiveEditIndex] = useState<number | null>(null);
-	const [ModalDelete, setModalDelete] = useState(false);
+	const [isEditing, setIsEditing] = useState(false);
 
 	async function saveCategory(event: MouseEvent<HTMLButtonElement>) {
 		event.preventDefault();
-		const current = { name };
-
-		try {
-			await axios.post("/api/categories", current);
-			setName("");
-		} catch (error) {
-			console.log("categories page error:", error);
-		}
+		await axios.post("/api/categories", { name });
+		setName("");
 	}
-
 	function fetchCategories() {
 		axios.get("/api/categories").then((response) => {
 			setCategories(response.data);
 		});
 	}
+
 	useEffect(() => {
 		fetchCategories();
 	}, []);
-
-	const handleEdit = (index: number) => {
-		setCategoryID(categories[index]._id);
-		setActiveEditIndex(index);
-		setEditName(categories[index].name);
-	};
-
-	async function handleSave(event: MouseEvent<HTMLButtonElement>) {
-		event.preventDefault();
-		if (categoryID) {
-			try {
-				await axios.put("/api/categories", {
-					name: editName,
-					_id: categoryID,
-				});
-				setActiveEditIndex(null);
-				fetchCategories();
-			} catch (error) {
-				console.log("category iddd error:", error);
-			}
-		}
-	}
 
 	return (
 		<section className="items-center m-4 px-4 max-w-[700px] ml-auto mr-auto">
@@ -88,7 +57,7 @@ export default function CategoriesPage() {
 						{categories.length &&
 							categories.map((category: Categories, index) => (
 								<tr key={index + category.name}>
-									{activeEditIndex === index ? (
+									{isEditing ? (
 										<td>
 											<input
 												value={editName}
@@ -104,12 +73,13 @@ export default function CategoriesPage() {
 									)}
 
 									<td className="text-center flex gap-2 justify-center mx-2">
-										{activeEditIndex !== index ? (
+										{!isEditing ? (
 											<button
 												className="btn-primary bg-orange items-center flex"
-												onClick={() =>
-													handleEdit(index)
-												}
+												onClick={() => {
+													setIsEditing(true);
+													return undefined; // Ensure the function returns void
+												}}
 											>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
@@ -129,9 +99,11 @@ export default function CategoriesPage() {
 											</button>
 										) : (
 											<button
-												type="button"
 												className="btn-primary bg-orange items-center flex"
-												onClick={handleSave}
+												onClick={() => {
+													setIsEditing(true);
+													return undefined; // Ensure the function returns void
+												}}
 											>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
@@ -151,12 +123,7 @@ export default function CategoriesPage() {
 											</button>
 										)}
 
-										<button
-											className="btn-primary !bg-red-800 items-center flex"
-											onClick={() =>
-												setModalDelete(!ModalDelete)
-											}
-										>
+										<button className="btn-primary !bg-red-800 items-center flex">
 											<svg
 												xmlns="http://www.w3.org/2000/svg"
 												fill="none"
@@ -179,11 +146,6 @@ export default function CategoriesPage() {
 					</tbody>
 				</thead>
 			</table>
-			<div className="absolute">
-				<div>
-					<h2></h2>Are you sure you want to delete this category?
-				</div>
-			</div>
 		</section>
 	);
 }
