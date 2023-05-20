@@ -19,17 +19,17 @@ export default function CategoriesPage() {
 	async function saveCategory(event: MouseEvent<HTMLButtonElement>) {
 		event.preventDefault();
 		const current = { name };
-
 		try {
 			await axios.post("/api/categories", current);
 			setName("");
+			fetchCategories();
 		} catch (error) {
 			console.log("categories page error:", error);
 		}
 	}
 
-	function fetchCategories() {
-		axios.get("/api/categories").then((response) => {
+	async function fetchCategories() {
+		await axios.get("/api/categories").then((response) => {
 			setCategories(response.data);
 		});
 	}
@@ -43,17 +43,16 @@ export default function CategoriesPage() {
 		setEditName(categories[index].name);
 	};
 
-	useEffect(() => {
-		console.log("activeIndex:", activeIndex, categoryID);
-	}, [activeIndex]);
+	// useEffect(() => {
+	// 	console.log("activeIndex:", activeIndex, categoryID);
+	// }, [activeIndex]);
 
 	const handleDelete = (index: number) => {
 		setModalDelete(true);
-		setActiveIndex(index);
 		setCategoryID(categories[index]._id);
 	};
 
-	async function handleSave(event: MouseEvent<HTMLButtonElement>) {
+	async function handleEditSave(event: MouseEvent<HTMLButtonElement>) {
 		event.preventDefault();
 		if (activeIndex !== null) {
 			try {
@@ -73,6 +72,11 @@ export default function CategoriesPage() {
 		setModalDelete(false);
 		setActiveIndex(null);
 		fetchCategories();
+	}
+
+	function goBack() {
+		setModalDelete(false);
+		setActiveIndex(null);
 	}
 
 	return (
@@ -147,7 +151,7 @@ export default function CategoriesPage() {
 											<button
 												type="button"
 												className="btn-primary bg-orange items-center flex"
-												onClick={handleSave}
+												onClick={handleEditSave}
 											>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
@@ -209,7 +213,7 @@ export default function CategoriesPage() {
 								</button>
 								<button
 									className="btn-primary"
-									onClick={() => setModalDelete(false)}
+									onClick={goBack}
 								>
 									No
 								</button>
