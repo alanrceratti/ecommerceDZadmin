@@ -1,9 +1,9 @@
 "use client";
-import { NewProductsProps } from "@/app/types";
+import { Categories, NewProductsProps } from "@/app/types";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { MouseEvent, useState } from "react";
+import { MouseEvent, useEffect, useState } from "react";
 import Spinner from "./spinner";
 import { ItemInterface, ReactSortable } from "react-sortablejs";
 
@@ -13,14 +13,24 @@ export default function ProductForm({
 	description: currentDescription,
 	price: currentPrice,
 	images: currentImages,
+	category: currentCategory,
 }: NewProductsProps) {
 	const [name, setName] = useState(currentName || "");
 	const [description, setDescription] = useState(currentDescription || "");
+	const [category, setCategory] = useState(currentCategory || "");
 	const [price, setPrice] = useState(currentPrice || "");
 	const [images, setImages] = useState(currentImages || []);
 	const [goToProducts, setGoToProducts] = useState(false);
 	const [isUploading, setIsUploading] = useState(false);
+	const [categories, setCategories] = useState<Categories[]>([]);
 	const router = useRouter();
+	console.log(category);
+
+	useEffect(() => {
+		axios.get("/api/categories").then((response) => {
+			setCategories(response.data);
+		});
+	}, []);
 
 	function goBack() {
 		router.push("/products");
@@ -30,7 +40,7 @@ export default function ProductForm({
 		event: MouseEvent<HTMLButtonElement>
 	): Promise<void> {
 		event.preventDefault();
-		const data = { name, description, price, images };
+		const data = { name, description, price, images, category };
 		if (_id) {
 			await axios.put("/api/products", { ...data, _id });
 		} else {
@@ -55,7 +65,6 @@ export default function ProductForm({
 
 			try {
 				const res = await axios.post("/api/upload", data);
-				// headers: { "Content-Type": "multipart/form-data" },
 				setImages((oldImages) => {
 					return [...oldImages, ...res.data.links];
 				});
@@ -89,6 +98,27 @@ export default function ProductForm({
 							required
 						/>
 					</label>
+					<label className="my-2">Category</label>
+					<div className="mb-2">
+						<select
+							className="text-black"
+							onChange={(event) =>
+								setCategory(event.target.value)
+							}
+							value={category}
+						>
+							<option>Select</option>
+							{categories.length > 0 &&
+								categories.map((category) => (
+									<option
+										key={category._id}
+										value={category._id}
+									>
+										{category.name}
+									</option>
+								))}
+						</select>
+					</div>
 					<label htmlFor="description">
 						Description
 						<textarea

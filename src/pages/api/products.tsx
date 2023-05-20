@@ -21,7 +21,7 @@ export default async function handle(
 	// Check if the HTTP method is POST
 	if (req.method === "POST") {
 		// Extract the name, description, and price from the request body
-		const { name, description, price, images } = req.body;
+		const { name, description, price, images, category } = req.body;
 
 		// Create a new document in the "Product" collection using the extracted data
 		const productDoc = await Product.create({
@@ -29,6 +29,7 @@ export default async function handle(
 			description,
 			price,
 			images,
+			category,
 		});
 
 		// Send the created product document as the response
@@ -36,8 +37,11 @@ export default async function handle(
 	}
 
 	if (req.method === "PUT") {
-		const { name, description, price, images, _id } = req.body;
-		await Product.updateOne({ _id }, { name, description, price, images });
+		const { name, description, price, images, _id, category } = req.body;
+		await Product.updateOne(
+			{ _id },
+			{ name, description, price, images, category }
+		);
 		res.json(true);
 	}
 

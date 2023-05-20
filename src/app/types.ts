@@ -17,4 +17,10 @@ export interface NewProductsProps {
 	price?: number;
 	images?: string[];
 	_id?: string;
+	category?: string[];
+}
+
+export interface Categories {
+	name?: string;
+	_id?: string;
 }

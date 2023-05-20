@@ -19,6 +19,7 @@ export default function CategoriesPage() {
 	async function saveCategory(event: MouseEvent<HTMLButtonElement>) {
 		event.preventDefault();
 		const current = { name };
+
 		try {
 			await axios.post("/api/categories", current);
 			setName("");
