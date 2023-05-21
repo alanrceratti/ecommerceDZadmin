@@ -3,16 +3,14 @@
 import Image from "next/image";
 
 interface ALOALO {
-	name: string;
-	email: string;
-	image: string;
+	session: {
+		name: string;
+		email: string;
+		image: string;
+	};
 }
 
-interface ASD {
-	session: ALOALO | null;
-}
-
-const Hero: React.FC<ASD> = ({ session }) => {
+const Hero = ({ session }: ALOALO) => {
 	const image = session?.image;
 
 	return (
