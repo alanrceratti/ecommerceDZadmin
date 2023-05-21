@@ -2,17 +2,17 @@
 
 import Image from "next/image";
 
-interface SessionProps {
+interface ALOALO {
 	name: string;
 	email: string;
 	image: string;
 }
 
-interface Props {
-	session: SessionProps | null;
+interface ASD {
+	session: ALOALO | null;
 }
 
-const Hero: React.FC<Props> = ({ session }) => {
+const Hero: React.FC<ASD> = ({ session }) => {
 	const image = session?.image;
 
 	return (
