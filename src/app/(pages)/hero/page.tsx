@@ -1,13 +1,22 @@
 "use client";
 
-import { SessionProps } from "@/app/types";
 import Image from "next/image";
+
+interface SessionProps {
+	session: {
+		user: {
+			name: string;
+			email: string;
+			image: string;
+		};
+	};
+}
 
 interface Props {
 	session: SessionProps["session"] | null;
 }
 
-export default function Hero({ session }: Props) {
+const Hero: React.FC<Props> = ({ session }) => {
 	const image = session?.user?.image;
 
 	return (
@@ -17,13 +26,17 @@ export default function Hero({ session }: Props) {
 				<h2 className="font-bold">&nbsp;{session?.user?.name}</h2>
 			</div>
 
-			<Image
-				src={image as string}
-				width={50}
-				height={50}
-				alt={`${session?.user?.name} photo`}
-				className="rounded-full mx-4"
-			/>
+			{image && (
+				<Image
+					src={image}
+					width={50}
+					height={50}
+					alt={`${session?.user?.name} photo`}
+					className="rounded-full mx-4"
+				/>
+			)}
 		</div>
 	);
-}
+};
+
+export default Hero;
