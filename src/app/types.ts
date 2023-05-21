@@ -1,12 +1,12 @@
-export interface SessionProps {
-	session: {
-		user: {
-			name: string;
-			email: string;
-			image: string;
-		};
-	};
-}
+// export interface SessionProps {
+// 	session: {
+// 		user: {
+// 			name: string;
+// 			email: string;
+// 			image: string;
+// 		};
+// 	};
+// }
 
 export interface DataProps {
 	name: string;
