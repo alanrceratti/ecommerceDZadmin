@@ -1,6 +1,5 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { SessionProps } from "@/app/types";
 
 import Image from "next/image";
 

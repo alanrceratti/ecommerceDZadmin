@@ -1,4 +1,5 @@
-import NextAuth, { AuthOptions, Session } from "next-auth";
+import { NextApiRequest, NextApiResponse } from "next";
+import NextAuth, { AuthOptions, Session, getServerSession } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -35,3 +36,14 @@ export const authOptions: AuthOptions = {
 	secret: process.env.NEXTAUTH_SECRET,
 };
 export default NextAuth(authOptions);
+
+export async function isAdminRequest(
+	req: NextApiRequest,
+	res: NextApiResponse
+) {
+	const session = await getServerSession(req, res, authOptions);
+
+	if (!adminEmails.includes(session?.user?.email)) {
+		throw "Not admin";
+	}
+}

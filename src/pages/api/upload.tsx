@@ -3,6 +3,8 @@ import multiparty from "multiparty";
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import fs from "fs";
 import mime, { contentType } from "mime-types";
+import { mongooseConnect } from "../../../lib/mongoose";
+import { isAdminRequest } from "../../../lib/auth";
 const bucketName = "dronezone-admin";
 
 interface File {
@@ -18,6 +20,8 @@ export default async function handle(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
+	await mongooseConnect();
+	await isAdminRequest(req, res);
 	const form = new multiparty.Form();
 	const { fields, files }: { fields: String; files: File } =
 		await new Promise((resolve, reject) => {
