@@ -1,14 +1,9 @@
 "use client";
-import { useSession } from "next-auth/react";
 import { SessionProps } from "@/app/types";
 
 import Image from "next/image";
-interface Props {
-	session: SessionProps | null;
-}
 
-export default function Hero() {
-	const { data: session } = useSession();
+export default function Hero({ session }: SessionProps) {
 	const image = session?.user?.image;
 
 	return (
