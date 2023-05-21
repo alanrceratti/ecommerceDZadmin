@@ -32,6 +32,6 @@
 		".next/types/**/*.ts",
 		"src/app/api/auth/[...nextauth].ts",
 		"lib/mongodb.ts"
-	],
+, "src/app/hooks/useMedia.jsx"	],
 	"exclude": ["node_modules"]
 }
