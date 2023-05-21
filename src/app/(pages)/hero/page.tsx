@@ -1,18 +1,13 @@
 "use client";
 
+import { SessionProps } from "@/app/types";
 import Image from "next/image";
 
-interface SessionProps {
-	session: {
-		user: {
-			name: string;
-			email: string;
-			image: string;
-		};
-	};
+interface Props {
+	session: SessionProps["session"] | null;
 }
 
-export default function Hero({ session }: SessionProps) {
+export default function Hero({ session }: Props) {
 	const image = session?.user?.image;
 
 	return (
