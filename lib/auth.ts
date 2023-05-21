@@ -42,8 +42,8 @@ export async function isAdminRequest(
 	res: NextApiResponse
 ) {
 	const session = await getServerSession(req, res, authOptions);
-
-	if (!adminEmails.includes(session?.user?.email)) {
+	const userEmail = session?.user?.email;
+  if (typeof userEmail === "string" && adminEmails.includes(userEmail)) {
 		throw "Not admin";
 	}
 }
