@@ -1,8 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { Category } from "../../../models/Category";
 import { mongooseConnect } from "../../../lib/mongoose";
-import { getServerSession } from "next-auth";
-import { authOptions, isAdminRequest } from "../../../lib/auth";
+import { isAdminRequest } from "../../../lib/auth";
 
 export default async function handle(
 	req: NextApiRequest,

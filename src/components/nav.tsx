@@ -1,12 +1,16 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 
 export default function Nav() {
 	const inactiveLink = "flex gap-1 p-1 w-full";
 	const activeLink = inactiveLink + " bg-blue-600";
 	const pathname = usePathname();
+
+	async function logOut() {
+		await signOut({ callbackUrl: "/" });
+	}
 
 	return (
 		<>
@@ -156,7 +160,7 @@ export default function Nav() {
 				</nav>
 				<button
 					className="m-4 bg-black h-fit flex px-4 py-2 text-center rounded-md font-bold"
-					onClick={() => signOut()}
+					onClick={logOut}
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"

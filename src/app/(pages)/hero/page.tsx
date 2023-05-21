@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function Hero() {
 	const { data: session } = useSession();
-	const image = session?.user?.name;
+	const image = session?.user?.image;
 
 	return (
 		<div className="flex  items-center m-4 justify-between">

@@ -22,6 +22,7 @@ export default async function handle(
 ) {
 	await mongooseConnect();
 	await isAdminRequest(req, res);
+
 	const form = new multiparty.Form();
 	const { fields, files }: { fields: String; files: File } =
 		await new Promise((resolve, reject) => {
