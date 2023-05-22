@@ -17,16 +17,7 @@ export default function Nav() {
 	async function logOut() {
 		await signOut({ callbackUrl: "/" });
 	}
-	console.log(activeMenu);
-	function handleMenu(e) {
-		if (activeMenu === true) {
-			setActiveMenu(false);
-		} else if (activeMenu === false) {
-			setActiveMenu(true);
-		} else {
-			console.log("an??");
-		}
-	}
+
 	useEffect(() => {
 		setActiveMenu(false);
 	}, [pathname]);
@@ -40,7 +31,7 @@ export default function Nav() {
 			{mobile ? (
 				<div className="w-18 m-4  text-center">
 					{!activeMenu ? (
-						<button onClick={(e) => handleMenu(e)} id="menu">
+						<button onClick={() => setActiveMenu(true)}>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
