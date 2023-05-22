@@ -86,7 +86,7 @@ export default function ProductForm({
 			<div className=" items-center px-2 m-4 max-w-[500px] ml-auto mr-auto">
 				<form>
 					<label htmlFor="product">
-						Product name
+						<h2>Product name</h2>
 						<input
 							type="text"
 							id="product"
@@ -98,7 +98,9 @@ export default function ProductForm({
 							required
 						/>
 					</label>
-					<label className="my-2">Category</label>
+					<label className="my-2">
+						<h2>Category</h2>
+					</label>
 					<div className="mb-2">
 						<select
 							className="text-black"
@@ -120,7 +122,7 @@ export default function ProductForm({
 						</select>
 					</div>
 					<label htmlFor="description">
-						Description
+						<h2>Description</h2>
 						<textarea
 							rows={5}
 							id="description"
@@ -133,7 +135,10 @@ export default function ProductForm({
 							required
 						></textarea>
 					</label>
-					<label>Photos</label>
+
+					<label>
+						<h2>Photos</h2>
+					</label>
 					<div className="flex flex-wrap gap-2 h-auto  ">
 						<ReactSortable
 							list={images.map((link, index) => ({
@@ -192,7 +197,8 @@ export default function ProductForm({
 						</label>
 					</div>
 					<label htmlFor="price">
-						Price
+						<h2>Price</h2>
+
 						<input
 							type="number"
 							id="price"
