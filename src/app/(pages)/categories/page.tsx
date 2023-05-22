@@ -43,10 +43,6 @@ export default function CategoriesPage() {
 		setEditName(categories[index].name);
 	};
 
-	// useEffect(() => {
-	// 	console.log("activeIndex:", activeIndex, categoryID);
-	// }, [activeIndex]);
-
 	const handleDelete = (index: number) => {
 		setModalDelete(true);
 		setCategoryID(categories[index]._id);
@@ -81,7 +77,7 @@ export default function CategoriesPage() {
 
 	return (
 		<section className="items-center m-4 px-4 max-w-[700px] ml-auto mr-auto">
-			<h1 className="relative">Categories</h1>
+			<h1>Categories</h1>
 			<label>Add Categories</label>
 			<form className="flex gap-2 max-w-[500px] py-4 ">
 				<input
