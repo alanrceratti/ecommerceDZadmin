@@ -4,7 +4,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import useMedia from "@/app/hooks/useMedia";
 import { useEffect, useRef, useState } from "react";
-import useOneClickOutside from "../app/hooks/useOnClickOutside";
 import useOutsideClick from "../app/hooks/useOnClickOutside";
 
 export default function Nav() {
@@ -18,16 +17,21 @@ export default function Nav() {
 	async function logOut() {
 		await signOut({ callbackUrl: "/" });
 	}
-
-	function handleMenu() {
-		setActiveMenu((activeMenu) => !activeMenu);
+	console.log(activeMenu);
+	function handleMenu(e) {
+		if (activeMenu === true) {
+			setActiveMenu(false);
+		} else if (activeMenu === false) {
+			setActiveMenu(true);
+		} else {
+			console.log("an??");
+		}
 	}
 	useEffect(() => {
 		setActiveMenu(false);
 	}, [pathname]);
 
 	useOutsideClick(ref, () => {
-		console.log(activeMenu);
 		setActiveMenu(false);
 	});
 
@@ -35,24 +39,46 @@ export default function Nav() {
 		<>
 			{mobile ? (
 				<div className="w-18 m-4  text-center">
-					<button onClick={handleMenu}>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							strokeWidth={1.5}
-							stroke="currentColor"
-							className="w-8 h-8 ml-auto mr-auto"
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
-							/>
-						</svg>
-					</button>
+					{!activeMenu ? (
+						<button onClick={(e) => handleMenu(e)} id="menu">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								strokeWidth={1.5}
+								stroke="currentColor"
+								className="w-8 h-8 ml-auto mr-auto"
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5"
+								/>
+							</svg>
+						</button>
+					) : (
+						<div className="w-18 m-4  text-center z-50 absolute right-0 top-0">
+							<button onClick={() => setActiveMenu(false)}>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									strokeWidth={1.5}
+									stroke="currentColor"
+									className="w-8 h-8 "
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										d="M6 18L18 6M6 6l12 12"
+									/>
+								</svg>
+							</button>
+						</div>
+					)}
 				</div>
 			) : null}
+
 			{!mobile ? (
 				<aside className="p-4 pr-0">
 					<Link
@@ -228,7 +254,7 @@ export default function Nav() {
 			) : null}
 			{activeMenu && mobile ? (
 				<aside
-					className="p-4 pr-0 fixed left-12 w-full h-2/3 bg-black800"
+					className="p-4 pr-0 fixed  pl-12 w-full h-2/3 bg-black800 transition-all"
 					ref={ref}
 				>
 					<Link
