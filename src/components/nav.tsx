@@ -74,7 +74,7 @@ export default function Nav() {
 				<aside className="p-4 pr-0">
 					<Link
 						className="flex gap-1 mb-4 min-w-[170px]  mr-5"
-						href={"/"}
+						href={"/admin/"}
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -95,9 +95,11 @@ export default function Nav() {
 					</Link>
 					<nav className="flex flex-col gap-2 ">
 						<Link
-							href={"/"}
+							href={"/admin/"}
 							className={
-								pathname === "/" ? activeLink : inactiveLink
+								pathname === "/admin/"
+									? activeLink
+									: inactiveLink
 							}
 						>
 							<svg
@@ -117,11 +119,11 @@ export default function Nav() {
 							Dashboard
 						</Link>
 						<Link
-							href={"/products"}
+							href={"/admin/products"}
 							id="products"
 							className={
-								pathname === "/products" ||
-								pathname === "/products/new"
+								pathname === "/admin/products" ||
+								pathname === "/admin/products/new"
 									? activeLink
 									: inactiveLink
 							}
@@ -143,10 +145,10 @@ export default function Nav() {
 							Products
 						</Link>
 						<Link
-							href={"/categories"}
+							href={"/admin/categories"}
 							id="categories"
 							className={
-								pathname === "/categories"
+								pathname === "/admin/categories"
 									? activeLink
 									: inactiveLink
 							}
@@ -168,9 +170,9 @@ export default function Nav() {
 							Categories
 						</Link>
 						<Link
-							href={"/orders"}
+							href={"/admin/orders"}
 							className={
-								pathname === "/orders"
+								pathname === "/admin/orders"
 									? activeLink
 									: inactiveLink
 							}
@@ -192,9 +194,9 @@ export default function Nav() {
 							Orders
 						</Link>
 						<Link
-							href={"/settings"}
+							href={"/admin/settings"}
 							className={
-								pathname === "/settings"
+								pathname === "/admin/settings"
 									? activeLink
 									: inactiveLink
 							}
@@ -250,7 +252,7 @@ export default function Nav() {
 				>
 					<Link
 						className="flex gap-1 mb-4 min-w-[170px]  mr-5"
-						href={"/"}
+						href={"/admin"}
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -271,9 +273,11 @@ export default function Nav() {
 					</Link>
 					<nav className="flex flex-col gap-2 ">
 						<Link
-							href={"/"}
+							href={"/admin"}
 							className={
-								pathname === "/" ? activeLink : inactiveLink
+								pathname === "/admin"
+									? activeLink
+									: inactiveLink
 							}
 						>
 							<svg
@@ -293,11 +297,11 @@ export default function Nav() {
 							Dashboard
 						</Link>
 						<Link
-							href={"/products"}
+							href={"/admin/products"}
 							id="products"
 							className={
-								pathname === "/products" ||
-								pathname === "/products/new"
+								pathname === "/admin/products" ||
+								pathname === "/admin/products/new"
 									? activeLink
 									: inactiveLink
 							}
@@ -319,10 +323,10 @@ export default function Nav() {
 							Products
 						</Link>
 						<Link
-							href={"/categories"}
+							href={"/admin/categories"}
 							id="categories"
 							className={
-								pathname === "/categories"
+								pathname === "/admin/categories"
 									? activeLink
 									: inactiveLink
 							}
@@ -344,9 +348,9 @@ export default function Nav() {
 							Categories
 						</Link>
 						<Link
-							href={"/orders"}
+							href={"/admin/orders"}
 							className={
-								pathname === "/orders"
+								pathname === "/admin/orders"
 									? activeLink
 									: inactiveLink
 							}
@@ -368,9 +372,9 @@ export default function Nav() {
 							Orders
 						</Link>
 						<Link
-							href={"/settings"}
+							href={"/admin/settings"}
 							className={
-								pathname === "/settings"
+								pathname === "/admin/settings"
 									? activeLink
 									: inactiveLink
 							}

@@ -10,14 +10,20 @@ module.exports = {
 		extend: {
 			fontFamily: {
 				unisansheavy: ["var(--font-unisansheavy)", ...fontFamily.sans],
-				unisansitalic: ["var(--font-unisansitalic)", ...fontFamily.sans],
+				unisansitalic: [
+					"var(--font-unisansitalic)",
+					...fontFamily.sans,
+				],
 				unisansthin: ["var(--font-unisansthin)", ...fontFamily.sans],
 				poppins: ["var(--font-poppins)", ...fontFamily.sans],
 			},
 			colors: {
 				orange: "#FF7A00",
-				gray800: "#171717",
+
+				gray900: "#171717",
+				gray950: "#0E0E0E",
 				gray500: "#A9A9A9",
+
 				gray400: "#D4D4D4",
 				black800: "#0E0E0E",
 			},

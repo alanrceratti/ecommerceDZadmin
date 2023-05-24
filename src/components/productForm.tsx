@@ -33,7 +33,7 @@ export default function ProductForm({
 	}, []);
 
 	function goBack() {
-		router.push("/products");
+		router.push("/admin/products");
 	}
 
 	async function saveProduct(
@@ -53,7 +53,7 @@ export default function ProductForm({
 		setGoToProducts(true);
 	}
 	if (goToProducts) {
-		router.push("/products");
+		router.push("/admin/products");
 	}
 
 	async function uploadImages(e: React.ChangeEvent<HTMLInputElement>) {

@@ -43,7 +43,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
 				<title>Drone Zone</title>
 			</head>
 			<body
-				className={`${poppins.variable} ${unisansheavy.variable} ${unisansthin.variable}`}
+				className={`${poppins.variable} ${unisansheavy.variable} ${unisansthin.variable} bg-gray900 `}
 			>
 				<NextAuthProvider>{children}</NextAuthProvider>
 			</body>
