@@ -22,6 +22,18 @@ export interface NewProductsProps {
 	images?: string[];
 	_id?: string;
 	category?: string[];
+	speed?: number;
+	range?: number;
+	camera?: string[];
+	battery?: number;
+	waterProof?: string[];
+	skillLevel?: string[];
+	ambient?: string[];
+	followMode?: string[];
+	autoReturn?: string[];
+	weight?: number;
+	bestSeller?: boolean;
+	offer?: boolean;
 }
 
 export interface Categories {

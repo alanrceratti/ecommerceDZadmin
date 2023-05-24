@@ -4,8 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Product } from "../../../../../models/Product";
+import { mongooseConnect } from "../../../../../lib/mongoose";
 
-export default function Main() {
+export function Main() {
 	return (
 		<>
 			<section className=" bg-center min-h-[800px] flex items-center justify-center flex-col  ">
@@ -64,18 +66,4 @@ export default function Main() {
 			<BestSellers />
 		</>
 	);
-}
-
-export async function GetProduct() {
-	const [data, setData] = useState([]);
-	// const product = await axios.get("/api/categories").then((response) => {
-	// 	setData(response.data);
-	// });
-
-	useEffect(() => {
-		axios.get("/api/categories").then((response) => {
-			setData(response.data);
-			console.log("testeeee", data);
-		});
-	}, []);
 }

@@ -12,7 +12,7 @@ export default function DeleteProduct() {
 	const [productInfo, setProductInfo] = useState<NewProductsProps>();
 
 	function goBack() {
-		router.push("/products");
+		router.push("/admin/products");
 		return null;
 	}
 

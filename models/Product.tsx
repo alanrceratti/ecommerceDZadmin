@@ -8,10 +8,20 @@ const ProductSchema = new Schema({
 	description: String,
 	// Define the "price" field as a required number
 	price: { type: Number, require: true },
-
-	category: {type:mongoose.Types.ObjectId, ref:"Category"},
-
+	category: { type: mongoose.Types.ObjectId, ref: "Category" },
+	speed: { type: Number },
+	range: { type: Number },
+	camera: { type: String, require: true },
+	battery: { type: Number },
+	waterProof: { type: String, require: true },
+	skillLevel: { type: String, require: true },
+	ambient: { type: String, require: true },
+	followMode: { type: String, require: true },
+	autoReturn: { type: String, require: true },
+	weight: { type: Number },
 	images: { type: [String] },
+	bestSeller: { type: Boolean, require: true },
+	offer: { type: Boolean, require: true },
 });
 
 // Create a model for the "Product" collection using the schema

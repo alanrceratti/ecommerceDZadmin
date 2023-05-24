@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import Main from "./main/main";
+import { Main } from "./main/main";
 
 export default function Header() {
 	return (

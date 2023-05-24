@@ -14,10 +14,40 @@ export default function ProductForm({
 	price: currentPrice,
 	images: currentImages,
 	category: currentCategory,
+	speed: currentSpeed,
+	range: currentRange,
+	camera: currentCamera,
+	battery: currentBattery,
+	waterProof: currentWaterProof,
+	skillLevel: currentSkillLevel,
+	ambient: currentAmbient,
+	followMode: currentFollowMode,
+	autoReturn: currentAutoReturn,
+	weight: currentWeight,
+	bestSeller: currentBestSeller,
+	offer: currentOffer,
 }: NewProductsProps) {
 	const [name, setName] = useState(currentName || "");
 	const [description, setDescription] = useState(currentDescription || "");
 	const [category, setCategory] = useState(currentCategory || "");
+	const [speed, setSpeed] = useState(currentSpeed || "");
+	const [range, setRange] = useState(currentRange || "");
+	const [battery, setBattery] = useState(currentBattery || "");
+	const [camera, setCamera] = useState("");
+	const cam = ["720p", "1080p", "2K", "4K", "8K"];
+	const [waterProof, setWaterProof] = useState("");
+	const waterP = ["Yes", "No"];
+	const [skillLevel, setSkillLevel] = useState("");
+	const skillL = ["Begginer", "Semi-Professional", "Professional"];
+	const [ambient, setAmbient] = useState("");
+	const amb = ["Indoor", "Outdoor"];
+	const [followMode, setFollowMode] = useState("");
+	const followM = ["Yes", "No"];
+	const [autoReturn, setAutoReturn] = useState("");
+	const autoR = ["Yes", "No"];
+	const [weight, setWeight] = useState(currentWeight || "");
+	const [bestSeller, setBestSeller] = useState(currentBestSeller || false);
+	const [offer, setOffer] = useState(currentOffer || false);
 	const [price, setPrice] = useState(currentPrice || "");
 	const [images, setImages] = useState(currentImages || []);
 	const [goToProducts, setGoToProducts] = useState(false);
@@ -40,7 +70,25 @@ export default function ProductForm({
 		event: MouseEvent<HTMLButtonElement>
 	): Promise<void> {
 		event.preventDefault();
-		const data = { name, description, price, images, category };
+		const data = {
+			name,
+			description,
+			price,
+			images,
+			category,
+			speed,
+			range,
+			camera,
+			battery,
+			waterProof,
+			skillLevel,
+			ambient,
+			followMode,
+			autoReturn,
+			weight,
+			bestSeller,
+			offer,
+		};
 		if (_id) {
 			await axios.put("/api/products", { ...data, _id });
 		} else {
@@ -98,29 +146,216 @@ export default function ProductForm({
 							required
 						/>
 					</label>
+					<div className="flex gap-16">
+						<div>
+							<label className="my-2">
+								<h2>Category</h2>
+							</label>
+							<div className="mb-2">
+								<select
+									className="text-black"
+									onChange={(event) =>
+										setCategory(event.target.value)
+									}
+									value={category}
+								>
+									<option>Select</option>
+									{categories.length > 0 &&
+										categories.map((category) => (
+											<option
+												key={category._id}
+												value={category._id}
+											>
+												{category.name}
+											</option>
+										))}
+								</select>
+							</div>
+							<label className="my-2">
+								<h2>Camera</h2>
+							</label>
+							<div className="mb-2">
+								<select
+									className="text-black"
+									onChange={(event) =>
+										setCamera(event.target.value)
+									}
+									value={camera}
+								>
+									<option>Select</option>
+									{cam.length > 0 &&
+										cam.map((camera) => (
+											<option key={camera} value={camera}>
+												{camera}
+											</option>
+										))}
+								</select>
+							</div>
+							<label className="my-2">
+								<h2>Water Proof</h2>
+							</label>
+							<div className="mb-2">
+								<select
+									className="text-black"
+									onChange={(event) =>
+										setWaterProof(event.target.value)
+									}
+									value={waterProof}
+								>
+									<option>Select</option>
+									{waterP.length > 0 &&
+										waterP.map((waterProof) => (
+											<option
+												key={waterProof}
+												value={waterProof}
+											>
+												{waterProof}
+											</option>
+										))}
+								</select>
+							</div>
+						</div>
+						<div>
+							<label className="my-2">
+								<h2>Ambient</h2>
+							</label>
+							<div className="mb-2">
+								<select
+									className="text-black"
+									onChange={(event) =>
+										setAmbient(event.target.value)
+									}
+									value={ambient}
+								>
+									<option>Select</option>
+									{amb.length > 0 &&
+										amb.map((ambient) => (
+											<option
+												key={ambient}
+												value={ambient}
+											>
+												{ambient}
+											</option>
+										))}
+								</select>
+							</div>
+							<label className="my-2">
+								<h2>Follow Mode</h2>
+							</label>
+							<div className="mb-2">
+								<select
+									className="text-black"
+									onChange={(event) =>
+										setFollowMode(event.target.value)
+									}
+									value={followMode}
+								>
+									<option>Select</option>
+									{followM.length > 0 &&
+										followM.map((followMode) => (
+											<option
+												key={followMode}
+												value={followMode}
+											>
+												{followMode}
+											</option>
+										))}
+								</select>
+							</div>
+							<label className="my-2">
+								<h2>Skill Level</h2>
+							</label>
+							<div className="mb-2">
+								<select
+									className="text-black"
+									onChange={(event) =>
+										setSkillLevel(event.target.value)
+									}
+									value={skillLevel}
+								>
+									<option>Select</option>
+									{skillL.length > 0 &&
+										skillL.map((skillLevel) => (
+											<option
+												key={skillLevel}
+												value={skillLevel}
+											>
+												{skillLevel}
+											</option>
+										))}
+								</select>
+							</div>
+						</div>
+					</div>
+
 					<label className="my-2">
-						<h2>Category</h2>
+						<h2>Auto Return</h2>
 					</label>
 					<div className="mb-2">
 						<select
 							className="text-black"
 							onChange={(event) =>
-								setCategory(event.target.value)
+								setAutoReturn(event.target.value)
 							}
-							value={category}
+							value={autoReturn}
 						>
 							<option>Select</option>
-							{categories.length > 0 &&
-								categories.map((category) => (
-									<option
-										key={category._id}
-										value={category._id}
-									>
-										{category.name}
+							{autoR.length > 0 &&
+								autoR.map((autoReturn) => (
+									<option key={autoReturn} value={autoReturn}>
+										{autoReturn}
 									</option>
 								))}
 						</select>
 					</div>
+					<label htmlFor="speed">
+						<h2>Speed</h2>
+						<input
+							type="number"
+							id="speed"
+							value={speed}
+							placeholder="Speed in mph"
+							onChange={(event) => setSpeed(event.target.value)}
+							aria-label="Speed"
+							aria-required="true"
+						/>
+					</label>
+					<label htmlFor="battery">
+						<h2>Battery</h2>
+						<input
+							type="number"
+							id="battery"
+							value={battery}
+							placeholder="battery in minutes"
+							onChange={(event) => setBattery(event.target.value)}
+							aria-label="battery"
+							aria-required="true"
+						/>
+					</label>
+					<label htmlFor="weight">
+						<h2>Weight</h2>
+						<input
+							type="number"
+							id="weight"
+							value={weight}
+							placeholder="weight in kilos"
+							onChange={(event) => setWeight(event.target.value)}
+							aria-label="weight"
+							aria-required="true"
+						/>
+					</label>
+					<label htmlFor="range">
+						<h2>Range</h2>
+						<input
+							type="number"
+							id="range"
+							value={range}
+							placeholder="range in miles"
+							onChange={(event) => setRange(event.target.value)}
+							aria-label="range"
+							aria-required="true"
+						/>
+					</label>
 					<label htmlFor="description">
 						<h2>Description</h2>
 						<textarea
@@ -135,7 +370,38 @@ export default function ProductForm({
 							required
 						></textarea>
 					</label>
-
+					<div className="flex gap-10 pb-4">
+						<label htmlFor="bestSeller" className="flex">
+							<h2>Best Seller</h2>
+							<input
+								type="checkbox"
+								id="bestSeller"
+								checked={bestSeller}
+								className="w-6 mx-4"
+								placeholder="bestSeller in kilos"
+								onChange={(event) =>
+									setBestSeller(event.target.checked)
+								}
+								aria-label="bestSeller"
+								aria-required="true"
+							/>
+						</label>
+						<label htmlFor="offer" className="flex">
+							<h2>Offer</h2>
+							<input
+								type="checkbox"
+								id="offer"
+								className="w-6 mx-4"
+								checked={offer}
+								placeholder="offer in kilos"
+								onChange={(event) =>
+									setOffer(event.target.checked)
+								}
+								aria-label="offer"
+								aria-required="true"
+							/>
+						</label>
+					</div>
 					<label>
 						<h2>Photos</h2>
 					</label>

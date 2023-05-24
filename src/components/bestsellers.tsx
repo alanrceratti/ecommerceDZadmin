@@ -2,8 +2,20 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { mongooseConnect } from "../../lib/mongoose";
+import axios from "axios";
 
 export default function BestSellers() {
+	const [products, setProducts] = useState([]);
+
+	useEffect(() => {
+		axios.get("/api/productsFront").then((response) => {
+			setProducts(response.data);
+			console.log(products);
+		});
+	}, []);
+	
 	return (
 		<>
 			<section className="h-screen">

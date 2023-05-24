@@ -12,7 +12,6 @@ export default async function handle(
 	await mongooseConnect();
 	await isAdminRequest(req, res);
 
-
 	if (req.method === "GET") {
 		if (req.query?.id) {
 			res.json(await Product.findOne({ _id: req.query.id }));
@@ -24,7 +23,25 @@ export default async function handle(
 	// Check if the HTTP method is POST
 	if (req.method === "POST") {
 		// Extract the name, description, and price from the request body
-		const { name, description, price, images, category } = req.body;
+		const {
+			name,
+			description,
+			price,
+			images,
+			category,
+			speed,
+			range,
+			camera,
+			battery,
+			waterProof,
+			skillLevel,
+			ambient,
+			followMode,
+			autoReturn,
+			weight,
+			bestSeller,
+			offer,
+		} = req.body;
 
 		// Create a new document in the "Product" collection using the extracted data
 		const productDoc = await Product.create({
@@ -33,6 +50,18 @@ export default async function handle(
 			price,
 			images,
 			category,
+			speed,
+			range,
+			camera,
+			battery,
+			waterProof,
+			skillLevel,
+			ambient,
+			followMode,
+			autoReturn,
+			weight,
+			bestSeller,
+			offer,
 		});
 
 		// Send the created product document as the response
@@ -40,10 +69,47 @@ export default async function handle(
 	}
 
 	if (req.method === "PUT") {
-		const { name, description, price, images, _id, category } = req.body;
+		const {
+			name,
+			description,
+			price,
+			images,
+			_id,
+			category,
+			speed,
+			range,
+			camera,
+			battery,
+			waterProof,
+			skillLevel,
+			ambient,
+			followMode,
+			autoReturn,
+			weight,
+			bestSeller,
+			offer,
+		} = req.body;
 		await Product.updateOne(
 			{ _id },
-			{ name, description, price, images, category }
+			{
+				name,
+				description,
+				price,
+				images,
+				category,
+				speed,
+				range,
+				camera,
+				battery,
+				waterProof,
+				skillLevel,
+				ambient,
+				followMode,
+				autoReturn,
+				weight,
+				bestSeller,
+				offer,
+			}
 		);
 		res.json(true);
 	}
