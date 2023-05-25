@@ -1,11 +1,22 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { Main } from "./main/main";
+import useMedia from "@/app/hooks/useMedia";
+import { useState } from "react";
 
 export default function Header() {
+	const mobile = useMedia("(max-width: 990px)");
+	const mobileMD = useMedia("(max-width: 560px)");
+	const [isOpen, setIsOpen] = useState(false);
+
+	function handleMenu() {
+		setIsOpen((isOpen) => !isOpen);
+	}
+
 	return (
 		<>
-			<header className="text-white font-poppins flex items-center  px-8 bg-black h-[100px]">
+			<header className="text-white font-poppins flex items-center justify-between px-2  sm:px-8 bg-black h-[100px] ">
 				<Link href={"/"} className=" mr-20">
 					<Image
 						src="assets/header/DroneZone.svg"
@@ -15,23 +26,80 @@ export default function Header() {
 						className="min-h-[100px] min-w-[100px]"
 					/>
 				</Link>
-				<nav className="flex gap-8 flex-grow  ">
-					<Link href={"/"} className="hover">
-						Home
-					</Link>
-					<Link href={"/shop"} className="hover">
-						Shop
-					</Link>
-					<Link href={"/about"} className="hover">
-						About Us
-					</Link>
-					<Link href={"/contact"} className="hover">
-						Contact
-					</Link>
-				</nav>
+				{!mobile ? (
+					<nav className="flex gap-8 ">
+						<Link href={"/"} className="hover">
+							Home
+						</Link>
+						<Link href={"/shop"} className="hover">
+							Shop
+						</Link>
+						<Link href={"/about"} className="hover">
+							About Us
+						</Link>
+						<Link href={"/contact"} className="hover">
+							Contact
+						</Link>
+					</nav>
+				) : (
+					<>
+						<div className=" ml-auto pr-4 relative ">
+							<button
+								onClick={handleMenu}
+								className="transition-all"
+							>
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									strokeWidth={1.5}
+									stroke="currentColor"
+									className="w-9 h-9"
+								>
+									<path
+										strokeLinecap="round"
+										strokeLinejoin="round"
+										d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+									/>
+								</svg>
+							</button>
+							{isOpen ? (
+								<div className="absolute ">
+									<nav className="flex flex-col gap-1 ">
+										<Link href={"/"} className="hover">
+											Home
+										</Link>
+										<Link href={"/shop"} className="hover">
+											Shop
+										</Link>
+										<Link href={"/about"} className="hover">
+											About Us
+										</Link>
+										<Link
+											href={"/contact"}
+											className="hover"
+										>
+											Contact
+										</Link>
+									</nav>
+									<button className="btn-primaryy-mobile mb-2 mt-2">
+										Login
+									</button>
+									<button className="btn-primaryy-mobile ">
+										Register
+									</button>
+								</div>
+							) : null}
+						</div>
+					</>
+				)}
 				<div className="flex items-center gap-4">
-					<button className="btn-primaryy">Register</button>
-					<button className="btn-primaryy">Login</button>
+					{!mobile ? (
+						<>
+							<button className="btn-primaryy">Login</button>
+							<button className="btn-primaryy">Register</button>
+						</>
+					) : null}
 					<Link href={"/cart"} className="flex">
 						<Image
 							src="assets/header/cart.svg"

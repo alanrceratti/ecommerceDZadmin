@@ -20,6 +20,7 @@ export interface NewProductsProps {
 	description?: string;
 	price?: number;
 	images?: string[];
+
 	_id?: string;
 	category?: string[];
 	speed?: number;

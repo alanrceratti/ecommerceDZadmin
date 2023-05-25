@@ -39,15 +39,15 @@ export default function ProductForm({
 	const [camera, setCamera] = useState(currentCamera || "");
 	const cam = ["No camera", "720p", "1080p", "2K", "4K", "8K"];
 	const [waterProof, setWaterProof] = useState(currentWaterProof || "");
-	const waterP = ["Yes", "No"];
+	const waterP = ["No", "Yes"];
 	const [skillLevel, setSkillLevel] = useState(currentSkillLevel || "");
 	const skillL = ["Beginner", "Semi-Professional", "Professional"];
 	const [ambient, setAmbient] = useState(currentAmbient || "");
 	const amb = ["Indoor", "Outdoor"];
 	const [followMode, setFollowMode] = useState(currentFollowMode || "");
-	const followM = ["Yes", "No"];
+	const followM = ["No", "Yes"];
 	const [autoReturn, setAutoReturn] = useState(currentAutoReturn || "");
-	const autoR = ["Yes", "No"];
+	const autoR = ["No", "Yes"];
 	const [weight, setWeight] = useState(currentWeight || "");
 	const [bestSeller, setBestSeller] = useState(currentBestSeller || false);
 	const [offer, setOffer] = useState(currentOffer || false);
@@ -58,7 +58,6 @@ export default function ProductForm({
 	const [isUploading, setIsUploading] = useState(false);
 	const [categories, setCategories] = useState<Categories[]>([]);
 	const router = useRouter();
-	console.log(category);
 
 	useEffect(() => {
 		axios.get("/api/categories").then((response) => {
@@ -74,7 +73,7 @@ export default function ProductForm({
 		event: FormEvent<HTMLFormElement>
 	): Promise<void> {
 		event.preventDefault();
-		const requi = [category, ambient];
+
 		const data = {
 			name,
 			description,
