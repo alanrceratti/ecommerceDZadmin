@@ -24,7 +24,7 @@ function Layout({ children }: { children: ReactNode }) {
 						className="bg-orange p-2 mx-2 rounded-md font-poppins"
 						onClick={async () =>
 							await signIn("google", {
-								callbackUrl: "/admin",
+								callbackUrl: "/admin/",
 							})
 						}
 					>
@@ -34,7 +34,7 @@ function Layout({ children }: { children: ReactNode }) {
 						className="bg-orange p-2 mx-2 rounded-md font-poppins"
 						onClick={async () =>
 							await signIn("github", {
-								callbackUrl: "/admin",
+								callbackUrl: "/admin/",
 							})
 						}
 					>

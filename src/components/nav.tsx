@@ -15,7 +15,7 @@ export default function Nav() {
 	const [activeMenu, setActiveMenu] = useState(false);
 
 	async function logOut() {
-		await signOut({ callbackUrl: "/" });
+		await signOut({ callbackUrl: "/admin" });
 	}
 
 	useEffect(() => {
