@@ -6,6 +6,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Product } from "../../../../../models/Product";
 import { mongooseConnect } from "../../../../../lib/mongoose";
+import Offers from "@/components/offers";
 
 export function Main() {
 	return (
@@ -64,6 +65,7 @@ export function Main() {
 				<hr className="sm:h-16 h-0 w-full  bg-white border-none  "></hr>
 			</section>
 			<BestSellers />
+			<Offers />
 		</>
 	);
 }

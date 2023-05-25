@@ -7,12 +7,12 @@ import { mongooseConnect } from "../../lib/mongoose";
 import axios from "axios";
 import { NewProductsProps } from "@/app/types";
 
-export default function BestSellers() {
+export default function Offers() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	console.log(typeof products);
 
 	useEffect(() => {
-		axios.get("/api/productsBestSellers").then((response) => {
+		axios.get("/api/productsOffers").then((response) => {
 			setProducts(response.data);
 			console.log(products);
 		});
@@ -22,15 +22,15 @@ export default function BestSellers() {
 		<>
 			{products ? (
 				<section className="h-fit ">
-					<h1 className="text-xl sm:text-3xl sm:mt-20 mt-2 text-black bg-white  py-2 font-bold font-unisansheavy text-center">
-						BEST SELLERS
+					<h1 className="text-xl sm:text-3xl sm:mt-1 mt-2 text-white bg-red-600  py-2 font-bold font-unisansheavy text-center">
+						OFFERS
 					</h1>
-					<div className="flex justify-center   ">
-						<div className="flex items-center justify-start  overflow-auto">
+					<div className="flex justify-center bg-white  ">
+						<div className="flex items-center justify-start  overflow-auto bg-white">
 							{products.map((product) => (
 								<div className="sm:p-8 p-4" key={product._id}>
-									<div className="w-[340px] sm:w-[340px] h-[450px] sm:h-[470px] text-center font-poppins font-light text-white bg-gray950 rounded-md ">
-										<h2 className="sm:py-4 py-2">
+									<div className="w-[340px] sm:w-[340px] h-[450px] sm:h-[470px] text-center font-poppins text-black font-light shadow-2xl bg-white rounded-md ">
+										<h2 className="sm:py-4 py-2 font-semibold ">
 											{product.name}
 										</h2>
 										<div>
@@ -45,7 +45,7 @@ export default function BestSellers() {
 												)}
 											</div>
 
-											<div className="flex gap-4 text-white justify-center py-2">
+											<div className="flex gap-4 text-black  justify-center py-2">
 												<div className="flex gap-1 ">
 													<Image
 														src="/assets/svgs/speed.svg"
@@ -76,36 +76,53 @@ export default function BestSellers() {
 													{product.battery} min
 												</div>
 											</div>
-											<hr className="h-[1px] w-4/5 bg-white border-none mb-2 ml-auto mr-auto  "></hr>
-											<div className="flex justify-center items-center text-white font-normal gap-4">
-												<div className="flex items-center">
-													<h3 className="text-orange text-xl">
-														£
-														{product.price &&
-															(
-																product.price /
-																100
-															).toLocaleString(
-																undefined,
-																{
-																	minimumFractionDigits: 2,
-																}
-															)}
-														&nbsp;
-													</h3>
-													<p>Or Pay monthly</p>
+											<hr className="h-[1px] w-4/5 bg-gray-300 border-none mb-2 ml-auto mr-auto  "></hr>
+											<div className="flex justify-center items-center text-black  font-normal gap-4">
+												<div className="flex items-center justify-between">
+													<div className="flex">
+														<h3 className="text-orange text-xl items-center flex">
+															<p className="text-black text-sm">
+																From &nbsp;
+															</p>
+															£
+															<s>
+																{product.price &&
+																	(
+																		product.price /
+																		100
+																	).toLocaleString(
+																		undefined,
+																		{
+																			minimumFractionDigits: 2,
+																		}
+																	)}
+															</s>
+															&nbsp;
+														</h3>
+													</div>
+													<div className="flex">
+														<p className="text-lg ">
+															Now&nbsp;
+														</p>
+														<h3 className="text-lg text-red-500">
+															£
+															{product.offerPrice &&
+																(
+																	product.offerPrice /
+																	100
+																).toLocaleString(
+																	undefined,
+																	{
+																		minimumFractionDigits: 2,
+																	}
+																)}
+														</h3>
+													</div>
 												</div>
-												<Image
-													src="/assets/svgs/heart.svg"
-													alt="drone"
-													width={25}
-													height={25}
-													className="cursor-pointer"
-												/>
 											</div>
-											<hr className="h-[1px] w-4/5 bg-white border-none my-2 ml-auto mr-auto "></hr>
+											<hr className="h-[1px] w-4/5 bg-gray-300 border-none my-2 ml-auto mr-auto "></hr>
 											<div className="flex justify-center gap-4">
-												<button className="btn-third flex gap-1">
+												<button className="btn-third !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl">
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
 														fill="none"
@@ -125,7 +142,7 @@ export default function BestSellers() {
 
 												<Link
 													href={"/details"}
-													className="btn-third !bg-black !text-white hover:!bg-orange "
+													className="btn-third !bg-white !text-black hover:!bg-orange shadow-xl"
 												>
 													View More
 												</Link>

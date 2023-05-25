@@ -11,6 +11,7 @@ export default async function handle(
 	await mongooseConnect();
 
 	if (req.method === "GET") {
-		res.json(await Product.find({ offers: true }));
+		// res.json(await Product.find());
+		res.json(await Product.find({ offer: true }));
 	}
 }
