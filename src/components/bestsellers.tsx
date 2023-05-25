@@ -22,17 +22,19 @@ export default function BestSellers() {
 		<>
 			{products ? (
 				<section className="h-screen ">
-					<h1 className="text-3xl mt-20 text-black bg-white  py-2 font-bold font-unisansheavy text-center">
+					<h1 className="text-xl sm:text-3xl sm:mt-20 mt-2 text-black bg-white  py-2 font-bold font-unisansheavy text-center">
 						BEST SELLERS
 					</h1>
 					<div className="flex justify-center   ">
 						<div className="flex items-center justify-start  overflow-auto">
 							{products.map((product) => (
-								<div className="p-8" key={product._id}>
-									<div className="w-[340px] h-[500px] text-center font-poppins font-normal text-white bg-gray950 rounded-md ">
-										<h2 className="py-4">{product.name}</h2>
+								<div className="sm:p-8 p-4" key={product._id}>
+									<div className="w-[340px] sm:w-[340px] h-[450px] sm:h-[500px] text-center font-poppins font-light text-white bg-gray950 rounded-md ">
+										<h2 className="sm:py-4 py-2">
+											{product.name}
+										</h2>
 										<div>
-											<div className="w-[280px] h-[250px] relative m-auto">
+											<div className="w-[280px] h-[250px] sm:w-[280px] sm:h-[250px] relative m-auto">
 												{product.images && (
 													<Image
 														src={product?.images[0]}
@@ -75,7 +77,7 @@ export default function BestSellers() {
 												</div>
 											</div>
 											<hr className="h-[1px] w-4/5 bg-white border-none mb-2 ml-auto mr-auto  "></hr>
-											<div className="flex justify-center items-center text-white font-semibold gap-4">
+											<div className="flex justify-center items-center text-white font-normal gap-4">
 												<div className="flex items-center">
 													<h3 className="text-orange text-xl">
 														£
