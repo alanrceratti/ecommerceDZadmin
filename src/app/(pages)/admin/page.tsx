@@ -1,6 +1,6 @@
 "use client";
 
-import Hero from "./(hero)/page";
+import Hero from "./dashboard/page";
 
 export default async function App() {
 	return (

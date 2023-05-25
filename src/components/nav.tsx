@@ -74,7 +74,7 @@ export default function Nav() {
 				<aside className="p-4 pr-0">
 					<Link
 						className="flex gap-1 mb-4 min-w-[170px]  mr-5"
-						href={"/admin/"}
+						href={"/admin/dashboard"}
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -95,9 +95,9 @@ export default function Nav() {
 					</Link>
 					<nav className="flex flex-col gap-2 ">
 						<Link
-							href={"/admin/"}
+							href={"/admin/dashboard"}
 							className={
-								pathname === "/admin/"
+								pathname === "/admin/dashboard"
 									? activeLink
 									: inactiveLink
 							}
@@ -252,7 +252,7 @@ export default function Nav() {
 				>
 					<Link
 						className="flex gap-1 mb-4 min-w-[170px]  mr-5"
-						href={"/admin"}
+						href={"/admin/dashboard"}
 					>
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
@@ -273,9 +273,9 @@ export default function Nav() {
 					</Link>
 					<nav className="flex flex-col gap-2 ">
 						<Link
-							href={"/admin"}
+							href={"/admin/dashboard"}
 							className={
-								pathname === "/admin"
+								pathname === "/admin/dashboard"
 									? activeLink
 									: inactiveLink
 							}

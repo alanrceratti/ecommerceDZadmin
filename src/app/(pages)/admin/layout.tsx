@@ -22,13 +22,21 @@ function Layout({ children }: { children: ReactNode }) {
 				<div className="text-center w-full">
 					<button
 						className="bg-orange p-2 mx-2 rounded-md font-poppins"
-						onClick={async () => await signIn("google")}
+						onClick={async () =>
+							await signIn("google", {
+								callbackUrl: "/admin/dashboard",
+							})
+						}
 					>
 						Login with Google
 					</button>
 					<button
 						className="bg-orange p-2 mx-2 rounded-md font-poppins"
-						onClick={async () => await signIn("github")}
+						onClick={async () =>
+							await signIn("github", {
+								callbackUrl: "/admin/dashboard",
+							})
+						}
 					>
 						Login with Github
 					</button>
