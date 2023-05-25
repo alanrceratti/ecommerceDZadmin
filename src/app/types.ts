@@ -34,6 +34,7 @@ export interface NewProductsProps {
 	weight?: number;
 	bestSeller?: boolean;
 	offer?: boolean;
+	offerPrice?: number;
 }
 
 export interface Categories {

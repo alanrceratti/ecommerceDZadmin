@@ -29,7 +29,7 @@ textarea:focus {
 .h1 {
 	@apply text-orange text-lg;
 }
-h2 {
+.h2 {
 	@apply text-lg font-semibold;
 }
 

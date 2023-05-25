@@ -41,6 +41,7 @@ export default async function handle(
 			weight,
 			bestSeller,
 			offer,
+			offerPrice,
 		} = req.body;
 
 		// Create a new document in the "Product" collection using the extracted data
@@ -62,6 +63,7 @@ export default async function handle(
 			weight,
 			bestSeller,
 			offer,
+			offerPrice,
 		});
 
 		// Send the created product document as the response
@@ -88,6 +90,7 @@ export default async function handle(
 			weight,
 			bestSeller,
 			offer,
+			offerPrice,
 		} = req.body;
 		await Product.updateOne(
 			{ _id },
@@ -109,6 +112,7 @@ export default async function handle(
 				weight,
 				bestSeller,
 				offer,
+				offerPrice,
 			}
 		);
 		res.json(true);

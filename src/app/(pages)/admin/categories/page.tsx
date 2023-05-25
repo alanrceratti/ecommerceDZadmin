@@ -196,9 +196,9 @@ export default function CategoriesPage() {
 				{ModalDelete ? (
 					<div className="absolute top-1/3 left-auto shadow-[0px_20px_20px_1000px_#000000b9]">
 						<div className="bg-white text-black w-[380px] h-32 rounded-md font-semibold text-center ">
-							<h2>
+							<h1>
 								Are you sure you want to delete this category?
-							</h2>
+							</h1>
 
 							<div className="flex gap-2 justify-center my-4 ">
 								<button

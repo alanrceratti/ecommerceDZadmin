@@ -3,9 +3,11 @@ import { Categories, NewProductsProps } from "@/app/types";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { MouseEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import Spinner from "./spinner";
 import { ItemInterface, ReactSortable } from "react-sortablejs";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function ProductForm({
 	_id,
@@ -16,16 +18,17 @@ export default function ProductForm({
 	category: currentCategory,
 	speed: currentSpeed,
 	range: currentRange,
-	camera: currentCamera,
 	battery: currentBattery,
+	weight: currentWeight,
+	bestSeller: currentBestSeller,
+	offer: currentOffer,
+	offerPrice: currentOfferPrice,
+	camera: currentCamera,
 	waterProof: currentWaterProof,
 	skillLevel: currentSkillLevel,
 	ambient: currentAmbient,
 	followMode: currentFollowMode,
 	autoReturn: currentAutoReturn,
-	weight: currentWeight,
-	bestSeller: currentBestSeller,
-	offer: currentOffer,
 }: NewProductsProps) {
 	const [name, setName] = useState(currentName || "");
 	const [description, setDescription] = useState(currentDescription || "");
@@ -33,21 +36,22 @@ export default function ProductForm({
 	const [speed, setSpeed] = useState(currentSpeed || "");
 	const [range, setRange] = useState(currentRange || "");
 	const [battery, setBattery] = useState(currentBattery || "");
-	const [camera, setCamera] = useState("");
-	const cam = ["720p", "1080p", "2K", "4K", "8K"];
-	const [waterProof, setWaterProof] = useState("");
+	const [camera, setCamera] = useState(currentCamera || "");
+	const cam = ["No camera", "720p", "1080p", "2K", "4K", "8K"];
+	const [waterProof, setWaterProof] = useState(currentWaterProof || "");
 	const waterP = ["Yes", "No"];
-	const [skillLevel, setSkillLevel] = useState("");
-	const skillL = ["Begginer", "Semi-Professional", "Professional"];
-	const [ambient, setAmbient] = useState("");
+	const [skillLevel, setSkillLevel] = useState(currentSkillLevel || "");
+	const skillL = ["Beginner", "Semi-Professional", "Professional"];
+	const [ambient, setAmbient] = useState(currentAmbient || "");
 	const amb = ["Indoor", "Outdoor"];
-	const [followMode, setFollowMode] = useState("");
+	const [followMode, setFollowMode] = useState(currentFollowMode || "");
 	const followM = ["Yes", "No"];
-	const [autoReturn, setAutoReturn] = useState("");
+	const [autoReturn, setAutoReturn] = useState(currentAutoReturn || "");
 	const autoR = ["Yes", "No"];
 	const [weight, setWeight] = useState(currentWeight || "");
 	const [bestSeller, setBestSeller] = useState(currentBestSeller || false);
 	const [offer, setOffer] = useState(currentOffer || false);
+	const [offerPrice, setOfferPrice] = useState(currentOfferPrice || "");
 	const [price, setPrice] = useState(currentPrice || "");
 	const [images, setImages] = useState(currentImages || []);
 	const [goToProducts, setGoToProducts] = useState(false);
@@ -67,9 +71,10 @@ export default function ProductForm({
 	}
 
 	async function saveProduct(
-		event: MouseEvent<HTMLButtonElement>
+		event: FormEvent<HTMLFormElement>
 	): Promise<void> {
 		event.preventDefault();
+		const requi = [category, ambient];
 		const data = {
 			name,
 			description,
@@ -88,17 +93,33 @@ export default function ProductForm({
 			weight,
 			bestSeller,
 			offer,
+			offerPrice,
 		};
-		if (_id) {
-			await axios.put("/api/products", { ...data, _id });
-		} else {
-			try {
-				await axios.post("/api/products", data);
-			} catch (error) {
-				console.log("productForm page error:", error);
+		{
+			if (
+				ambient !== "" &&
+				category !== "" &&
+				camera !== "" &&
+				waterProof !== "" &&
+				skillLevel !== "" &&
+				followMode !== "" &&
+				autoReturn !== ""
+			) {
+				if (_id) {
+					await axios.put("/api/products", { ...data, _id });
+					setGoToProducts(true);
+				} else {
+					try {
+						await axios.post("/api/products", data);
+					} catch (error) {
+						console.log("productForm page error:", error);
+					}
+					setGoToProducts(true);
+				}
+			} else {
+				toast.error("Please select required fields");
 			}
 		}
-		setGoToProducts(true);
 	}
 	if (goToProducts) {
 		router.push("/admin/products");
@@ -132,7 +153,7 @@ export default function ProductForm({
 	return (
 		<>
 			<div className=" items-center px-2 m-4 max-w-[500px] ml-auto mr-auto">
-				<form>
+				<form onSubmit={saveProduct}>
 					<label htmlFor="product">
 						<h2>Product name</h2>
 						<input
@@ -181,6 +202,7 @@ export default function ProductForm({
 										setCamera(event.target.value)
 									}
 									value={camera}
+									required
 								>
 									<option>Select</option>
 									{cam.length > 0 &&
@@ -196,6 +218,7 @@ export default function ProductForm({
 							</label>
 							<div className="mb-2">
 								<select
+									required
 									className="text-black"
 									onChange={(event) =>
 										setWaterProof(event.target.value)
@@ -226,6 +249,7 @@ export default function ProductForm({
 										setAmbient(event.target.value)
 									}
 									value={ambient}
+									required
 								>
 									<option>Select</option>
 									{amb.length > 0 &&
@@ -249,6 +273,7 @@ export default function ProductForm({
 										setFollowMode(event.target.value)
 									}
 									value={followMode}
+									required
 								>
 									<option>Select</option>
 									{followM.length > 0 &&
@@ -272,6 +297,7 @@ export default function ProductForm({
 										setSkillLevel(event.target.value)
 									}
 									value={skillLevel}
+									required
 								>
 									<option>Select</option>
 									{skillL.length > 0 &&
@@ -298,6 +324,7 @@ export default function ProductForm({
 								setAutoReturn(event.target.value)
 							}
 							value={autoReturn}
+							required
 						>
 							<option>Select</option>
 							{autoR.length > 0 &&
@@ -318,6 +345,7 @@ export default function ProductForm({
 							onChange={(event) => setSpeed(event.target.value)}
 							aria-label="Speed"
 							aria-required="true"
+							required
 						/>
 					</label>
 					<label htmlFor="battery">
@@ -330,6 +358,7 @@ export default function ProductForm({
 							onChange={(event) => setBattery(event.target.value)}
 							aria-label="battery"
 							aria-required="true"
+							required
 						/>
 					</label>
 					<label htmlFor="weight">
@@ -354,6 +383,7 @@ export default function ProductForm({
 							onChange={(event) => setRange(event.target.value)}
 							aria-label="range"
 							aria-required="true"
+							required
 						/>
 					</label>
 					<label htmlFor="description">
@@ -367,7 +397,6 @@ export default function ProductForm({
 								setDescription(event.target.value)
 							}
 							aria-label="Description"
-							required
 						></textarea>
 					</label>
 					<div className="flex gap-10 pb-4">
@@ -377,7 +406,7 @@ export default function ProductForm({
 								type="checkbox"
 								id="bestSeller"
 								checked={bestSeller}
-								className="w-6 mx-4"
+								className="w-4 mx-4"
 								placeholder="bestSeller in kilos"
 								onChange={(event) =>
 									setBestSeller(event.target.checked)
@@ -398,6 +427,17 @@ export default function ProductForm({
 									setOffer(event.target.checked)
 								}
 								aria-label="offer"
+								aria-required="true"
+							/>
+							<input
+								type="number"
+								id="offerprice"
+								value={offerPrice}
+								placeholder="Offer Price"
+								onChange={(event) =>
+									setOfferPrice(event.target.value)
+								}
+								aria-label="Offer Price"
 								aria-required="true"
 							/>
 						</label>
@@ -476,16 +516,23 @@ export default function ProductForm({
 							required
 						/>
 					</label>
-				</form>
-				<div>
-					<button
-						type="button"
-						onClick={saveProduct}
-						className="btn-primary my-4 mr-4"
-					>
+					<ToastContainer
+						position="top-right"
+						autoClose={3000}
+						hideProgressBar={false}
+						newestOnTop={false}
+						closeOnClick
+						rtl={false}
+						pauseOnFocusLoss
+						draggable
+						pauseOnHover
+						theme="dark"
+					/>
+					<button type="submit" className="btn-primary my-4 mr-4">
 						Save
 					</button>
-
+				</form>
+				<div>
 					<button onClick={goBack} className="btn-primary m-auto">
 						Back
 					</button>
