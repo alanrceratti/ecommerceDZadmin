@@ -22,14 +22,14 @@ export default function Offers() {
 		<>
 			{products ? (
 				<section className="h-fit ">
-					<h1 className="text-xl sm:text-3xl sm:mt-1 mt-2 text-white bg-red-600  py-2 font-bold font-unisansheavy text-center">
-						OFFERS
+					<h1 className="text-xl sm:text-3xl sm:mt-1 mt-2 text-slate-50 bg-red-700  py-2 font-bold font-unisansheavy text-center">
+						WEEK OFFERS
 					</h1>
 					<div className="flex justify-center bg-white  ">
 						<div className="flex items-center justify-start  overflow-auto bg-white">
 							{products.map((product) => (
-								<div className="sm:p-8 p-4" key={product._id}>
-									<div className="w-[280px] sm:w-[340px] h-[380px] sm:h-[470px] text-center font-poppins text-black font-light shadow-2xl bg-white rounded-md ">
+								<div className="sm:p-8 p-2" key={product._id}>
+									<div className="w-[270px] sm:w-[340px] h-[340px] sm:h-[470px] text-center font-poppins text-black font-light shadow-2xl bg-white rounded-md ">
 										<h2 className="sm:py-4 py-2 font-semibold ">
 											{product.name}
 										</h2>
@@ -45,7 +45,7 @@ export default function Offers() {
 												)}
 											</div>
 
-											<div className="flex gap-4 text-black text-sm sm:text-base sm:text-base   justify-center py-2">
+											<div className="flex sm:gap-4 gap-2 text-black text-sm sm:text-base   justify-center py-2">
 												<div className="flex gap-1 items-center  ">
 													<Image
 														src="/assets/svgs/speed.svg"
@@ -101,7 +101,7 @@ export default function Offers() {
 														</h3>
 													</div>
 													<div className="flex items-center">
-														<p className="text-base font-normal sm:text-lg ">
+														<p className="text-base font-normal sm:text-lg  ">
 															Now&nbsp;
 														</p>
 														<h3 className="text-base font-normal sm:text-lg text-red-500">
@@ -142,7 +142,7 @@ export default function Offers() {
 
 												<Link
 													href={"/details"}
-													className="btn-third !bg-white !text-black hover:!bg-orange shadow-xl"
+													className="btn-third !bg-white !text-black hover:!bg-orange shadow-md shadow-slate-300 "
 												>
 													View More
 												</Link>

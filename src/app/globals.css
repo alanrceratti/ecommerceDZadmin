@@ -85,9 +85,6 @@ table.basic a {
 .btn-third {
 	@apply sm:px-3 px-2 py-1 sm:py-1 bg-white sm:text-base text-sm text-black font-poppins font-semibold sm:font-semibold rounded-md hover:bg-orange hover:text-white transition-all duration-300;
 }
-.btn-third-mobile {
-	@apply px-3 py-1 bg-white text-black font-poppins font-semibold rounded-md hover:bg-orange hover:text-white transition-all duration-300;
-}
 
 .hover {
 	@apply hover:text-orange transition-all duration-300;

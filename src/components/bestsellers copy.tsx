@@ -6,15 +6,14 @@ import { useEffect, useState } from "react";
 import { mongooseConnect } from "../../lib/mongoose";
 import axios from "axios";
 import { NewProductsProps } from "@/app/types";
-import useMedia from "@/app/hooks/useMedia";
 
-export default function Offers() {
+export default function BestSellers() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
-	const mobile = useMedia("(max-width: 640px)");
 
 	useEffect(() => {
 		axios.get("/api/productsBestSellers").then((response) => {
 			setProducts(response.data);
+			console.log(products);
 		});
 	}, []);
 
@@ -22,19 +21,19 @@ export default function Offers() {
 		<>
 			{products ? (
 				<section className="h-fit ">
-					<h1 className="text-xl sm:text-3xl sm:mt-20 mt-2 text-gray-950 bg-gray-200  py-2 font-bold font-unisansheavy text-center">
+					<h1 className="text-xl sm:text-3xl sm:mt-20 mt-2 text-black bg-white  py-2 font-bold font-unisansheavy text-center">
 						BEST SELLERS
 					</h1>
 					<div className="flex justify-center   ">
-						<div className="flex items-center justify-start  overflow-auto ">
+						<div className="flex items-center justify-start  overflow-auto">
 							{products.map((product) => (
-								<div className="sm:p-8 p-2" key={product._id}>
-									<div className="w-[270px] sm:w-[340px] h-[340px] sm:h-[470px] text-center font-poppins text-black font-light shadow-2xl bg-gray950  rounded-md ">
-										<h2 className="sm:py-4 py-2 font-semibold text-white ">
+								<div className="sm:p-8 p-4" key={product._id}>
+									<div className="w-[340px] sm:w-[340px] h-[450px] sm:h-[470px] text-center font-poppins font-light text-white bg-gray950 rounded-md ">
+										<h2 className="sm:py-4 py-2">
 											{product.name}
 										</h2>
 										<div>
-											<div className="w-[180px] h-[150px] sm:w-[280px] sm:h-[250px] relative m-auto">
+											<div className="w-[280px] h-[250px] sm:w-[280px] sm:h-[250px] relative m-auto">
 												{product.images && (
 													<Image
 														src={product?.images[0]}
@@ -45,8 +44,8 @@ export default function Offers() {
 												)}
 											</div>
 
-											<div className="flex sm:gap-4 gap-2 text-white text-sm sm:text-base   justify-center py-2">
-												<div className="flex gap-1 items-center  ">
+											<div className="flex gap-4 text-white justify-center py-2">
+												<div className="flex gap-1 ">
 													<Image
 														src="/assets/svgs/speed.svg"
 														alt="drone"
@@ -56,7 +55,7 @@ export default function Offers() {
 													{product.speed} mph
 												</div>
 
-												<div className="flex gap-1 items-center ">
+												<div className="flex gap-1">
 													<Image
 														src="/assets/svgs/range.svg"
 														alt="drone"
@@ -66,7 +65,7 @@ export default function Offers() {
 													{product.range} miles
 												</div>
 
-												<div className="flex gap-1 items-center ">
+												<div className="flex gap-1">
 													<Image
 														src="/assets/svgs/battery.svg"
 														alt="drone"
@@ -77,9 +76,9 @@ export default function Offers() {
 												</div>
 											</div>
 											<hr className="h-[1px] w-4/5 bg-white border-none mb-2 ml-auto mr-auto  "></hr>
-											<div className="flex justify-center items-center text-white  gap-4">
-												<div className="flex items-center justify-between ">
-													<h3 className="text-orange text-base font-normal sm:text-lg">
+											<div className="flex justify-center items-center text-white font-normal gap-4">
+												<div className="flex items-center">
+													<h3 className="text-orange text-xl">
 														£
 														{product.price &&
 															(
@@ -95,27 +94,17 @@ export default function Offers() {
 													</h3>
 													<p>Or Pay monthly</p>
 												</div>
-												{mobile ? (
-													<Image
-														src="/assets/svgs/heart.svg"
-														alt="drone"
-														width={20}
-														height={20}
-														className="cursor-pointer"
-													/>
-												) : (
-													<Image
-														src="/assets/svgs/heart.svg"
-														alt="drone"
-														width={25}
-														height={25}
-														className="cursor-pointer"
-													/>
-												)}
+												<Image
+													src="/assets/svgs/heart.svg"
+													alt="drone"
+													width={25}
+													height={25}
+													className="cursor-pointer"
+												/>
 											</div>
-											<hr className="h-[1px] w-4/5 bg-gray-300 border-none my-2 ml-auto mr-auto "></hr>
-											<div className="flex justify-center items-center gap-4">
-												<button className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl">
+											<hr className="h-[1px] w-4/5 bg-white border-none my-2 ml-auto mr-auto "></hr>
+											<div className="flex justify-center gap-4">
+												<button className="btn-third flex gap-1">
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
 														fill="none"
@@ -135,7 +124,7 @@ export default function Offers() {
 
 												<Link
 													href={"/details"}
-													className="btn-third !bg-white !text-black hover:!bg-orange   "
+													className="btn-third !bg-black !text-white hover:!bg-orange "
 												>
 													View More
 												</Link>
@@ -144,21 +133,6 @@ export default function Offers() {
 									</div>
 								</div>
 							))}
-
-							{/* <svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								strokeWidth={1.5}
-								stroke="currentColor"
-								className="w-6 h-6 absolute right-2 sm:hidden"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M8.25 4.5l7.5 7.5-7.5 7.5"
-								/>
-							</svg> */}
 						</div>
 					</div>
 				</section>
