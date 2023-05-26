@@ -12,6 +12,6 @@ export default async function handle(
 
 	if (req.method === "GET") {
 		// res.json(await Product.find());
-		res.json(await Product.find({ offer: true }));
+		res.json(await Product.find());
 	}
 }
