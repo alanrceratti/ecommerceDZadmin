@@ -36,7 +36,9 @@ export default function Header() {
 			<header
 				className={`${
 					isInView ? "sticky -top-32 translate-y-32 " : ""
-				}text-white font-poppins flex items-center z-50 justify-between px-2 transition-all !duration-1000 sm:px-8 bg-black h-[100px]`}
+				}text-white font-poppins flex items-center z-50 justify-between px-2 transition-all !duration-1000 sm:px-8 bg-black ${
+					mobile ? "h-[70px]" : "h-[100px]"
+				}`}
 			>
 				<Link href={"/"} className=" mr-20">
 					<Image
