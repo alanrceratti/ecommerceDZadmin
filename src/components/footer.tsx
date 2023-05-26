@@ -6,10 +6,10 @@ export default function Footer() {
 	const mobile = useMedia("(max-width: 560px)");
 	return (
 		<>
-			<hr className="h-[20px] w-4/5 border-none mb-2 ml-auto mr-auto  "></hr>
-			<div className="bg-black text-white">
-				<div className="flex">
-					<aside className="bg-white m-8 ">
+			<hr className="h-[20px] w-4/5 border-none mb-2 ml-auto mr-auto   "></hr>
+			<div className="bg-black text-white ">
+				<div className="flex justify-center pb-8 ">
+					<aside className="hidden lg:block bg-white m-8 ">
 						<div className="w-[300px] h-[200px]   relative">
 							<Image
 								src="/assets/footer/drones1.webp"
@@ -25,8 +25,8 @@ export default function Footer() {
 							/>
 						</div>
 					</aside>
-					<main className="w-full flex flex-wrap mt-8 gap-8 h-fit">
-						<div className="flex w-full justify-between  ">
+					<main className="w-full flex flex-wrap mt-8 gap-8 h-fit justify-center ">
+						<div className="flex flex-wrap justify-center ">
 							<div className="footer-card">
 								<h1>SHOP</h1>
 								<Link
@@ -103,8 +103,7 @@ export default function Footer() {
 									Terms and Conditions
 								</Link>
 							</div>
-						</div>
-						<div className="flex w-full justify-between">
+
 							<div className="footer-card">
 								<h1>RESOURCES</h1>
 								<Link
