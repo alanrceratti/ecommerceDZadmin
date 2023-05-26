@@ -89,3 +89,9 @@ table.basic a {
 .hover {
 	@apply hover:text-orange transition-all duration-300;
 }
+.footer-card {
+	@apply w-1/3 mx-2;
+}
+.footer-card > h1 {
+	@apply text-orange font-bold;
+}

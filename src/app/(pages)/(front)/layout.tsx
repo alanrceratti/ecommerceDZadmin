@@ -4,10 +4,11 @@ import Link from "next/link";
 import { Main } from "./main/main";
 import useMedia from "@/app/hooks/useMedia";
 import { useState } from "react";
+import Footer from "@/components/footer";
 
 export default function Header() {
 	const mobile = useMedia("(max-width: 990px)");
-	const mobileMD = useMedia("(max-width: 560px)");
+
 	const [isOpen, setIsOpen] = useState(false);
 
 	function handleMenu() {
@@ -113,6 +114,9 @@ export default function Header() {
 				</div>
 			</header>
 			<Main />
+			<footer>
+				<Footer />
+			</footer>
 		</>
 	);
 }
