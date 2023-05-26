@@ -3,21 +3,41 @@ import Image from "next/image";
 import Link from "next/link";
 import { Main } from "./main/main";
 import useMedia from "@/app/hooks/useMedia";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Footer from "@/components/footer";
 
 export default function Header() {
 	const mobile = useMedia("(max-width: 990px)");
-
+	const [isInView, setIsInView] = useState(false);
+	const [prevScroll, setPrevScroll] = useState(0);
 	const [isOpen, setIsOpen] = useState(false);
 
 	function handleMenu() {
 		setIsOpen((isOpen) => !isOpen);
 	}
 
+	const handleScroll = () => {
+		const currentScroll = window.pageYOffset;
+		setIsInView(currentScroll <= prevScroll);
+		setPrevScroll(currentScroll);
+		if (currentScroll < 150) {
+			setIsInView(false);
+		}
+		console.log(currentScroll);
+	};
+
+	useEffect(() => {
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	});
+
 	return (
 		<>
-			<header className="text-white font-poppins flex items-center justify-between px-2  sm:px-8 bg-black h-[100px] ">
+			<header
+				className={`${
+					isInView ? "sticky -top-32 translate-y-32 " : ""
+				}text-white font-poppins flex items-center z-50 justify-between px-2 transition-all !duration-1000 sm:px-8 bg-black h-[100px]`}
+			>
 				<Link href={"/"} className=" mr-20">
 					<Image
 						src="assets/header/DroneZone.svg"
@@ -64,9 +84,9 @@ export default function Header() {
 									/>
 								</svg>
 							</button>
-							{isOpen ? (
-								<div className="absolute ">
-									<nav className="flex flex-col gap-1 ">
+							{!isOpen ? (
+								<div className="absolute bg-black rounded-lg px-8 py-4 -left-5 transition-all">
+									<nav className="flex flex-col gap-2 ">
 										<Link href={"/"} className="hover">
 											Home
 										</Link>
