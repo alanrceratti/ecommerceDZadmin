@@ -90,8 +90,8 @@ table.basic a {
 	@apply hover:text-orange transition-all duration-300;
 }
 .footer-card {
-	@apply w-[150px]  text-sm sm:w-[235px] xl:w-[250px] xl:mx-4 2xl:mx-12 sm:text-base mx-2;
+	@apply w-full  text-sm  sm:text-base lg:mx-2 mx-4;
 }
 .footer-card > h1 {
-	@apply text-orange font-bold mt-4;
+	@apply text-orange font-bold mt-4 mb-2;
 }

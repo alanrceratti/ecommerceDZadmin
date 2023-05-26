@@ -53,7 +53,7 @@ export default function ProductForm({
 	const [offer, setOffer] = useState(currentOffer || false);
 	const [offerPrice, setOfferPrice] = useState(currentOfferPrice || "");
 	const [price, setPrice] = useState(currentPrice || "");
-	const [images, setImages] = useState(currentImages || []);
+	const [images, setImages] = useState(currentImages || []);use
 	const [goToProducts, setGoToProducts] = useState(false);
 	const [isUploading, setIsUploading] = useState(false);
 	const [categories, setCategories] = useState<Categories[]>([]);
