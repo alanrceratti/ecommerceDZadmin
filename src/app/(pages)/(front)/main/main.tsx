@@ -15,13 +15,13 @@ export function Main() {
 				</div>
 				<div className="flex gap-10 mt-16">
 					<Link
-						href={"/all"}
+						href={"/products"}
 						className={"btn-secondary-mobile sm:btn-secondary"}
 					>
 						Shop All
 					</Link>
 					<Link
-						href={"/all"}
+						href={"/products"}
 						className={"btn-secondary-mobile sm:btn-secondary"}
 					>
 						Find Yours
