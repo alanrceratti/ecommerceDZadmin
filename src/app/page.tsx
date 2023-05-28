@@ -1,11 +1,14 @@
 import HomeLayout from "./(pages)/(front)/layout";
+import { ReactNode } from "react";
 
-export default async function App() {
+export default function App() {
 	// const session = await getServerSession(authOptions);
 	// console.log(session);
 	return (
 		<main>
-			<HomeLayout />
+			<HomeLayout>
+				<></>
+			</HomeLayout>
 		</main>
 	);
 }
