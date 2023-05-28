@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Offers from "@/components/front/main/offers";
 
-export function Main() {
+export default function MainPage() {
 	return (
 		<>
 			<section className=" bg-center sm:h-[680px] xl:h-[900px] 2xl:h-[1000px]  min-h-[300px] flex items-center sm:justify-center flex-col bg-[url('/assets/header/bg-main.webp')] bg-cover ">
