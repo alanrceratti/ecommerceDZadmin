@@ -3,8 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { mongooseConnect } from "../../lib/mongoose";
-import axios from "axios";
+
 import { NewProductsProps } from "@/app/types";
 import useMedia from "@/app/hooks/useMedia";
 
@@ -13,9 +12,14 @@ export default function Offers() {
 	const mobile = useMedia("(max-width: 640px)");
 
 	useEffect(() => {
-		axios.get("/api/productsBestSellers").then((response) => {
-			setProducts(response.data);
-		});
+		fetch("/api/productsBestSellers")
+			.then((response) => response.json())
+			.then((data) => {
+				setProducts(data);
+			})
+			.catch((error) => {
+				// Handle error if needed
+			});
 	}, []);
 
 	return (

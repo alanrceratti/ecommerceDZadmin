@@ -53,16 +53,18 @@ export default function ProductForm({
 	const [offer, setOffer] = useState(currentOffer || false);
 	const [offerPrice, setOfferPrice] = useState(currentOfferPrice || "");
 	const [price, setPrice] = useState(currentPrice || "");
-	const [images, setImages] = useState(currentImages || [])
+	const [images, setImages] = useState(currentImages || []);
 	const [goToProducts, setGoToProducts] = useState(false);
 	const [isUploading, setIsUploading] = useState(false);
 	const [categories, setCategories] = useState<Categories[]>([]);
 	const router = useRouter();
 
 	useEffect(() => {
-		axios.get("/api/categories").then((response) => {
-			setCategories(response.data);
-		});
+		fetch("/api/categories")
+			.then((response) => response.json())
+			.then((data) => {
+				setCategories(data);
+			});
 	}, []);
 
 	function goBack() {

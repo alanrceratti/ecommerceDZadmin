@@ -1,26 +1,12 @@
-"use client";
-import BestSellers from "@/components/bestsellers";
+import BestSellers from "@/components/front/main/bestsellers";
 import Image from "next/image";
 import Link from "next/link";
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Product } from "../../../../../models/Product";
-import { mongooseConnect } from "../../../../../lib/mongoose";
-import Offers from "@/components/offers";
-import useMedia from "@/app/hooks/useMedia";
+import Offers from "@/components/front/main/offers";
 
 export function Main() {
-	const mobile = useMedia("(max-width: 640px)");
 	return (
 		<>
 			<section className=" bg-center sm:h-[680px] xl:h-[900px] 2xl:h-[1000px]  min-h-[300px] flex items-center sm:justify-center flex-col bg-[url('/assets/header/bg-main.webp')] bg-cover ">
-				{/* <Image
-					src="/assets/header/bg-main.webp"
-					alt="test"
-					className="rounded-md absolute -z-10  -mt-64 "
-					loading="lazy"
-					fill
-				/> */}
 				<div className="font-unisansheavy sm:text-6xl text-xl text-white  text-center flex flex-col gap-8 sm:gap-20 mx-8 sm:mx-20 ">
 					<h1 className="text-2xl sm:text-5xl ">
 						Drones have changed the way we see the world.
@@ -30,17 +16,13 @@ export function Main() {
 				<div className="flex gap-10 mt-16">
 					<Link
 						href={"/all"}
-						className={`${
-							mobile ? "btn-secondary-mobile" : "btn-secondary"
-						}`}
+						className={"btn-secondary-mobile sm:btn-secondary"}
 					>
 						Shop All
 					</Link>
 					<Link
 						href={"/all"}
-						className={`${
-							mobile ? "btn-secondary-mobile" : "btn-secondary"
-						}`}
+						className={"btn-secondary-mobile sm:btn-secondary"}
 					>
 						Find Yours
 					</Link>

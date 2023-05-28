@@ -1,5 +1,3 @@
-"use client";
-
 import Header from "./(pages)/(front)/layout";
 
 export default async function App() {

@@ -1,4 +1,3 @@
-"use client";
 import Nav from "@/components/nav";
 import { useSession, signIn } from "next-auth/react";
 import { ReactNode } from "react";

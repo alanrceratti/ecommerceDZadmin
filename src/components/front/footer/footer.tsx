@@ -1,3 +1,4 @@
+"use client";
 import useMedia from "@/app/hooks/useMedia";
 import Image from "next/image";
 import Link from "next/link";
