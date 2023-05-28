@@ -1,3 +1,5 @@
+import MainCard from "@/components/front/products/maincard";
+
 export default function Products() {
 	return (
 		<section>
@@ -12,6 +14,7 @@ export default function Products() {
 						</div>
 					</div>
 				</div>
+				<MainCard />
 			</main>
 		</section>
 	);

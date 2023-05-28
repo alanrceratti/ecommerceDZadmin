@@ -21,7 +21,6 @@ export default function HeaderNav() {
 		if (currentScroll < 150) {
 			setIsInView(false);
 		}
-		console.log(currentScroll);
 	};
 
 	useEffect(() => {

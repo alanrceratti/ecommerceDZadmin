@@ -1,13 +1,11 @@
 "use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
 import { NewProductsProps } from "@/app/types";
 import useMedia from "@/app/hooks/useMedia";
 
-export default function Offers() {
+export default function BestSellers() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const mobile = useMedia("(max-width: 640px)");
 
@@ -18,7 +16,7 @@ export default function Offers() {
 				setProducts(data);
 			})
 			.catch((error) => {
-				// Handle error if needed
+				console.error(error);
 			});
 	}, []);
 
