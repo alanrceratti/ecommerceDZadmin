@@ -24,7 +24,7 @@ export default function CategoriesFilter() {
 				<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
 					<div className=""></div>
 					{categories.map((categorie, index) => (
-						<Link
+						<Link key={categorie._id}
 							href={`/categories/${categorie.name}`}
 							className={`flex w-full p-2 ${
 								index !== categories.length - 1
