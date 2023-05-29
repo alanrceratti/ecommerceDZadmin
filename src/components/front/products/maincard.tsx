@@ -9,12 +9,14 @@ import CategoriesFilter from "./categoriesFilter";
 export default function MainCard() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const mobile = useMedia("(max-width: 640px)");
+	const [categoryID, setCategoryID] = useState("");
 
 	useEffect(() => {
 		fetch("/api/productsAll")
 			.then((response) => response.json())
 			.then((data) => {
 				setProducts(data);
+				console.log(data);
 			})
 			.catch((error) => {
 				console.error(error);
@@ -23,9 +25,9 @@ export default function MainCard() {
 
 	return (
 		<>
-			<div className="flex justify-center bg-white  ">
+			<div className="flex justify-center bg-white   ">
 				<CategoriesFilter />
-				<div className="flex flex-wrap items-center justify-start  ">
+				<div className="flex flex-wrap items-center justify-center pt-9 ">
 					{products.map((product) => (
 						<div className="sm:p-8 p-2 " key={product._id}>
 							<div className="w-[270px] sm:w-[340px] h-[340px] sm:h-[470px] text-center font-poppins text-black font-light  bg-white shadow-2xl  rounded-md ">

@@ -21,7 +21,7 @@ export interface NewProductsProps {
 	price?: number;
 	images?: string[];
 	_id?: string;
-	category?: string[];
+	category: { name: string; _id: string };
 	speed?: number;
 	range?: number;
 	camera?: string[];
@@ -35,9 +35,4 @@ export interface NewProductsProps {
 	bestSeller?: boolean;
 	offer?: boolean;
 	offerPrice?: number;
-}
-
-export interface Categories {
-	name?: string;
-	_id?: string;
 }

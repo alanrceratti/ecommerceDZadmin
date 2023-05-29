@@ -5,11 +5,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { NewProductsProps } from "@/app/types";
-import useMedia from "@/app/hooks/useMedia";
 
 export default function Offers() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
-	// const mobile = useMedia("(max-width: 990px)");
 
 	useEffect(() => {
 		fetch("/api/productsOffers")

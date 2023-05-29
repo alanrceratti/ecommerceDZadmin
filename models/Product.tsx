@@ -9,7 +9,7 @@ const ProductSchema = new Schema(
 		description: String,
 		// Define the "price" field as a required number
 		price: { type: Number, require: true },
-		category: { type: mongoose.Types.ObjectId, ref: "Category" },
+		category: { type: Schema.Types.ObjectId, ref: "Category" },
 		speed: { type: Number },
 		range: { type: Number },
 		camera: { type: String, require: true },
@@ -27,6 +27,8 @@ const ProductSchema = new Schema(
 	},
 	{ timestamps: true }
 );
+
+
 
 // Create a model for the "Product" collection using the schema
 // If the model already exists (e.g., during hot-reloading), use the existing model

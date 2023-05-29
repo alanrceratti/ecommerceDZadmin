@@ -11,6 +11,6 @@ export default async function handle(
 	await mongooseConnect();
 
 	if (req.method === "GET") {
-		res.json(await Product.find().populate("category", "name"));
+		res.json(await Product.find());
 	}
 }
