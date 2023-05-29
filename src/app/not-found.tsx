@@ -22,7 +22,7 @@ export default function NotFound() {
 					</p>
 					<br></br>
 					<p className=" m-auto">
-						View Help us bring it back safely by clicking&nbsp;
+						You can help us bring it back safely by clicking&nbsp;
 						<Link href="/" className="text-blue-500">
 							here
 						</Link>
