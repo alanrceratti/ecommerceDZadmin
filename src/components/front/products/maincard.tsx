@@ -39,11 +39,12 @@ export default function MainCard() {
 				.then((response) => response.json())
 				.then((data) => {
 					setProducts(data);
-					console.log(selectedCategory, "HSAUDASDUH");
 				})
 				.catch((error) => {
 					console.error(error);
 				});
+			setSelectedCategory("");
+			console.log(selectedCategory, "HSAUDASDUH");
 		}
 	}, [selectedCategory]);
 

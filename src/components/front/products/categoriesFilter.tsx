@@ -63,10 +63,11 @@ export default function CategoriesFilter({
 						{isOpen ? (
 							<div className="bg-black text-white absolute h-fit w-2/4 z-10 rounded-md font-poppins py-1">
 								{categories
-									.sort((a, b) =>
-										a.category?.name.localeCompare(
-											b.category?.name
-										) || 0
+									.sort(
+										(a, b) =>
+											a.category?.name.localeCompare(
+												b.category?.name as string
+											) || 0
 									)
 									.map((category, index) => (
 										<Link
@@ -79,7 +80,8 @@ export default function CategoriesFilter({
 											}`}
 											onClick={() =>
 												handleClick(
-													category?.category?._id 
+													category?.category
+														?._id as string
 												)
 											}
 										>
@@ -99,10 +101,11 @@ export default function CategoriesFilter({
 
 						<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
 							{categories
-								.sort((a, b) =>
-									a.category?.name.localeCompare(
-										b.category?.name
-									)
+								.sort(
+									(a, b) =>
+										a.category?.name.localeCompare(
+											b.category?.name as string
+										) || 0
 								)
 								.map((category, index) => (
 									<Link
@@ -114,7 +117,10 @@ export default function CategoriesFilter({
 												: ""
 										}`}
 										onClick={() =>
-											handleClick(category?.category?._id)
+											handleClick(
+												category?.category
+													?._id as string
+											)
 										}
 									>
 										{category?.category?.name}

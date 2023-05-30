@@ -21,7 +21,7 @@ export interface NewProductsProps {
 	price?: number;
 	images?: string[];
 	_id?: string;
-	category: { name: string; _id: string };
+	category?: { name: string; _id: string };
 	speed?: number;
 	range?: number;
 	camera?: string[];
