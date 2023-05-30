@@ -66,7 +66,7 @@ export default function CategoriesFilter({
 									.sort((a, b) =>
 										a.category?.name.localeCompare(
 											b.category?.name
-										)
+										) || 0
 									)
 									.map((category, index) => (
 										<Link
@@ -79,7 +79,7 @@ export default function CategoriesFilter({
 											}`}
 											onClick={() =>
 												handleClick(
-													category?.category?._id
+													category?.category?._id 
 												)
 											}
 										>
