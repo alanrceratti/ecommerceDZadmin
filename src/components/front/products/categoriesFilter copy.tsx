@@ -4,11 +4,7 @@ import { NewProductsProps } from "@/app/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-export default function CategoriesFilter({
-	onCategoryChange,
-}: {
-	onCategoryChange: (category: string) => void;
-}) {
+export default function CategoriesFilter() {
 	const [categories, setCategories] = useState<NewProductsProps[]>([]);
 	const mobile = useMedia("(max-width: 640px)");
 	const [isOpen, SetIsOpen] = useState(false);
@@ -18,10 +14,6 @@ export default function CategoriesFilter({
 	function handleMenu() {
 		SetIsOpen((isOpen) => !isOpen);
 	}
-
-	const handleClick = (category: string) => {
-		onCategoryChange(category);
-	};
 
 	// useEffect(() => {
 	// 	fetch("/api/categoriesAll")
@@ -77,11 +69,16 @@ export default function CategoriesFilter({
 													? "border-b-2 border-gray-700"
 													: ""
 											}`}
-											onClick={() =>
-												handleClick(
-													category?.category?._id
-												)
-											}
+											onClick={() => {
+												setCategory(
+													category?.category?.name ??
+														""
+												);
+												setFilteredCategory(
+													category?.category?.name ??
+														""
+												);
+											}}
 										>
 											{category?.category?.name}
 										</Link>
@@ -113,9 +110,14 @@ export default function CategoriesFilter({
 												? "border-b-2 border-gray-700"
 												: ""
 										}`}
-										onClick={() =>
-											handleClick(category?.category?._id)
-										}
+										onClick={() => {
+											setCategory(
+												category?.category?.name ?? ""
+											);
+											setFilteredCategory(
+												category?.category?.name ?? ""
+											);
+										}}
 									>
 										{category?.category?.name}
 									</Link>

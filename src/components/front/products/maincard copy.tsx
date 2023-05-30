@@ -9,63 +9,23 @@ import CategoriesFilter from "./categoriesFilter";
 export default function MainCard() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const mobile = useMedia("(max-width: 640px)");
-	const [selectedCategory, setSelectedCategory] = useState("");
-
-	// useEffect(() => {
-	// 	if (selectedCategory) {
-	// 		fetch(`/api/productsAll?id=${selectedCategory}`)
-	// 			.then((response) => response.json())
-	// 			.then((data) => {
-	// 				setProducts(data);
-	// 			})
-	// 			.catch((error) => {
-	// 				console.error(error);
-	// 			});
-	// 	} else {
-	// 		fetch("/api/productsAll")
-	// 			.then((response) => response.json())
-	// 			.then((data) => {
-	// 				setProducts(data);
-	// 			})
-	// 			.catch((error) => {
-	// 				console.error(error);
-	// 			});
-	// 	}
-	// }, [selectedCategory]);
+	const [categoryID, setCategoryID] = useState("");
 
 	useEffect(() => {
-		if (selectedCategory) {
-			fetch(`/api/productsAll?_id=${selectedCategory}`)
-				.then((response) => response.json())
-				.then((data) => {
-					setProducts(data);
-					console.log(selectedCategory, "HSAUDASDUH");
-				})
-				.catch((error) => {
-					console.error(error);
-				});
-		}
-	}, [selectedCategory]);
-
-	const handleCategoryChange = (category: string) => {
-		setSelectedCategory(category);
-	};
-
-	// function FetchFilter() {
-	// 	fetch("/api/productsAll")
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			setProducts(data);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error(error);
-	// 		});
-	// }
+		fetch("/api/productsAll")
+			.then((response) => response.json())
+			.then((data) => {
+				setProducts(data);
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	}, []);
 
 	return (
 		<>
-			<div className="flex justify-center sm:justify-normal bg-white   ">
-				<CategoriesFilter onCategoryChange={handleCategoryChange} />
+			<div className="flex justify-center bg-white   ">
+				<CategoriesFilter />
 				<div className="flex flex-wrap items-center justify-center pt-9 ">
 					{products.map((product) => (
 						<div className="sm:p-8 p-2 " key={product._id}>

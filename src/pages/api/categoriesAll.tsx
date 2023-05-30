@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { Category } from "../../../models/Category";
 import { mongooseConnect } from "../../../lib/mongoose";
+import { Product } from "../../../models/Product";
+import { Category } from "../../../models/Category";
 
 export default async function handle(
 	req: NextApiRequest,
@@ -9,6 +10,7 @@ export default async function handle(
 	await mongooseConnect();
 
 	if (req.method === "GET") {
-		res.json(await Category.find());
+		res.json(await Product.find().populate("category", "name"));
+		// res.json(await Category.find());
 	}
 }
