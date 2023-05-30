@@ -118,7 +118,7 @@ export default function ProductForm({
 					setGoToProducts(true);
 				}
 			} else {
-				toast.error("Please select required fields");
+				toast.error("Please fill up and/or select all fields");
 			}
 		}
 	}
@@ -177,9 +177,11 @@ export default function ProductForm({
 								<select
 									className="text-black"
 									onChange={(event) =>
-										setCategory(event.target.value)
+										setCategory(
+											event.target.value as string
+										)
 									}
-									// value={category}
+									value={category as string}
 								>
 									<option>Select</option>
 									{categories.length > 0 &&
