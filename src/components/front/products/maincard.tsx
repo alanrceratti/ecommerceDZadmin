@@ -43,9 +43,9 @@ export default function MainCard() {
 				.catch((error) => {
 					console.error(error);
 				});
-			setSelectedCategory("");
-			console.log(selectedCategory, "HSAUDASDUH");
 		}
+		setSelectedCategory("");
+		console.log(selectedCategory, "HSAUDASDUH");
 	}, [selectedCategory]);
 
 	const handleCategoryChange = (category: string) => {

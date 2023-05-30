@@ -62,55 +62,10 @@ export default function CategoriesFilter({
 						</svg>
 						{isOpen ? (
 							<div className="bg-black text-white absolute h-fit w-2/4 z-10 rounded-md font-poppins py-1">
-								{categories
-									.sort(
-										(a, b) =>
-											a.category?.name.localeCompare(
-												b.category?.name as string
-											) || 0
-									)
-									.map((category, index) => (
-										<Link
-											key={category._id}
-											href={`/categorys/${category?.category?.name}`}
-											className={`flex w-full p-2 ${
-												index !== categories.length - 1
-													? "border-b-2 border-gray-700"
-													: ""
-											}`}
-											onClick={() =>
-												handleClick(
-													category?.category
-														?._id as string
-												)
-											}
-										>
-											{category?.category?.name}
-										</Link>
-									))}
-							</div>
-						) : null}
-					</>
-				) : (
-					<div>
-						<div className="bg-white border border-gray-600 rounded-md my-4">
-							<h1 className="font-bold  text-black m-2">
-								Categories
-							</h1>
-						</div>
-
-						<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
-							{categories
-								.sort(
-									(a, b) =>
-										a.category?.name.localeCompare(
-											b.category?.name as string
-										) || 0
-								)
-								.map((category, index) => (
+								{categories.map((category, index) => (
 									<Link
 										key={category._id}
-										href={`/products/${category?.category?.name}`}
+										href={`/categorys/${category?.category?.name}`}
 										className={`flex w-full p-2 ${
 											index !== categories.length - 1
 												? "border-b-2 border-gray-700"
@@ -126,6 +81,36 @@ export default function CategoriesFilter({
 										{category?.category?.name}
 									</Link>
 								))}
+							</div>
+						) : null}
+					</>
+				) : (
+					<div>
+						<div className="bg-white border border-gray-600 rounded-md my-4">
+							<h1 className="font-bold  text-black m-2">
+								Categories
+							</h1>
+						</div>
+
+						<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
+							{categories.map((category, index) => (
+								<Link
+									key={category._id}
+									href={`/products/${category?.category?.name}`}
+									className={`flex w-full p-2 ${
+										index !== categories.length - 1
+											? "border-b-2 border-gray-700"
+											: ""
+									}`}
+									onClick={() =>
+										handleClick(
+											category?.category?._id as string
+										)
+									}
+								>
+									{category?.category?.name}
+								</Link>
+							))}
 						</div>
 					</div>
 				)}
