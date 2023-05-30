@@ -12,13 +12,18 @@ export default async function handle(
 	await mongooseConnect();
 
 	if (req.method === "GET") {
-		const categoryId = req.query._id;
+		if (req.query._id) {
+			const categoryId = req.query._id;
 
-		const query = Product.find({ category: categoryId }).populate(
-			"category",
-			"name"
-		);
+			const query = Product.find({ category: categoryId }).populate(
+				"category",
+				"name"
+			);
 
-		res.json(await query);
+			res.json(await query);
+		} else {
+			const query = Product.find();
+			res.json(await query);
+		}
 	}
 }

@@ -11,6 +11,9 @@ export default function MainCard() {
 	const mobile = useMedia("(max-width: 640px)");
 	const [selectedCategory, setSelectedCategory] = useState("");
 
+	const handleCategoryChange = (category: string) => {
+		setSelectedCategory(category);
+	};
 	// useEffect(() => {
 	// 	if (selectedCategory) {
 	// 		fetch(`/api/productsAll?id=${selectedCategory}`)
@@ -39,19 +42,20 @@ export default function MainCard() {
 				.then((response) => response.json())
 				.then((data) => {
 					setProducts(data);
-					console.log("data MAIN CARD", data);
+					console.log(selectedCategory, "data MAIN CARD", data);
 				})
 				.catch((error) => {
 					console.error(error);
 				});
+		} else {
+			fetch(`/api/productsAll`)
+				.then((response) => response.json())
+				.then((data) => {
+					setProducts(data);
+					console.log(selectedCategory, "data ELSE MAIN CARD", data);
+				});
 		}
-
-		console.log(selectedCategory, "HSAUDASDUH");
 	}, [selectedCategory]);
-
-	const handleCategoryChange = (category: string) => {
-		setSelectedCategory(category);
-	};
 
 	return (
 		<>

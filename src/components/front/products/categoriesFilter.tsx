@@ -23,14 +23,6 @@ export default function CategoriesFilter({
 		onCategoryChange(category);
 	};
 
-	// useEffect(() => {
-	// 	fetch("/api/categoriesAll")
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			setCategories(data);
-	// 		});
-	// }, []);
-
 	useEffect(() => {
 		fetch("/api/categoriesAll")
 			.then((response) => response.json())
