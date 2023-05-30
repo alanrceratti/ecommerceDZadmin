@@ -36,3 +36,8 @@ export interface NewProductsProps {
 	offer?: boolean;
 	offerPrice?: number;
 }
+
+export interface Categories {
+	_id: string;
+	name: string;
+}

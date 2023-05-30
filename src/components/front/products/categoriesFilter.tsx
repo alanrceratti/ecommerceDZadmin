@@ -36,6 +36,7 @@ export default function CategoriesFilter({
 			.then((response) => response.json())
 			.then((data) => {
 				setCategories(data);
+				console.log("data CATEGORI FILTER", data);
 			});
 	}, []);
 

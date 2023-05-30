@@ -179,7 +179,7 @@ export default function ProductForm({
 									onChange={(event) =>
 										setCategory(event.target.value)
 									}
-									value={category}
+									// value={category}
 								>
 									<option>Select</option>
 									{categories.length > 0 &&

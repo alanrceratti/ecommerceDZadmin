@@ -35,11 +35,11 @@ export default function MainCard() {
 
 	useEffect(() => {
 		if (selectedCategory) {
-			setSelectedCategory("");
 			fetch(`/api/productsAll?_id=${selectedCategory}`)
 				.then((response) => response.json())
 				.then((data) => {
 					setProducts(data);
+					console.log("data MAIN CARD", data);
 				})
 				.catch((error) => {
 					console.error(error);
