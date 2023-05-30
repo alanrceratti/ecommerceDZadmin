@@ -38,7 +38,7 @@ export default function CategoriesFilter({
 				setCategories(data);
 			});
 	}, []);
-	console.log(categories);
+
 	return (
 		<>
 			<div className="mx-4 font-poppins">

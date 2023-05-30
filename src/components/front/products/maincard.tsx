@@ -35,6 +35,7 @@ export default function MainCard() {
 
 	useEffect(() => {
 		if (selectedCategory) {
+			setSelectedCategory("");
 			fetch(`/api/productsAll?_id=${selectedCategory}`)
 				.then((response) => response.json())
 				.then((data) => {
@@ -44,7 +45,7 @@ export default function MainCard() {
 					console.error(error);
 				});
 		}
-		setSelectedCategory("");
+
 		console.log(selectedCategory, "HSAUDASDUH");
 	}, [selectedCategory]);
 
