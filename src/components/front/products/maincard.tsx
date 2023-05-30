@@ -51,17 +51,6 @@ export default function MainCard() {
 		setSelectedCategory(category);
 	};
 
-	// function FetchFilter() {
-	// 	fetch("/api/productsAll")
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			setProducts(data);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error(error);
-	// 		});
-	// }
-
 	return (
 		<>
 			<div className="flex justify-center sm:justify-normal bg-white   ">
