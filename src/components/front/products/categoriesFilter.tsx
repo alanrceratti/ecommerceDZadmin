@@ -80,25 +80,28 @@ export default function CategoriesFilter({
 								Categories
 							</h1>
 						</div>
-
-						<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
-							{categories.map((category, index) => (
-								<Link
-									key={category._id}
-									href={`/products/${category?.name}`}
-									className={`flex w-full p-2 ${
-										index !== categories.length - 1
-											? "border-b-2 border-gray-700"
-											: ""
-									}`}
-									onClick={() =>
-										handleClick(category?._id as string)
-									}
-								>
-									{category?.name}
-								</Link>
-							))}
-						</div>
+						{categories && (
+							<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
+								{categories.map((category, index) => (
+									<Link
+										key={category._id}
+										href={`/products/${category?.name}`}
+										className={`flex w-full p-2 ${
+											index !== categories.length - 1
+												? "border-b-2 border-gray-700"
+												: ""
+										}`}
+										onClick={() =>
+											handleClick(
+												category?.name as string
+											)
+										}
+									>
+										{category?.name}
+									</Link>
+								))}
+							</div>
+						)}
 					</div>
 				)}
 			</div>

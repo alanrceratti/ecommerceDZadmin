@@ -11,6 +11,7 @@ export default async function handle(
 
 	if (req.method === "GET") {
 		// res.json(await Product.find().populate("category", "name"));
-		res.json(await Category.find());
+		const categories = await Category.find({}, { name: 1, _id: 0 });
+		res.json(categories);
 	}
 }
