@@ -13,13 +13,17 @@ export default function MainCard() {
 	const [selectedCategory, setSelectedCategory] = useState("");
 	const path = usePathname();
 	const categoryPath = path?.split("/")[2];
-	console.log(path, "esse eh URL ATUAL");
+	console.log(categoryPath, "esse eh URL ATUAL");
 	const handleCategoryChange = (category: string) => {
 		setSelectedCategory(category);
 	};
 
 	const selectCategory = () => {
-		if (selectedCategory !== "" || path !== "/products") {
+		if (
+			selectedCategory !== null &&
+			selectedCategory !== undefined &&
+			categoryPath !== "all"
+		) {
 			fetch(
 				`/api/productFilteredCategory?name=${
 					selectedCategory || categoryPath
@@ -32,15 +36,15 @@ export default function MainCard() {
 				.catch((error) => {
 					console.error(error);
 				});
-			// console.log("eh products", selectedCategory);
 		} else {
 			fetch(`/api/productsAll`)
 				.then((response) => response.json())
 				.then((data) => {
 					setProducts(data);
-					// console.log(selectedCategory, "data ELSE MAIN CARD", data);
+				})
+				.catch((error) => {
+					console.error(error);
 				});
-			// console.log("nao eh products");
 		}
 	};
 

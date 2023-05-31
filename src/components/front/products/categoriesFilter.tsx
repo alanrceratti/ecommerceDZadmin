@@ -2,6 +2,7 @@
 import useMedia from "@/app/hooks/useMedia";
 import { NewProductsProps } from "@/app/types";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function CategoriesFilter({
@@ -12,6 +13,11 @@ export default function CategoriesFilter({
 	const [categories, setCategories] = useState<NewProductsProps[]>([]);
 	const mobile = useMedia("(max-width: 640px)");
 	const [isOpen, SetIsOpen] = useState(false);
+	const [isActive, SetIsActive] = useState(false);
+	const path = usePathname()?.split("/")[2];
+
+	const active = "text-orange";
+	const notActive = "text-white";
 
 	function handleMenu() {
 		SetIsOpen((isOpen) => !isOpen);
@@ -80,13 +86,25 @@ export default function CategoriesFilter({
 								Categories
 							</h1>
 						</div>
+						<Link
+							href={`/products/all`}
+							className="flex w-full p-2
+							border-b-2 border-gray-700"
+							onClick={() => handleClick("all" as string)}
+						>
+							All
+						</Link>
 						{categories && (
 							<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
 								{categories.map((category, index) => (
 									<Link
 										key={category._id}
 										href={`/products/${category?.name}`}
-										className={`flex w-full p-2 ${
+										className={`${
+											path === category.name
+												? active
+												: notActive
+										} flex w-full p-2 hover:text-orange ${
 											index !== categories.length - 1
 												? "border-b-2 border-gray-700"
 												: ""

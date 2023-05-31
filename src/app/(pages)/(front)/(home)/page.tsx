@@ -15,7 +15,7 @@ export default function MainPage() {
 				</div>
 				<div className="flex gap-10 mt-16">
 					<Link
-						href={"/products"}
+						href={"/products/all"}
 						className={"btn-secondary-mobile sm:btn-secondary"}
 					>
 						Shop All
