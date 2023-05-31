@@ -30,16 +30,16 @@ export default function MainCard() {
 				});
 			console.log("nao eh products");
 		} else {
-			// setSelectedCategory(categoryPath as string);
-			// fetch(`/api/productsAll?name=${selectedCategory}`)
-			// 	.then((response) => response.json())
-			// 	.then((data) => {
-			// 		setProducts(data);
-			// 	})
-			// 	.catch((error) => {
-			// 		console.error(error);
-			// 	});
-			// console.log("eh products");
+			setSelectedCategory(categoryPath as string);
+			fetch(`/api/productsAll?name=${selectedCategory}`)
+				.then((response) => response.json())
+				.then((data) => {
+					setProducts(data);
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+			console.log("eh products");
 		}
 	};
 
