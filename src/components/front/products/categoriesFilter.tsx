@@ -12,8 +12,6 @@ export default function CategoriesFilter({
 	const [categories, setCategories] = useState<NewProductsProps[]>([]);
 	const mobile = useMedia("(max-width: 640px)");
 	const [isOpen, SetIsOpen] = useState(false);
-	const [category, setCategory] = useState("");
-	const [filteredCategory, setFilteredCategory] = useState("");
 
 	function handleMenu() {
 		SetIsOpen((isOpen) => !isOpen);
@@ -28,7 +26,6 @@ export default function CategoriesFilter({
 			.then((response) => response.json())
 			.then((data) => {
 				setCategories(data);
-				console.log("data CATEGORI FILTER", data);
 			});
 	}, []);
 
@@ -58,7 +55,7 @@ export default function CategoriesFilter({
 								{categories.map((category, index) => (
 									<Link
 										key={category._id}
-										href={`/categorys/${category?.category?.name}`}
+										href={`/categorys/${category?.name}`}
 										className={`flex w-full p-2 ${
 											index !== categories.length - 1
 												? "border-b-2 border-gray-700"
@@ -66,12 +63,11 @@ export default function CategoriesFilter({
 										}`}
 										onClick={() =>
 											handleClick(
-												category?.category
-													?._id as string
+												category?.name as string
 											)
 										}
 									>
-										{category?.category?.name}
+										{category?.name}
 									</Link>
 								))}
 							</div>
@@ -89,19 +85,17 @@ export default function CategoriesFilter({
 							{categories.map((category, index) => (
 								<Link
 									key={category._id}
-									href={`/products/${category?.category?.name}`}
+									href={`/products/${category?.name}`}
 									className={`flex w-full p-2 ${
 										index !== categories.length - 1
 											? "border-b-2 border-gray-700"
 											: ""
 									}`}
 									onClick={() =>
-										handleClick(
-											category?.category?._id as string
-										)
+										handleClick(category?._id as string)
 									}
 								>
-									{category?.category?.name}
+									{category?.name}
 								</Link>
 							))}
 						</div>
