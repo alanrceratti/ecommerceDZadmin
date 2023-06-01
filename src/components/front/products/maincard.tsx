@@ -11,25 +11,12 @@ import Loading from "@/components/front/products/loading";
 export default function MainCard() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const mobile = useMedia("(max-width: 640px)");
-	const [selectedCategory, setSelectedCategory] = useState("");
 	const path = usePathname();
 	const categoryPath = path?.split("/")[2];
 
-	const handleCategoryChange = (category: string) => {
-		setSelectedCategory(category);
-	};
-
 	const selectCategory = () => {
-		if (
-			selectedCategory !== null &&
-			selectedCategory !== undefined &&
-			categoryPath !== "all"
-		) {
-			fetch(
-				`/api/productFilteredCategory?name=${
-					selectedCategory || categoryPath
-				}`
-			)
+		if (categoryPath !== "all") {
+			fetch(`/api/productFilteredCategory?name=${categoryPath}`)
 				.then((response) => response.json())
 				.then((data) => {
 					setProducts(data);
@@ -164,7 +151,7 @@ export default function MainCard() {
 											</button>
 
 											<Link
-												href={"/details"}
+												href={`products/details/${product._id}`}
 												className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl"
 											>
 												View More
