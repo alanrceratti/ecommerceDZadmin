@@ -10,7 +10,6 @@ export default async function handle(
 ) {
 	// Establish a connection to MongoDB using Mongoose
 	await mongooseConnect();
-	await isAdminRequest(req, res);
 
 	if (req.method === "GET") {
 		if (req.query?.id) {

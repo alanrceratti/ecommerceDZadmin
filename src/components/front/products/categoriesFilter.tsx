@@ -189,9 +189,7 @@ export default function CategoriesFilter() {
 						</div>
 					)}
 				</div>
-			) : (
-				<h1>HASUDHASDUHUASD</h1>
-			)}
+			) : null}
 		</main>
 	);
 }
