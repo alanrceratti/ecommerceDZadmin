@@ -15,6 +15,7 @@ export default function MainCard() {
 	const categoryPath = path?.split("/")[2];
 	console.log(categoryPath, "esse eh URL ATUAL");
 	const handleCategoryChange = (category: string) => {
+		
 		setSelectedCategory(category);
 	};
 

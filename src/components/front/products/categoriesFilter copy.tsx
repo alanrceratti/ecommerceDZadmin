@@ -2,6 +2,7 @@
 // import useMedia from "@/app/hooks/useMedia";
 // import { NewProductsProps } from "@/app/types";
 // import Link from "next/link";
+// import { usePathname } from "next/navigation";
 // import { useEffect, useState } from "react";
 
 // export default function CategoriesFilter({
@@ -10,8 +11,16 @@
 // 	onCategoryChange: (category: string) => void;
 // }) {
 // 	const [categories, setCategories] = useState<NewProductsProps[]>([]);
+// 	const [categoriesCount, setCategoriesCount] = useState<NewProductsProps[]>(
+// 		[]
+// 	);
 // 	const mobile = useMedia("(max-width: 640px)");
 // 	const [isOpen, SetIsOpen] = useState(false);
+// 	const [isActive, SetIsActive] = useState(false);
+// 	const path = usePathname()?.split("/")[2];
+
+// 	const active = "text-orange";
+// 	const notActive = "text-white";
 
 // 	function handleMenu() {
 // 		SetIsOpen((isOpen) => !isOpen);
@@ -21,6 +30,23 @@
 // 		onCategoryChange(category);
 // 	};
 
+// 	//if user scroll any direction, menu close
+// 	useEffect(() => {
+// 		let prevScrollY = window.pageYOffset;
+// 		const scrollListener = () => {
+// 			const scrollY = window.pageYOffset;
+// 			if (scrollY !== prevScrollY) {
+// 				SetIsOpen(false);
+// 			}
+// 			prevScrollY = scrollY;
+// 		};
+// 		window.addEventListener("scroll", scrollListener);
+// 		return () => {
+// 			window.removeEventListener("scroll", scrollListener);
+// 		};
+// 	}, []);
+
+// 	//fetch all categories from mongodb
 // 	useEffect(() => {
 // 		fetch("/api/categoriesAll")
 // 			.then((response) => response.json())
@@ -29,6 +55,42 @@
 // 			});
 // 	}, []);
 
+// 	//fetch all categories from mongodb from Products Schema (show only the categories that exist)
+// 	useEffect(() => {
+// 		fetch("/api/categoriesCount")
+// 			.then((response) => response.json())
+// 			.then((data) => {
+// 				setCategoriesCount(data);
+// 			});
+// 	}, []);
+
+// 	const categoryCounts = {} as Record<string, number>;
+
+// 	// Loop through the categoriesCount array and count the occurrences of each category
+// 	categoriesCount &&
+// 		categoriesCount.forEach((catcount) => {
+// 			if (catcount.category && catcount.category.name) {
+// 				// Increment the count if the category already exists in categoryCounts
+// 				if (categoryCounts[catcount.category.name]) {
+// 					categoryCounts[catcount.category.name] += 1;
+// 				} else {
+// 					// Initialize the count to 1 if it's the first occurrence of the category
+// 					categoryCounts[catcount.category.name] = 1;
+// 				}
+// 			}
+// 		});
+
+// 	// Map the categories array to create an array of category names with their respective counts
+// 	const result = categories.map((category) => {
+// 		if (category?.name) {
+// 			const count = categoryCounts[category?.name] || 0;
+// 			return count > 0
+// 				? `${category?.name} (${count})` // Include the count if it's greater than 0
+// 				: `${category?.name}(0)`; // Append (0) if the count is 0
+// 		}
+// 	});
+
+// 	console.log(result);
 // 	return (
 // 		<>
 // 			<div className="mx-4 font-poppins">
@@ -36,7 +98,6 @@
 // 					<>
 // 						<h1 className="font-bold  text-black m-2">Filter</h1>
 // 						<svg
-// 							xmlns="http://www.w3.org/2000/svg"
 // 							fill="none"
 // 							viewBox="0 0 24 24"
 // 							strokeWidth={1.5}
@@ -52,17 +113,31 @@
 // 						</svg>
 // 						{isOpen ? (
 // 							<div className="bg-black text-white absolute h-fit w-2/4 z-10 rounded-md font-poppins py-1">
+// 								<Link
+// 									href={`/products/all`}
+// 									className="flex w-full p-2
+// 							border-b-2 border-gray-700"
+// 									onClick={() => handleClick("all" as string)}
+// 								>
+// 									All
+// 								</Link>
 // 								{categories.map((category, index) => (
 // 									<Link
 // 										key={category._id}
-// 										href={`/categorys/${category?.name}`}
-// 										className={`flex w-full p-2 ${
+// 										href={`/products/${category?.name}`}
+// 										className={`${
+// 											path === category.name
+// 												? active
+// 												: notActive
+// 										} flex w-full p-2 hover:text-orange ${
 // 											index !== categories.length - 1
 // 												? "border-b-2 border-gray-700"
 // 												: ""
 // 										}`}
 // 										onClick={() =>
-// 											handleClick(category?._id as string)
+// 											handleClick(
+// 												category?.name as string
+// 											)
 // 										}
 // 									>
 // 										{category?.name}
@@ -78,25 +153,37 @@
 // 								Categories
 // 							</h1>
 // 						</div>
-
-// 						<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
-// 							{categories.map((category, index) => (
-// 								<Link
-// 									key={category._id}
-// 									href={`/products/${category?.name}`}
-// 									className={`flex w-full p-2 ${
-// 										index !== categories.length - 1
-// 											? "border-b-2 border-gray-700"
-// 											: ""
-// 									}`}
-// 									onClick={() =>
-// 										handleClick(category?._id as string)
-// 									}
-// 								>
-// 									{category?.name}
-// 								</Link>
-// 							))}
-// 						</div>
+// 						<Link
+// 							href={`/products/all`}
+// 							className="flex w-full p-2
+// 							border-b-2 border-gray-700"
+// 							onClick={() => handleClick("all" as string)}
+// 						>
+// 							All
+// 						</Link>
+// 						{categories && (
+// 							<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
+// 								{result.map((category, index) => (
+// 									<Link
+// 										href={`/products/${
+// 											category?.split(" ")[0]
+// 										}`}
+// 										key={category}
+// 										className={`${
+// 											path === category?.split(" ")[0]
+// 												? active
+// 												: notActive
+// 										} flex w-full p-2 hover:text-orange ${
+// 											index !== categories.length - 1
+// 												? "border-b-2 border-gray-700"
+// 												: ""
+// 										}`}
+// 									>
+// 										{category}
+// 									</Link>
+// 								))}
+// 							</div>
+// 						)}
 // 					</div>
 // 				)}
 // 			</div>
