@@ -27,10 +27,10 @@ const unisansthin = localFont({
 	variable: "--font-unisansthin",
 });
 
-// export const metadata = {
-// 	title: "Drone Zone",
-// 	description: "Start to fly",
-// };
+export const metadata = {
+	title: "Drone Zone",
+	description: "Start to fly today.",
+};
 
 interface RootLayoutProps {
 	children: React.ReactNode;
@@ -39,9 +39,7 @@ interface RootLayoutProps {
 const RootLayout = ({ children }: RootLayoutProps) => {
 	return (
 		<html lang="en">
-			<head>
-				<title>Drone Zone</title>
-			</head>
+			<head></head>
 			<body
 				className={`${poppins.variable} ${unisansheavy.variable} ${unisansthin.variable} bg-gray900 `}
 			>

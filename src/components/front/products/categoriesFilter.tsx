@@ -5,18 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
-export default function CategoriesFilter({
-	onCategoryChange,
-}: {
-	onCategoryChange: (category: string) => void;
-}) {
+export default function CategoriesFilter() {
 	const [categories, setCategories] = useState<NewProductsProps[]>([]);
 	const [categoriesCount, setCategoriesCount] = useState<NewProductsProps[]>(
 		[]
 	);
 	const mobile = useMedia("(max-width: 640px)");
 	const [isOpen, setIsOpen] = useState(false);
-	const [isActive, setIsActive] = useState(false);
 	const path = usePathname()?.split("/")[2];
 
 	const active = "text-orange";
@@ -26,13 +21,13 @@ export default function CategoriesFilter({
 		setIsOpen((isOpen) => !isOpen);
 	}
 
-	const handleClick = (
-		event: React.MouseEvent<HTMLAnchorElement>,
-		category: string
-	) => {
-		event.preventDefault();
-		onCategoryChange(category);
-	};
+	// const handleClick = (
+	// 	event: React.MouseEvent<HTMLAnchorElement>,
+	// 	category: string
+	// ) => {
+	// 	event.preventDefault();
+	// 	onCategoryChange(category);
+	// };
 
 	//if user scroll any direction, menu close
 	useEffect(() => {
@@ -95,108 +90,108 @@ export default function CategoriesFilter({
 	});
 
 	return (
-		<>
-			<div className="mx-4 font-poppins">
-				{mobile ? (
-					<>
-						<h1 className="font-bold  text-black m-2">Filter</h1>
-						<svg
-							fill="none"
-							viewBox="0 0 24 24"
-							strokeWidth={1.5}
-							stroke="currentColor"
-							className="w-8 h-8"
-							onClick={handleMenu}
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
-							/>
-						</svg>
-						{isOpen ? (
-							<div className="bg-black text-white absolute h-fit w-2/4 z-10 rounded-md font-poppins py-1">
-								<Link
-									href={`/products/all`}
-									className="flex w-full p-2
-							border-b-2 border-gray-700"
-									onClick={(event) =>
-										handleClick(event, "all" as string)
-									}
-								>
-									All
-								</Link>
-								{categories && (
-									<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
-										{result.map((category, index) => (
-											<Link
-												href={`/products/${
-													category?.split(" ")[0]
-												}`}
-												key={category}
-												className={`${
-													path ===
-													category?.split(" ")[0]
-														? active
-														: notActive
-												} flex w-full p-2 hover:text-orange ${
-													index !==
-													categories.length - 1
-														? "border-b-2 border-gray-700"
-														: ""
-												}`}
-											>
-												{category}
-											</Link>
-										))}
-									</div>
-								)}
-							</div>
-						) : null}
-					</>
-				) : (
-					<div>
-						<div className="bg-white border border-gray-600 rounded-md my-4">
+		<main>
+			{result.length > 0 ? (
+				<div className="mx-4 font-poppins ">
+					{mobile ? (
+						<>
 							<h1 className="font-bold  text-black m-2">
-								Categories
+								Filter
 							</h1>
-						</div>
-						<Link
-							href={`/products/all`}
-							className="flex w-full p-2
-							border-b-2 border-gray-700"
-							onClick={(event) =>
-								handleClick(event, "all" as string)
-							}
-						>
-							All
-						</Link>
-						{categories && (
-							<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
-								{result.map((category, index) => (
+							<svg
+								fill="none"
+								viewBox="0 0 24 24"
+								strokeWidth={1.5}
+								stroke="currentColor"
+								className="w-8 h-8"
+								onClick={handleMenu}
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
+								/>
+							</svg>
+							{isOpen ? (
+								<div className="bg-black text-white absolute h-fit w-2/4 z-10 rounded-md font-poppins py-1">
 									<Link
-										href={`/products/${
-											category?.split(" ")[0]
-										}`}
-										key={category}
-										className={`${
-											path === category?.split(" ")[0]
-												? active
-												: notActive
-										} flex w-full p-2 hover:text-orange ${
-											index !== categories.length - 1
-												? "border-b-2 border-gray-700"
-												: ""
-										}`}
+										href={`/products/all`}
+										className="flex w-full p-2
+							border-b-2 border-gray-700"
 									>
-										{category}
+										All
 									</Link>
-								))}
+									{categories && (
+										<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
+											{result.map((category, index) => (
+												<Link
+													href={`/products/${
+														category?.split(" ")[0]
+													}`}
+													key={category}
+													className={`${
+														path ===
+														category?.split(" ")[0]
+															? active
+															: notActive
+													} flex w-full p-2 hover:text-orange ${
+														index !==
+														categories.length - 1
+															? "border-b-2 border-gray-700"
+															: ""
+													}`}
+												>
+													{category}
+												</Link>
+											))}
+										</div>
+									)}
+								</div>
+							) : null}
+						</>
+					) : (
+						<div>
+							<div className="bg-white border border-gray-600 rounded-md my-4">
+								<h1 className="font-bold  text-black m-2">
+									Categories
+								</h1>
 							</div>
-						)}
-					</div>
-				)}
-			</div>
-		</>
+							<Link
+								href={`/products/all`}
+								className="flex w-full p-2
+							border-b-2 border-gray-700"
+							>
+								All
+							</Link>
+							{categories && (
+								<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
+									{result.map((category, index) => (
+										<Link
+											href={`/products/${
+												category?.split(" ")[0]
+											}`}
+											key={category}
+											className={`${
+												path === category?.split(" ")[0]
+													? active
+													: notActive
+											} flex w-full p-2 hover:text-orange ${
+												index !== categories.length - 1
+													? "border-b-2 border-gray-700"
+													: ""
+											}`}
+										>
+											{category}
+										</Link>
+									))}
+								</div>
+							)}
+						</div>
+					)}
+				</div>
+			) : (
+				<h1>HASUDHASDUHUASD</h1>
+			)}
+		</main>
 	);
 }

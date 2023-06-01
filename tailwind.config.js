@@ -25,6 +25,9 @@ module.exports = {
 				gray950: "#0E0E0E",
 				black800: "#0E0E0E",
 			},
+			animation: {
+				"pulse-fast": "pulse 1s linear infinite",
+			},
 		},
 	},
 	plugins: [],

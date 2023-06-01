@@ -1,3 +1,4 @@
+// import CategoriesFilter from "@/components/front/products/categoriesFilter";
 // import MainCard from "@/components/front/products/maincard";
 
 // export default function Products() {
@@ -15,7 +16,11 @@
 // 					</div>
 // 				</div>
 // 				<hr className=" h-6 w-full  bg-black border-none  "></hr>
-// 				<MainCard />
+// 				<div className="flex bg-white">
+// 					<CategoriesFilter />
+
+// 					<MainCard />
+// 				</div>
 // 			</main>
 // 		</section>
 // 	);

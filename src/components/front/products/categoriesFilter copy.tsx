@@ -15,28 +15,31 @@
 // 		[]
 // 	);
 // 	const mobile = useMedia("(max-width: 640px)");
-// 	const [isOpen, SetIsOpen] = useState(false);
-// 	const [isActive, SetIsActive] = useState(false);
+// 	const [isOpen, setIsOpen] = useState(false);
 // 	const path = usePathname()?.split("/")[2];
 
 // 	const active = "text-orange";
 // 	const notActive = "text-white";
 
 // 	function handleMenu() {
-// 		SetIsOpen((isOpen) => !isOpen);
+// 		setIsOpen((isOpen) => !isOpen);
 // 	}
 
-// 	const handleClick = (category: string) => {
+// 	const handleClick = (
+// 		event: React.MouseEvent<HTMLAnchorElement>,
+// 		category: string
+// 	) => {
+// 		event.preventDefault();
 // 		onCategoryChange(category);
 // 	};
 
-// 	//if user scroll any direction, menu close
+// 	if user scroll any direction, menu close
 // 	useEffect(() => {
 // 		let prevScrollY = window.pageYOffset;
 // 		const scrollListener = () => {
 // 			const scrollY = window.pageYOffset;
 // 			if (scrollY !== prevScrollY) {
-// 				SetIsOpen(false);
+// 				setIsOpen(false);
 // 			}
 // 			prevScrollY = scrollY;
 // 		};
@@ -46,7 +49,7 @@
 // 		};
 // 	}, []);
 
-// 	//fetch all categories from mongodb
+// 	fetch all categories from mongodb
 // 	useEffect(() => {
 // 		fetch("/api/categoriesAll")
 // 			.then((response) => response.json())
@@ -55,7 +58,7 @@
 // 			});
 // 	}, []);
 
-// 	//fetch all categories from mongodb from Products Schema (show only the categories that exist)
+// 	fetch all categories from mongodb from Products Schema (show only the categories that exist)
 // 	useEffect(() => {
 // 		fetch("/api/categoriesCount")
 // 			.then((response) => response.json())
@@ -66,21 +69,21 @@
 
 // 	const categoryCounts = {} as Record<string, number>;
 
-// 	// Loop through the categoriesCount array and count the occurrences of each category
+// 	Loop through the categoriesCount array and count the occurrences of each category
 // 	categoriesCount &&
 // 		categoriesCount.forEach((catcount) => {
 // 			if (catcount.category && catcount.category.name) {
-// 				// Increment the count if the category already exists in categoryCounts
+// 				Increment the count if the category already exists in categoryCounts
 // 				if (categoryCounts[catcount.category.name]) {
 // 					categoryCounts[catcount.category.name] += 1;
 // 				} else {
-// 					// Initialize the count to 1 if it's the first occurrence of the category
+// 					Initialize the count to 1 if it's the first occurrence of the category
 // 					categoryCounts[catcount.category.name] = 1;
 // 				}
 // 			}
 // 		});
 
-// 	// Map the categories array to create an array of category names with their respective counts
+// 	Map the categories array to create an array of category names with their respective counts
 // 	const result = categories.map((category) => {
 // 		if (category?.name) {
 // 			const count = categoryCounts[category?.name] || 0;
@@ -90,7 +93,6 @@
 // 		}
 // 	});
 
-// 	console.log(result);
 // 	return (
 // 		<>
 // 			<div className="mx-4 font-poppins">
@@ -117,32 +119,37 @@
 // 									href={`/products/all`}
 // 									className="flex w-full p-2
 // 							border-b-2 border-gray-700"
-// 									onClick={() => handleClick("all" as string)}
+// 									onClick={(event) =>
+// 										handleClick(event, "all" as string)
+// 									}
 // 								>
 // 									All
 // 								</Link>
-// 								{categories.map((category, index) => (
-// 									<Link
-// 										key={category._id}
-// 										href={`/products/${category?.name}`}
-// 										className={`${
-// 											path === category.name
-// 												? active
-// 												: notActive
-// 										} flex w-full p-2 hover:text-orange ${
-// 											index !== categories.length - 1
-// 												? "border-b-2 border-gray-700"
-// 												: ""
-// 										}`}
-// 										onClick={() =>
-// 											handleClick(
-// 												category?.name as string
-// 											)
-// 										}
-// 									>
-// 										{category?.name}
-// 									</Link>
-// 								))}
+// 								{categories && (
+// 									<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
+// 										{result.map((category, index) => (
+// 											<Link
+// 												href={`/products/${
+// 													category?.split(" ")[0]
+// 												}`}
+// 												key={category}
+// 												className={`${
+// 													path ===
+// 													category?.split(" ")[0]
+// 														? active
+// 														: notActive
+// 												} flex w-full p-2 hover:text-orange ${
+// 													index !==
+// 													categories.length - 1
+// 														? "border-b-2 border-gray-700"
+// 														: ""
+// 												}`}
+// 											>
+// 												{category}
+// 											</Link>
+// 										))}
+// 									</div>
+// 								)}
 // 							</div>
 // 						) : null}
 // 					</>
@@ -157,7 +164,9 @@
 // 							href={`/products/all`}
 // 							className="flex w-full p-2
 // 							border-b-2 border-gray-700"
-// 							onClick={() => handleClick("all" as string)}
+// 							onClick={(event) =>
+// 								handleClick(event, "all" as string)
+// 							}
 // 						>
 // 							All
 // 						</Link>
