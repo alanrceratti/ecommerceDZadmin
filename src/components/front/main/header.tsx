@@ -39,7 +39,7 @@ export default function HeaderNav() {
 			>
 				<Link href={"/"} className=" mr-20">
 					<Image
-						src="assets/header/DroneZone.svg"
+						src="/assets/header/DroneZone.svg"
 						alt="Logo"
 						width={100}
 						height={100}
@@ -122,7 +122,7 @@ export default function HeaderNav() {
 					) : null}
 					<Link href={"/cart"} className="flex">
 						<Image
-							src="assets/header/cart.svg"
+							src="/assets/header/cart.svg"
 							alt="Logo"
 							width={60}
 							height={60}

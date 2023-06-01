@@ -15,15 +15,15 @@ export default function CategoriesFilter({
 		[]
 	);
 	const mobile = useMedia("(max-width: 640px)");
-	const [isOpen, SetIsOpen] = useState(false);
-	const [isActive, SetIsActive] = useState(false);
+	const [isOpen, setIsOpen] = useState(false);
+	const [isActive, setIsActive] = useState(false);
 	const path = usePathname()?.split("/")[2];
 
 	const active = "text-orange";
 	const notActive = "text-white";
 
 	function handleMenu() {
-		SetIsOpen((isOpen) => !isOpen);
+		setIsOpen((isOpen) => !isOpen);
 	}
 
 	const handleClick = (
@@ -40,7 +40,7 @@ export default function CategoriesFilter({
 		const scrollListener = () => {
 			const scrollY = window.pageYOffset;
 			if (scrollY !== prevScrollY) {
-				SetIsOpen(false);
+				setIsOpen(false);
 			}
 			prevScrollY = scrollY;
 		};
@@ -94,7 +94,6 @@ export default function CategoriesFilter({
 		}
 	});
 
-	console.log(result);
 	return (
 		<>
 			<div className="mx-4 font-poppins">

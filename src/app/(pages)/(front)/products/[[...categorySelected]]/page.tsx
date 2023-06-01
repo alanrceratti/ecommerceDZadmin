@@ -15,6 +15,7 @@ export default function Products() {
 					</div>
 				</div>
 				<hr className=" h-6 w-full  bg-black border-none  "></hr>
+
 				<MainCard />
 			</main>
 		</section>
