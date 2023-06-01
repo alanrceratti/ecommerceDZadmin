@@ -3,6 +3,7 @@ import { NewProductsProps } from "@/app/types";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function ProductDetails() {
 	const [product, setProduct] = useState<NewProductsProps>();
@@ -34,13 +35,16 @@ export default function ProductDetails() {
 			) : (
 				<>
 					{product && (
-						<div className="w-full ">
+						<div className="w-full max-w-[1440px] m-auto ">
 							<div className="  m-4">
-								<h1 className="text-sm h-fit w-fit font-poppins text-gray-500 mb-4 ">
+								<button
+									onClick={() => history.back()}
+									className="text-sm h-fit w-fit font-poppins text-gray-500 mb-4 hover:text-white cursor-pointer"
+								>
 									Back to results
-								</h1>
+								</button>
 								<div className=" sm:flex sm:justify-between w-full mx-auto text-center ">
-									<div className="w-[280px] h-[250px] sm:w-[500px] sm:h-[480px] relative m-auto ">
+									<div className="w-[280px] h-[250px] sm:w-[300px] sm:h-[350px]  md:w-[450px] md:h-[440px] lg:w-[600px] lg:h-[580px] relative m-auto ">
 										{product.images && (
 											<Image
 												src={product?.images[0]}
@@ -118,7 +122,7 @@ export default function ProductDetails() {
 												Total weight - {product.weight}
 												kg
 											</div>
-											<hr className=" h-4/6 sm:h-3/6 absolute -right-2 top-14 w-[1px] bg-white border-none  "></hr>
+											<hr className=" h-4/6 sm:h-3/6 lg:h-2/5 absolute -right-2 top-14 w-[1px] bg-white border-none  "></hr>
 
 											<hr className="h-[1px] w-full bg-white border-none   "></hr>
 										</div>

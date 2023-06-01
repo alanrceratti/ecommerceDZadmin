@@ -118,15 +118,15 @@ export default function MainCard() {
 													alt="drone"
 													width={20}
 													height={20}
-													className="cursor-pointer"
+													className="cursor-pointer "
 												/>
 											) : (
 												<Image
-													src="/assets/svgs/heart.svg"
+													src="/assets/svgs/heart-black.svg"
 													alt="drone"
 													width={25}
 													height={25}
-													className="cursor-pointer"
+													className="cursor-pointer opacity-50"
 												/>
 											)}
 										</div>
