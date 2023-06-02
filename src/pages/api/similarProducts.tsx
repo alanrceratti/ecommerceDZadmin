@@ -11,12 +11,17 @@ export default async function handle(
 	await mongooseConnect();
 
 	if (req.method === "GET") {
-		if (req.query?.id) {
-			const product = await Product.findOne({ _id: req.query.id })
-				.populate("category") // Populate the "category" field
-				.exec();
+		if (req.query.id) {
+			const category_id = req.query.id as string;
 
-			res.json(product);
+			const products = await Product.find({
+				category: category_id,
+			}).exec();
+
+			res.json(products);
+			return; // Add this line to ensure a response is sent
 		}
 	}
+
+	res.status(400).json({ error: "Invalid request" });
 }

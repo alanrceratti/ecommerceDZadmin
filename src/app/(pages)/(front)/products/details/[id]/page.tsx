@@ -124,6 +124,7 @@ export default function ProductDetails() {
 												Total weight - {product.weight}
 												kg
 											</div>
+
 											<hr className=" h-4/6 sm:h-3/6 lg:h-2/5 absolute -right-2 top-14 w-[1px] bg-white border-none  "></hr>
 
 											<hr className="h-[1px] w-full  bg-white border-none   "></hr>
@@ -176,7 +177,7 @@ export default function ProductDetails() {
 					)}
 				</>
 			)}
-			<SimilarProducts />
+			<SimilarProducts Category={product?.category?._id as string} />
 		</main>
 	);
 }

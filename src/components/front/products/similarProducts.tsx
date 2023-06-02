@@ -5,12 +5,13 @@ import { useEffect, useState } from "react";
 import { NewProductsProps } from "@/app/types";
 import useMedia from "@/app/hooks/useMedia";
 
-export default function SimilarProducts() {
+export default function SimilarProducts({ Category }: { Category: string }) {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const mobile = useMedia("(max-width: 640px)");
+	const currentcategory = Category;
 
-	useEffect(() => {
-		fetch("/api/productsBestSellers")
+	const selectedProduct = () => {
+		fetch("/api/similarProducts?id=646e6c20affb3bbaa0805fbe")
 			.then((response) => response.json())
 			.then((data) => {
 				setProducts(data);
@@ -18,13 +19,17 @@ export default function SimilarProducts() {
 			.catch((error) => {
 				console.error(error);
 			});
+	};
+
+	useEffect(() => {
+		selectedProduct();
 	}, []);
 
 	return (
 		<>
 			{products ? (
 				<section className="h-fit ">
-					<h1 className="text-xl sm:text-3xl sm:mt-20 mt-2 text-gray-950 bg-gray-200  py-2 font-medium font-poppins  text-center">
+					<h1 className="text-base sm:text-xl sm:mt-20 mt-2 text-gray-950 bg-gray-200  py-2 font-medium font-poppins  text-center">
 						Similar products you may like...
 					</h1>
 					<div className="flex justify-center   ">
