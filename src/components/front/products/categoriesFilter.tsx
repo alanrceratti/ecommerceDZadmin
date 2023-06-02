@@ -91,7 +91,7 @@ export default function CategoriesFilter() {
 
 	return (
 		<main>
-			{result.length > 0 ? (
+			{result && result.length > 0 ? (
 				<div className="mx-4 font-poppins ">
 					{mobile ? (
 						<>

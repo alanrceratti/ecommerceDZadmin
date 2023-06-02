@@ -97,7 +97,7 @@ export default function MainCard() {
 										<hr className="h-[1px] w-4/5 bg-white border-none mb-2 ml-auto mr-auto  "></hr>
 										<div className="flex justify-center items-center text-black  gap-4">
 											<div className="flex items-center justify-between ">
-												<h3 className="text-orange text-base font-normal sm:text-lg">
+												<h3 className="text-orange text-base font-normal font-poppins sm:text-lg">
 													£
 													{product.price &&
 														(

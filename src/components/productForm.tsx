@@ -392,6 +392,7 @@ export default function ProductForm({
 					<label htmlFor="description">
 						<h2>Description</h2>
 						<textarea
+							className="whitespace-pre-wrap"
 							rows={5}
 							id="description"
 							value={description}
