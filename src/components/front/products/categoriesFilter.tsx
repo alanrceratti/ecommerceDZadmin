@@ -22,14 +22,6 @@ export default function CategoriesFilter() {
 		setIsOpen((isOpen) => !isOpen);
 	}
 
-	// const handleClick = (
-	// 	event: React.MouseEvent<HTMLAnchorElement>,
-	// 	category: string
-	// ) => {
-	// 	event.preventDefault();
-	// 	onCategoryChange(category);
-	// };
-
 	//if user scroll any direction, menu close
 	useEffect(() => {
 		let prevScrollY = window.pageYOffset;
@@ -91,12 +83,12 @@ export default function CategoriesFilter() {
 	});
 
 	return (
-		<main>
+		<main className="w-fit ">
 			{result && result.length > 0 ? (
-				<div className="mx-4 font-poppins ">
+				<div className="m-2 font-poppins ">
 					{mobile ? (
 						<>
-							<h1 className="font-bold  text-black m-2">
+							<h1 className="font-bold  text-black m-0">
 								Filter
 							</h1>
 							<svg

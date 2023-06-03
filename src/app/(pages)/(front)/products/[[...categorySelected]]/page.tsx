@@ -1,6 +1,7 @@
 import CategoriesFilter from "@/components/front/products/categoriesFilter";
 import Loading from "@/components/front/products/loading";
 import MainCard from "@/components/front/products/maincard";
+import ProductsFilter from "@/components/front/products/productsFilter";
 import { Suspense } from "react";
 
 export default function Products() {
@@ -19,9 +20,14 @@ export default function Products() {
 				</div>
 				<hr className=" h-6 w-full  bg-black border-none  "></hr>
 				<div className="flex bg-white ">
-					<Suspense fallback={<Loading />}>
-						<CategoriesFilter />
-					</Suspense>
+					<div>
+						<Suspense fallback={<Loading />}>
+							<CategoriesFilter />
+						</Suspense>
+						<Suspense fallback={<Loading />}>
+							<ProductsFilter />
+						</Suspense>
+					</div>
 					<Suspense fallback={<Loading />}>
 						<MainCard />
 					</Suspense>

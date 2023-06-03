@@ -41,3 +41,17 @@ export interface Categories {
 	_id: string;
 	name: string;
 }
+
+export interface FilterOption {
+	label: string;
+	value: string;
+}
+
+export interface Filter {
+	name: string;
+	options: FilterOption[];
+}
+
+export interface Filters {
+	filters: Filter[];
+}
