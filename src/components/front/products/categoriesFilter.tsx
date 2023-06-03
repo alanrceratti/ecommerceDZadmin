@@ -4,6 +4,7 @@ import { NewProductsProps } from "@/app/types";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import Loading from "./loading";
 
 export default function CategoriesFilter() {
 	const [categories, setCategories] = useState<NewProductsProps[]>([]);
@@ -189,7 +190,9 @@ export default function CategoriesFilter() {
 						</div>
 					)}
 				</div>
-			) : null}
+			) : (
+				<Loading />
+			)}
 		</main>
 	);
 }
