@@ -101,29 +101,76 @@ export default function ProductsFilter() {
 								>
 									All
 								</Link>
-								{result && result.length > 0 && (
-									<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
-										{result.map((category, index) => (
-											<Link
-												href={`/products/${
-													category?.split(" ")[0]
-												}`}
-												key={category}
-												className={`${
-													path ===
-													category?.split(" ")[0]
-														? active
-														: notActive
-												} flex w-full p-2 hover:text-orange ${
-													index !==
-													categories.length - 1
-														? "border-b-2 border-gray-700"
-														: ""
-												}`}
-											>
-												{category}
-											</Link>
-										))}
+								<Link
+									href={`/products/all`}
+									className="flex w-full p-2
+							border-b-2 border-gray-700"
+								>
+									Reset
+								</Link>
+								{filters && (
+									<div className=" text-black  h-fit rounded-md font-poppins py-1">
+										<div>
+											{filters.filters.map((filter) => (
+												<div key={filter.name}>
+													<div className="flex items-center gap-2">
+														<h2
+															className=" mt-4 font-semibold cursor-pointer"
+															onClick={
+																handleFilters
+															}
+														>
+															{filter.name}
+														</h2>
+														<svg
+															xmlns="http://www.w3.org/2000/svg"
+															fill="none"
+															viewBox="0 0 24 24"
+															strokeWidth={1.5}
+															stroke="currentColor"
+															className="w-5 h-5 mt-3 cursor-pointer"
+															onClick={
+																handleFilters
+															}
+														>
+															<path
+																strokeLinecap="round"
+																strokeLinejoin="round"
+																d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+															/>
+														</svg>
+													</div>
+
+													{isOpen &&
+														filter.options.map(
+															(option) => (
+																<label
+																	key={
+																		option.value
+																	}
+																	className="flex justify-start items-center"
+																>
+																	<input
+																		className="w-4 h-6 mx-1 mt-2"
+																		type="checkbox"
+																		checked={selectedFilters.includes(
+																			option
+																		)}
+																		onChange={() =>
+																			handleFilterChange(
+																				option
+																			)
+																		}
+																	/>
+																	{
+																		option.label
+																	}
+																</label>
+															)
+														)}
+												</div>
+											))}
+										</div>
 									</div>
 								)}
 							</div>
