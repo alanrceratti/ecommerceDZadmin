@@ -122,7 +122,7 @@ export default function CategoriesFilter() {
 									>
 										All
 									</Link>
-									{categories && (
+									{result && result.length > 0 && (
 										<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
 											{result.map((category, index) => (
 												<Link
@@ -164,7 +164,7 @@ export default function CategoriesFilter() {
 							>
 								All
 							</Link>
-							{categories && (
+							{result && result.length > 0 && (
 								<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
 									{result.map((category, index) => (
 										<Link
