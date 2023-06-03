@@ -1,7 +1,7 @@
 "use client";
 import { NewProductsProps } from "@/app/types";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Loading from "@/components/front/products/loading";
@@ -12,7 +12,9 @@ export default function ProductDetails() {
 	const [isLoading, setIsLoading] = useState(true);
 	const path = usePathname();
 	const idPath = path?.split("/")[3];
+	const router = useRouter();
 
+	console.log(product?.category?.name);
 	const selectedProduct = () => {
 		fetch(`/api/productDetails?id=${idPath}`)
 			.then((response) => response.json())
@@ -40,7 +42,11 @@ export default function ProductDetails() {
 						<div className="w-full max-w-[1440px] m-auto ">
 							<div className="m-4">
 								<button
-									onClick={() => history.back()}
+									onClick={() =>
+										router.push(
+											`/products/${product?.category?.name}`
+										)
+									}
 									className="text-sm h-fit w-fit font-poppins text-gray-500 mb-4 hover:text-white cursor-pointer"
 								>
 									Back to results

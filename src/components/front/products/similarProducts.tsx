@@ -11,7 +11,7 @@ export default function SimilarProducts({ Category }: { Category: string }) {
 	const currentcategory = Category;
 
 	const selectedProduct = () => {
-		fetch("/api/similarProducts?id=646e6c20affb3bbaa0805fbe")
+		fetch("/api/similarProducts?id=" + currentcategory)
 			.then((response) => response.json())
 			.then((data) => {
 				setProducts(data);
@@ -22,12 +22,14 @@ export default function SimilarProducts({ Category }: { Category: string }) {
 	};
 
 	useEffect(() => {
-		selectedProduct();
-	}, []);
+		if (currentcategory) {
+			selectedProduct();
+		}
+	}, [currentcategory]);
 
 	return (
 		<>
-			{products ? (
+			{products && currentcategory ? (
 				<section className="h-fit ">
 					<h1 className="text-base sm:text-xl sm:mt-20 mt-2 text-gray-950 bg-gray-200  py-2 font-medium font-poppins  text-center">
 						Similar products you may like...
@@ -141,7 +143,7 @@ export default function SimilarProducts({ Category }: { Category: string }) {
 												</button>
 
 												<Link
-													href={"/details"}
+													href={`products/details/${product._id}`}
 													className="btn-third !bg-white !text-black hover:!bg-orange   "
 												>
 													View More

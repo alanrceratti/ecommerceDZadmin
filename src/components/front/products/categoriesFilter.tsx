@@ -190,9 +190,7 @@ export default function CategoriesFilter() {
 						</div>
 					)}
 				</div>
-			) : (
-				<Loading />
-			)}
+			) : null}
 		</main>
 	);
 }
