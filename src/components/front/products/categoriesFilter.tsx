@@ -89,7 +89,7 @@ export default function CategoriesFilter() {
 					{mobile ? (
 						<>
 							<h1 className="font-bold  text-black m-0">
-								Filter
+								Categories
 							</h1>
 							<svg
 								fill="none"

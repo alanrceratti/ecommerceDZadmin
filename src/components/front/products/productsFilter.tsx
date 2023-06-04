@@ -13,6 +13,7 @@ export default function ProductsFilter() {
 	);
 	const mobile = useMedia("(max-width: 640px)");
 	const [isOpen, setIsOpen] = useState(false);
+	const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 	const path = usePathname()?.split("/")[2];
 	const filters = productsFilter as Filters;
 
@@ -21,6 +22,11 @@ export default function ProductsFilter() {
 
 	function handleFilters() {
 		setIsOpen((isOpen) => !isOpen);
+	}
+	console.log(isOpen);
+
+	function handleFiltersOpen() {
+		setIsFiltersOpen((isOpen) => !isOpen);
 	}
 
 	//if user scroll any direction, menu close
@@ -33,9 +39,9 @@ export default function ProductsFilter() {
 			}
 			prevScrollY = scrollY;
 		};
-		window.addEventListener("scroll", scrollListener);
+		window.addEventListener("touchmove", scrollListener);
 		return () => {
-			window.removeEventListener("scroll", scrollListener);
+			window.removeEventListener("touchmove", scrollListener);
 		};
 	}, []);
 
@@ -72,13 +78,14 @@ export default function ProductsFilter() {
 	console.log(selectedFilters);
 
 	return (
-		<main className="w-[190px] ">
+		<main className="w-[100px] ">
 			{/* {result && result.length > 0 ? ( */}
 			<div className="m-2 font-poppins text-black ">
 				{mobile ? (
 					<>
-						<h1 className="font-bold  text-black m-0">Filter</h1>
+						<h1 className="font-bold  text-black m-0">Filter by</h1>
 						<svg
+							xmlns="http://www.w3.org/2000/svg"
 							fill="none"
 							viewBox="0 0 24 24"
 							strokeWidth={1.5}
@@ -89,9 +96,10 @@ export default function ProductsFilter() {
 							<path
 								strokeLinecap="round"
 								strokeLinejoin="round"
-								d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
+								d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5"
 							/>
 						</svg>
+
 						{isOpen ? (
 							<div className="bg-black text-white absolute h-fit w-2/4 z-10 rounded-md font-poppins py-1">
 								<Link
@@ -109,7 +117,7 @@ export default function ProductsFilter() {
 									Reset
 								</Link>
 								{filters && (
-									<div className=" text-black  h-fit rounded-md font-poppins py-1">
+									<div className=" text-white  h-fit rounded-md font-poppins py-1">
 										<div>
 											{filters.filters.map((filter) => (
 												<div key={filter.name}>
@@ -130,7 +138,7 @@ export default function ProductsFilter() {
 															stroke="currentColor"
 															className="w-5 h-5 mt-3 cursor-pointer"
 															onClick={
-																handleFilters
+																handleFiltersOpen
 															}
 														>
 															<path
@@ -141,7 +149,7 @@ export default function ProductsFilter() {
 														</svg>
 													</div>
 
-													{isOpen &&
+													{isFiltersOpen &&
 														filter.options.map(
 															(option) => (
 																<label
