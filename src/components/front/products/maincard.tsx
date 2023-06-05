@@ -5,18 +5,40 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import CategoriesFilter from "./categoriesFilter";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import Loading from "@/components/front/products/loading";
 
 export default function MainCard() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const mobile = useMedia("(max-width: 640px)");
 	const path = usePathname();
+	const searchParams = useSearchParams();
+
+	// for (const [key, value] of searchParams.entries()) {
+	// 	console.log(`${key}, ${value}`);
+	// }
+
+	const paramsString = searchParams ? searchParams.toString() : "";
+	const decodedParamsString = decodeURIComponent(paramsString);
+	const reconstructedURL = `${decodedParamsString}`;
+
+	// console.log("Reconstructed URL:", reconstructedURL);
+
 	const categoryPath = path?.split("/")[2];
 
 	const selectCategory = () => {
-		if (categoryPath !== "all") {
+		if (categoryPath !== "all" && categoryPath !== "Filter") {
 			fetch(`/api/productFilteredCategory?name=${categoryPath}`)
+				.then((response) => response.json())
+				.then((data) => {
+					setProducts(data);
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+		} else if (categoryPath === "Filter") {
+			fetch(`/api/productsIndividualFilter?${reconstructedURL}`)
+				// fetch(`/api/productsIndividualFilter?price=19100-50000`)
 				.then((response) => response.json())
 				.then((data) => {
 					setProducts(data);
@@ -38,7 +60,7 @@ export default function MainCard() {
 
 	useEffect(() => {
 		selectCategory();
-	}, [path]);
+	}, [path, reconstructedURL]);
 
 	return (
 		<>

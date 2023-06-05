@@ -4,24 +4,29 @@
 			"name": "Price",
 			"options": [
 				{
-					"label": "< £100",
-					"value": "<100"
+					"label": "£0 £100",
+					"labelName": "price",
+					"value": "10000"
 				},
 				{
-					"label": "£100-£250",
-					"value": "100-250"
+					"label": "£101-£250",
+					"labelName": "price",
+					"value": "10100-25000"
 				},
 				{
-					"label": "£250-£400",
-					"value": "250-400"
+					"label": "£251-£400",
+					"labelName": "price",
+					"value": "25100-40000"
 				},
 				{
-					"label": "> £400",
-					"value": "400-700"
+					"label": "£401-£700",
+					"labelName": "price",
+					"value": "40100-70000"
 				},
 				{
-					"label": "> £700",
-					"value": ">700"
+					"label": "> £701",
+					"labelName": "price",
+					"value": "70100"
 				}
 			]
 		},
@@ -30,18 +35,22 @@
 			"options": [
 				{
 					"label": "< 30 min",
+					"labelName": "time",
 					"value": "<30"
 				},
 				{
 					"label": "30 min-45 min",
+					"labelName": "time",
 					"value": "30-45"
 				},
 				{
 					"label": "> 45 min-60 min",
+					"labelName": "time",
 					"value": "45-60"
 				},
 				{
 					"label": "> 60 min",
+					"labelName": "time",
 					"value": ">60"
 				}
 			]

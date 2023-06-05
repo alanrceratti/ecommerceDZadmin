@@ -44,6 +44,7 @@ export interface Categories {
 
 export interface FilterOption {
 	label: string;
+	labelName: string;
 	value: string;
 }
 

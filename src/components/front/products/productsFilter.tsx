@@ -2,32 +2,46 @@
 import useMedia from "@/app/hooks/useMedia";
 import { FilterOption, Filters, NewProductsProps } from "@/app/types";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import productsFilter from "../products/productsFilters.json";
 
 export default function ProductsFilter() {
-	const [categories, setCategories] = useState<NewProductsProps[]>([]);
-	const [categoriesCount, setCategoriesCount] = useState<NewProductsProps[]>(
-		[]
-	);
-	const mobile = useMedia("(max-width: 640px)");
 	const [isOpen, setIsOpen] = useState(false);
-	const [isFiltersOpen, setIsFiltersOpen] = useState(false);
-	const path = usePathname()?.split("/")[2];
+	const [openFilter, setOpenFilter] = useState<string[]>([]);
+	const [selectedFilters, setSelectedFilters] = useState<FilterOption[]>([]);
+
+	const mobile = useMedia("(max-width: 640px)");
+
 	const filters = productsFilter as Filters;
 
 	const active = "text-orange";
 	const notActive = "text-black";
-
+	console.log(selectedFilters);
 	function handleFilters() {
 		setIsOpen((isOpen) => !isOpen);
 	}
-	console.log(isOpen);
 
-	function handleFiltersOpen() {
-		setIsFiltersOpen((isOpen) => !isOpen);
+	function handleFiltersOpen(filterName: string) {
+		if (openFilter.includes(filterName)) {
+			setOpenFilter(openFilter.filter((filter) => filter !== filterName));
+		} else {
+			setOpenFilter([...openFilter, filterName]);
+			setIsOpen(true);
+		}
 	}
+	// fetch(`/api/products?priceRange=${selectedPriceRange}&flightTime=${selectedFlightTime}`)
+
+	// const selectFilters = () => {
+	// 	fetch(`/api/products?priceRange=${selectedPriceRange}`)
+	// 		.then((response) => response.json())
+	// 		.then((data) => {
+	// 			setProducts(data);
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error(error);
+	// 		});
+	// };
 
 	//if user scroll any direction, menu close
 	useEffect(() => {
@@ -45,26 +59,6 @@ export default function ProductsFilter() {
 		};
 	}, []);
 
-	//fetch all categories from mongodb
-	useEffect(() => {
-		fetch("/api/categoriesAll")
-			.then((response) => response.json())
-			.then((data) => {
-				setCategories(data);
-			});
-	}, []);
-
-	//fetch all categories from mongodb from Products Schema (show only the categories that exist)
-	useEffect(() => {
-		fetch("/api/categoriesCount")
-			.then((response) => response.json())
-			.then((data) => {
-				setCategoriesCount(data);
-			});
-	}, []);
-
-	const [selectedFilters, setSelectedFilters] = useState<FilterOption[]>([]);
-
 	const handleFilterChange = (option: FilterOption) => {
 		const isSelected = selectedFilters.includes(option);
 		if (isSelected) {
@@ -75,10 +69,23 @@ export default function ProductsFilter() {
 			setSelectedFilters([...selectedFilters, option]);
 		}
 	};
-	console.log(selectedFilters);
+	const selectedFilters2 = [];
+	selectedFilters.forEach((filter) => {
+		const filterParam = `${filter.labelName}=${filter.value}`;
+		selectedFilters2.push(filterParam);
+	});
+	const queryString = selectedFilters2.join("&");
+	console.log(queryString, "EH ISSO AQUI");
+	const router = useRouter();
+	const url = `/products?${queryString}`;
 
+	useEffect(() => {
+		if (selectedFilters.length > 0) {
+			router.replace(`/products/Filter?${queryString}`);
+		}
+	}, [selectedFilters]);
 	return (
-		<main className="w-[100px] ">
+		<main className="w-[150px] ">
 			{/* {result && result.length > 0 ? ( */}
 			<div className="m-2 font-poppins text-black ">
 				{mobile ? (
@@ -137,8 +144,10 @@ export default function ProductsFilter() {
 															strokeWidth={1.5}
 															stroke="currentColor"
 															className="w-5 h-5 mt-3 cursor-pointer"
-															onClick={
-																handleFiltersOpen
+															onClick={() =>
+																handleFiltersOpen(
+																	filter.name
+																)
 															}
 														>
 															<path
@@ -149,7 +158,10 @@ export default function ProductsFilter() {
 														</svg>
 													</div>
 
-													{isFiltersOpen &&
+													{isOpen &&
+														openFilter.includes(
+															filter.name
+														) &&
 														filter.options.map(
 															(option) => (
 																<label
@@ -206,7 +218,11 @@ export default function ProductsFilter() {
 											<div className="flex items-center gap-2">
 												<h2
 													className=" mt-4 font-semibold cursor-pointer"
-													onClick={handleFilters}
+													onClick={() =>
+														handleFiltersOpen(
+															filter.name
+														)
+													}
 												>
 													{filter.name}
 												</h2>
@@ -217,7 +233,11 @@ export default function ProductsFilter() {
 													strokeWidth={1.5}
 													stroke="currentColor"
 													className="w-5 h-5 mt-3 cursor-pointer"
-													onClick={handleFilters}
+													onClick={() =>
+														handleFiltersOpen(
+															filter.name
+														)
+													}
 												>
 													<path
 														strokeLinecap="round"
@@ -228,6 +248,9 @@ export default function ProductsFilter() {
 											</div>
 
 											{isOpen &&
+												openFilter.includes(
+													filter.name
+												) &&
 												filter.options.map((option) => (
 													<label
 														key={option.value}
