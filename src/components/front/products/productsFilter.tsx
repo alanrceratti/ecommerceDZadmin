@@ -69,7 +69,7 @@ export default function ProductsFilter() {
 			setSelectedFilters([...selectedFilters, option]);
 		}
 	};
-	const selectedFilters2 = [];
+	const selectedFilters2 = [] as string[];
 	selectedFilters.forEach((filter) => {
 		const filterParam = `${filter.labelName}=${filter.value}`;
 		selectedFilters2.push(filterParam);
@@ -81,7 +81,7 @@ export default function ProductsFilter() {
 
 	useEffect(() => {
 		if (selectedFilters.length > 0) {
-			router.replace(`/products/Filter?${queryString}`);
+			router.replace(`/products/filter?${queryString}`);
 		}
 	}, [selectedFilters]);
 	return (

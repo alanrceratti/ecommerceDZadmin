@@ -25,9 +25,10 @@ export default function MainCard() {
 	// console.log("Reconstructed URL:", reconstructedURL);
 
 	const categoryPath = path?.split("/")[2];
-
+	const categoryPath1 = path?.split("/")[1];
+	console.log(categoryPath1, "/", categoryPath);
 	const selectCategory = () => {
-		if (categoryPath !== "all" && categoryPath !== "Filter") {
+		if (categoryPath !== "all" && categoryPath !== "filter") {
 			fetch(`/api/productFilteredCategory?name=${categoryPath}`)
 				.then((response) => response.json())
 				.then((data) => {
@@ -36,7 +37,7 @@ export default function MainCard() {
 				.catch((error) => {
 					console.error(error);
 				});
-		} else if (categoryPath === "Filter") {
+		} else if (categoryPath === "filter") {
 			fetch(`/api/productsIndividualFilter?${reconstructedURL}`)
 				// fetch(`/api/productsIndividualFilter?price=19100-50000`)
 				.then((response) => response.json())
