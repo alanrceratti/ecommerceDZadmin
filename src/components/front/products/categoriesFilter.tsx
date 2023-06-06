@@ -160,7 +160,7 @@ export default function CategoriesFilter() {
 								<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
 									{result.map((category, index) => (
 										<Link
-											href={`/products/${
+											href={`/products/filter?category=${
 												category?.split(" ")[0]
 											}`}
 											key={category}

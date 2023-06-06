@@ -3,7 +3,7 @@ import { NewProductsProps } from "@/app/types";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+
 import Loading from "@/components/front/products/loading";
 import SimilarProducts from "@/components/front/products/similarProducts";
 

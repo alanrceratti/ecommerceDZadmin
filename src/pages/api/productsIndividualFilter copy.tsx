@@ -1,6 +1,7 @@
 // import { NextApiRequest, NextApiResponse } from "next";
 // import { mongooseConnect } from "../../../lib/mongoose";
 // import { Product } from "../../../models/Product";
+// import { Category } from "../../../models/Category";
 
 // export default async function handle(
 // 	req: NextApiRequest,
@@ -11,16 +12,14 @@
 
 // 	if (req.method === "GET") {
 // 		// Get the selected filters from the query parameters
-// 		const { price, flightTime } = req.query;
+// 		const { price, flightTime, name } = req.query;
 // 		console.log("QUERY", req.query);
 // 		// Prepare the filter object based on the selected filters
 // 		const filter: any = {};
 
 // 		// Apply specific filters based on the selected options
-// 		// Apply specific filters based on the selected options
-// 		// Apply specific filters based on the selected options
 // 		if (Array.isArray(price)) {
-// 			const priceFilters = price.map((value) => {
+// 			const priceFilters = price.flatMap((value) => {
 // 				if (value.includes("-")) {
 // 					const [minPrice, maxPrice] = value.split("-");
 // 					return {
@@ -33,12 +32,15 @@
 // 							},
 // 						],
 // 					};
-// 				} else {
+// 				} else if (value === "10000") {
 // 					const singlePrice = parseInt(value);
-// 					return { price: singlePrice };
+// 					return { price: { $lt: singlePrice } };
+// 				} else if (value === "70100") {
+// 					const singlePrice = parseInt(value);
+// 					return { price: { $gt: singlePrice } };
 // 				}
 // 			});
-// 			priceFilters.push({ price: { $lt: 10000 } }); // Add filter for price less than 10000
+
 // 			filter.$or = priceFilters;
 // 		} else if (typeof price === "string") {
 // 			if (price.includes("-")) {
@@ -51,11 +53,15 @@
 // 						},
 // 					},
 // 				];
-// 			} else {
+// 			} else if (price === "10000") {
 // 				const singlePrice = parseInt(price);
 // 				filter.$or = [
-// 					{ price: singlePrice },
-// 					{ price: { $lt: 10000 } }, // Add filter for price less than 10000
+// 					{ price: { $lt: singlePrice } }, // Add filter for price less than 10000
+// 				];
+// 			} else if (price === "70100") {
+// 				const singlePrice = parseInt(price);
+// 				filter.$or = [
+// 					{ price: { $gt: singlePrice } }, // Add filter for price less than 10000
 // 				];
 // 			}
 // 		}
@@ -68,10 +74,20 @@
 // 			};
 // 		}
 
+// 		if (typeof name === "string") {
+// 			// Retrieve the category object based on the name
+// 			const category = await Category.findOne({ name }).exec();
+
+// 			if (category) {
+// 				// Add the category filter
+// 				filter.category = category._id;
+// 			}
+// 		}
+
 // 		console.log("FILTER RESULT", filter);
 
 // 		// Query the database with the applied filters
-// 		const products = await Product.find(filter);
+// 		const products = await Product.find(filter).populate("category").exec();
 
 // 		res.json(products);
 // 	}

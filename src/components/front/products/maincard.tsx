@@ -4,16 +4,19 @@ import { NewProductsProps } from "@/app/types";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import CategoriesFilter from "./categoriesFilter";
-import { usePathname, useSearchParams } from "next/navigation";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
 import Loading from "@/components/front/products/loading";
 
 export default function MainCard() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const mobile = useMedia("(max-width: 640px)");
 	const path = usePathname();
-	const searchParams = useSearchParams();
 
+	const searchParams = useSearchParams();
+	const queryKeys = Array.from(searchParams.keys());
+
+	const paramss = useParams();
+	// console.log("HSAUDSADUHSA", paramss);
 	// for (const [key, value] of searchParams.entries()) {
 	// 	console.log(`${key}, ${value}`);
 	// }
@@ -22,14 +25,20 @@ export default function MainCard() {
 	const decodedParamsString = decodeURIComponent(paramsString);
 	const reconstructedURL = `${decodedParamsString}`;
 
-	// console.log("Reconstructed URL:", reconstructedURL);
+	console.log("Reconstructed URL:", reconstructedURL);
 
-	const categoryPath = path?.split("/")[2];
-	const categoryPath1 = path?.split("/")[1];
-	console.log(categoryPath1, "/", categoryPath);
+	const categoryPath = path?.split("/")[4];
+	const categoryPath2 = path?.split("/")[2];
+	const params = searchParams?.get("category");
+
+	console.log("PATH", path);
+	console.log("teste1", categoryPath);
+	console.log("teste2", categoryPath2);
+	console.log("teste3333333", queryKeys.length);
 	const selectCategory = () => {
-		if (categoryPath !== "all" && categoryPath !== "filter") {
-			fetch(`/api/productFilteredCategory?name=${categoryPath}`)
+		if (categoryPath2 !== "all" && queryKeys.length === 1) {
+			fetch(`/api/productsIndividualFilter?name=${params}`)
+				// fetch(`/api/productsIndividualFilter?name=Foldable`)
 				.then((response) => response.json())
 				.then((data) => {
 					setProducts(data);
@@ -37,9 +46,11 @@ export default function MainCard() {
 				.catch((error) => {
 					console.error(error);
 				});
-		} else if (categoryPath === "filter") {
+		} else if (queryKeys.length > 1) {
 			fetch(`/api/productsIndividualFilter?${reconstructedURL}`)
-				// fetch(`/api/productsIndividualFilter?price=19100-50000`)
+				// fetch(
+				// 	`/api/productsIndividualFilter?category=FPV&price=10100-25000`
+				// )
 				.then((response) => response.json())
 				.then((data) => {
 					setProducts(data);

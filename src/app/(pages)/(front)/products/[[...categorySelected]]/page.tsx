@@ -1,10 +1,29 @@
+"use client";
 import CategoriesFilter from "@/components/front/products/categoriesFilter";
 import Loading from "@/components/front/products/loading";
 import MainCard from "@/components/front/products/maincard";
 import ProductsFilter from "@/components/front/products/productsFilter";
-import { Suspense } from "react";
+import { useParams, usePathname } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 
 export default function Products() {
+	const [param, setParam] = useState("");
+	const path = usePathname();
+
+	const categoryPath = path?.split("/")[2];
+
+	console.log("1", path);
+	console.log("2", categoryPath);
+
+	useEffect(() => {
+		if (categoryPath && path !== "products/all") {
+			setParam(JSON.stringify(categoryPath));
+		}
+	}, [path, categoryPath]);
+	useEffect(() => {
+		console.log(param, "PARAMSSS");
+	}, [param]);
+
 	return (
 		<section>
 			<main className="bg-black">

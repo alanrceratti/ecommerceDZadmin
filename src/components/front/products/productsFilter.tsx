@@ -2,7 +2,7 @@
 import useMedia from "@/app/hooks/useMedia";
 import { FilterOption, Filters, NewProductsProps } from "@/app/types";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import productsFilter from "../products/productsFilters.json";
 
@@ -13,11 +13,15 @@ export default function ProductsFilter() {
 
 	const mobile = useMedia("(max-width: 640px)");
 
-	const filters = productsFilter as Filters;
+	const searchParams = useSearchParams();
+	const categoryPath = searchParams?.get("category");
 
+	console.log("FILTER FILTER ", categoryPath);
+
+	const filters = productsFilter as Filters;
 	const active = "text-orange";
 	const notActive = "text-black";
-	console.log(selectedFilters);
+
 	function handleFilters() {
 		setIsOpen((isOpen) => !isOpen);
 	}
@@ -30,18 +34,6 @@ export default function ProductsFilter() {
 			setIsOpen(true);
 		}
 	}
-	// fetch(`/api/products?priceRange=${selectedPriceRange}&flightTime=${selectedFlightTime}`)
-
-	// const selectFilters = () => {
-	// 	fetch(`/api/products?priceRange=${selectedPriceRange}`)
-	// 		.then((response) => response.json())
-	// 		.then((data) => {
-	// 			setProducts(data);
-	// 		})
-	// 		.catch((error) => {
-	// 			console.error(error);
-	// 		});
-	// };
 
 	//if user scroll any direction, menu close
 	useEffect(() => {
@@ -75,15 +67,16 @@ export default function ProductsFilter() {
 		selectedFilters2.push(filterParam);
 	});
 	const queryString = selectedFilters2.join("&");
-	console.log(queryString, "EH ISSO AQUI");
+
 	const router = useRouter();
-	const url = `/products?${queryString}`;
+	const url = `/products/filter?category=${categoryPath}&${queryString}`;
+	// const url = `/products/filter?category=FPV&price=10100-25000`;
 
 	useEffect(() => {
 		if (selectedFilters.length > 0) {
-			router.replace(`/products/filter?${queryString}`);
+			router.replace(url);
 		}
-	}, [selectedFilters]);
+	}, [selectedFilters, url]);
 	return (
 		<main className="w-[150px] ">
 			{/* {result && result.length > 0 ? ( */}

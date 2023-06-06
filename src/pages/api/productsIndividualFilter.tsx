@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { mongooseConnect } from "../../../lib/mongoose";
 import { Product } from "../../../models/Product";
+import { Category } from "../../../models/Category";
 
 export default async function handle(
 	req: NextApiRequest,
@@ -11,7 +12,7 @@ export default async function handle(
 
 	if (req.method === "GET") {
 		// Get the selected filters from the query parameters
-		const { price, flightTime } = req.query;
+		const { price, flightTime, name } = req.query;
 		console.log("QUERY", req.query);
 		// Prepare the filter object based on the selected filters
 		const filter: any = {};
@@ -40,8 +41,11 @@ export default async function handle(
 				}
 			});
 
-			// priceFilters.push({ price: { $lt: 10000 } }); // Add filter for price less than 10000
-			filter.$or = priceFilters;
+			if (Array.isArray(price)) {
+				filter.$or = [...(filter.$or || []), ...priceFilters];
+			} else if (typeof price === "string") {
+				filter.$or = [...(filter.$or || []), ...[priceFilters]];
+			}
 		} else if (typeof price === "string") {
 			if (price.includes("-")) {
 				const [minPrice, maxPrice] = price.split("-");
@@ -74,10 +78,24 @@ export default async function handle(
 			};
 		}
 
+		if (typeof name === "string") {
+			// Retrieve the category object based on the name
+			// const category = await Category.findOne({ name }).exec();
+			// if (typeof name === "string") {
+			// 	// Add the category filter directly using the provided category name
+			// 	filter.category = category._id;
+			// }
+			// if (category) {
+			// 	// Add the category filter
+			// 	filter.category = category._id;
+			// }
+
+		}
+
 		console.log("FILTER RESULT", filter);
 
 		// Query the database with the applied filters
-		const products = await Product.find(filter);
+		const products = await Product.find(filter).populate("category").exec();
 
 		res.json(products);
 	}
