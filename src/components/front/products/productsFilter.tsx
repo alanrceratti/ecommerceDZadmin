@@ -3,8 +3,9 @@ import useMedia from "@/app/hooks/useMedia";
 import { FilterOption, Filters, NewProductsProps } from "@/app/types";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import productsFilter from "../products/productsFilters.json";
+import useOutsideClick from "@/app/hooks/useOnClickOutside";
 
 export default function ProductsFilter() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +14,7 @@ export default function ProductsFilter() {
 
 	const mobile = useMedia("(max-width: 640px)");
 
+	const ref = useRef<HTMLDivElement | null>(null);
 	const searchParams = useSearchParams();
 	const categoryPath = searchParams?.get("category");
 
@@ -69,14 +71,22 @@ export default function ProductsFilter() {
 	const queryString = selectedFilters2.join("&");
 
 	const router = useRouter();
-	const url = `/products/filter?category=${categoryPath}&${queryString}`;
+	const url = `/products/filter?${queryString}`;
+	// const url = `/products/filter?category=${categoryPath}&${queryString}`;
 	// const url = `/products/filter?category=FPV&price=10100-25000`;
+
+	const handleClickOutside = () => {
+		setIsOpen(false);
+	};
 
 	useEffect(() => {
 		if (selectedFilters.length > 0) {
 			router.replace(url);
 		}
 	}, [selectedFilters, url]);
+
+	useOutsideClick(ref, handleClickOutside);
+
 	return (
 		<main className="w-[150px] ">
 			{/* {result && result.length > 0 ? ( */}
@@ -101,7 +111,10 @@ export default function ProductsFilter() {
 						</svg>
 
 						{isOpen ? (
-							<div className="bg-black text-white absolute h-fit w-2/4 z-10 rounded-md font-poppins py-1">
+							<div
+								ref={ref}
+								className="bg-black text-white absolute h-fit w-2/4 z-10 rounded-md font-poppins py-1"
+							>
 								<Link
 									href={`/products/all`}
 									className="flex w-full p-2
@@ -116,6 +129,14 @@ export default function ProductsFilter() {
 								>
 									Reset
 								</Link>
+								<button
+									className="text-orange btn-third ml-2 mt-2"
+									onClick={() => {
+										setIsOpen(false);
+									}}
+								>
+									Apply
+								</button>
 								{filters && (
 									<div className=" text-white  h-fit rounded-md font-poppins py-1">
 										<div>
@@ -123,9 +144,11 @@ export default function ProductsFilter() {
 												<div key={filter.name}>
 													<div className="flex items-center gap-2">
 														<h2
-															className=" mt-4 font-semibold cursor-pointer"
-															onClick={
-																handleFilters
+															className="pl-2 mt-4 font-semibold cursor-pointer"
+															onClick={() =>
+																handleFiltersOpen(
+																	filter.name
+																)
 															}
 														>
 															{filter.name}

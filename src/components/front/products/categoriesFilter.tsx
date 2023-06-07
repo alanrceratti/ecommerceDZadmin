@@ -127,13 +127,11 @@ export default function CategoriesFilter() {
 										<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
 											{result.map((category, index) => (
 												<Link
-													href={`/products/${
-														category?.split(" ")[0]
-													}`}
-													key={category}
+													href={`/products/filter?category=${category?.key}`}
+													key={category?.key}
 													className={`${
-														path ===
-														category?.split(" ")[0]
+														categoryPath ===
+														category?.key
 															? active
 															: notActive
 													} flex w-full p-2 hover:text-orange ${
@@ -143,7 +141,8 @@ export default function CategoriesFilter() {
 															: ""
 													}`}
 												>
-													{category}
+													{category?.value}
+													{category?.count}
 												</Link>
 											))}
 										</div>

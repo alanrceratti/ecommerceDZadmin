@@ -25,7 +25,7 @@ export default function MainCard() {
 	const decodedParamsString = decodeURIComponent(paramsString);
 	const reconstructedURL = `${decodedParamsString}`;
 
-	console.log("Reconstructed URL:", reconstructedURL);
+	console.log("Reconstructed URL:", queryKeys[0]);
 
 	const categoryPath = path?.split("/")[4];
 	const categoryPath2 = path?.split("/")[2];
@@ -36,7 +36,11 @@ export default function MainCard() {
 	// console.log("teste2", categoryPath2);
 	// console.log("teste3333333", queryKeys.length);
 	const selectCategory = () => {
-		if (categoryPath2 !== "all" && queryKeys.length === 1) {
+		if (
+			categoryPath2 !== "all" &&
+			queryKeys.length === 1 &&
+			queryKeys[0] === "category"
+		) {
 			fetch(`/api/productsIndividualFilter?category=${params}`)
 				// fetch(`/api/productsIndividualFilter?name=Foldable`)
 				.then((response) => response.json())
@@ -46,7 +50,7 @@ export default function MainCard() {
 				.catch((error) => {
 					console.error(error);
 				});
-		} else if (queryKeys.length > 1) {
+		} else if (queryKeys.length >= 1 && queryKeys[0] !== "category") {
 			fetch(`/api/productsIndividualFilter?${reconstructedURL}`)
 				// fetch(
 				// 	`/api/productsIndividualFilter?category=FPV&price=10100-25000`

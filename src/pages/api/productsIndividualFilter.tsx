@@ -79,7 +79,7 @@ export default async function handle(
 			};
 		}
 
-		if (typeof category === "string" && category !== null) {
+		if (typeof category === "string") {
 			// Retrieve the category object based on the name
 			const categorys = await Product.find({ category: category }).exec();
 			if (
@@ -92,13 +92,14 @@ export default async function handle(
 			// 	// Add the category filter
 			// 	filter.category = category._id;
 			// }
-		} else {
-			const category = await Category.find().exec();
-			if (category) {
-				// // Add the category filter
-				filter.category = category;
-			}
 		}
+		// else if (typeof category === null) {
+		// 	const category = await Category.find().exec();
+		// 	if (category) {
+		// 		// // Add the category filter
+		// 		filter.category = category;
+		// 	}
+		// }
 
 		console.log("FILTER RESULT", filter);
 
