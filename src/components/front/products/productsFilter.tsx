@@ -72,7 +72,8 @@ export default function ProductsFilter() {
 
 	const router = useRouter();
 	const url = `/products/filter?${queryString}`;
-	// const url = `/products/filter?category=${categoryPath}&${queryString}`;
+	const urlWithCategory = `/products/filter?category=${categoryPath}&${queryString}`;
+	const urlAll = `/products/all`;
 	// const url = `/products/filter?category=FPV&price=10100-25000`;
 
 	const handleClickOutside = () => {
@@ -80,10 +81,14 @@ export default function ProductsFilter() {
 	};
 
 	useEffect(() => {
-		if (selectedFilters.length > 0) {
+		if (selectedFilters.length > 0 && !categoryPath && !urlAll) {
 			router.replace(url);
+		} else if (categoryPath) {
+			router.replace(urlWithCategory);
+		} else {
+			router.replace(urlAll);
 		}
-	}, [selectedFilters, url]);
+	}, [selectedFilters, url, urlAll]);
 
 	useOutsideClick(ref, handleClickOutside);
 

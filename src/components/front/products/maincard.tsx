@@ -25,7 +25,7 @@ export default function MainCard() {
 	const decodedParamsString = decodeURIComponent(paramsString);
 	const reconstructedURL = `${decodedParamsString}`;
 
-	console.log("Reconstructed URL:", queryKeys[0]);
+	console.log("Reconstructed URL:", reconstructedURL);
 
 	const categoryPath = path?.split("/")[4];
 	const categoryPath2 = path?.split("/")[2];
@@ -51,6 +51,18 @@ export default function MainCard() {
 					console.error(error);
 				});
 		} else if (queryKeys.length >= 1 && queryKeys[0] !== "category") {
+			fetch(`/api/productsIndividualFilter?${reconstructedURL}`)
+				// fetch(
+				// 	`/api/productsIndividualFilter?category=FPV&price=10100-25000`
+				// )
+				.then((response) => response.json())
+				.then((data) => {
+					setProducts(data);
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+		} else if (queryKeys.length >= 1 && queryKeys[0] === "category") {
 			fetch(`/api/productsIndividualFilter?${reconstructedURL}`)
 				// fetch(
 				// 	`/api/productsIndividualFilter?category=FPV&price=10100-25000`
