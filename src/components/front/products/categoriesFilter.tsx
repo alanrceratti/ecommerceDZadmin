@@ -81,6 +81,11 @@ export default function CategoriesFilter() {
 				: `${category?.name}(0)`; // Append (0) if the count is 0
 		}
 	});
+	const allCategories = categories
+		.filter((category) => category?.name)
+		.map((category) => ({ key: category._id, value: category.name }));
+
+	console.log(allCategories, "WQEWQEWQE");
 
 	return (
 		<main className="w-fit ">
@@ -174,7 +179,8 @@ export default function CategoriesFilter() {
 													: ""
 											}`}
 										>
-											{category}
+											{/* {category} */}
+											{allCategories[index].value}
 										</Link>
 									))}
 								</div>

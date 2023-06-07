@@ -80,16 +80,15 @@ export default async function handle(
 
 		if (typeof name === "string") {
 			// Retrieve the category object based on the name
-			// const category = await Category.findOne({ name }).exec();
-			// if (typeof name === "string") {
-			// 	// Add the category filter directly using the provided category name
-			// 	filter.category = category._id;
-			// }
+			const category = await Category.findOne({ name }).exec();
+			if (typeof name === "string") {
+				// Add the category filter directly using the provided category name
+				filter.category = category._id;
+			}
 			// if (category) {
 			// 	// Add the category filter
 			// 	filter.category = category._id;
 			// }
-
 		}
 
 		console.log("FILTER RESULT", filter);

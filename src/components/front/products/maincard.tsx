@@ -13,7 +13,7 @@ export default function MainCard() {
 	const path = usePathname();
 
 	const searchParams = useSearchParams();
-	const queryKeys = Array.from(searchParams.keys());
+	const queryKeys = searchParams ? Array.from(searchParams.keys()) : [];
 
 	const paramss = useParams();
 	// console.log("HSAUDSADUHSA", paramss);
