@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { mongooseConnect } from "../../../lib/mongoose";
 import { Product } from "../../../models/Product";
 import { Category } from "../../../models/Category";
+import mongoose from "mongoose";
 
 export default async function handle(
 	req: NextApiRequest,
@@ -12,7 +13,7 @@ export default async function handle(
 
 	if (req.method === "GET") {
 		// Get the selected filters from the query parameters
-		const { price, flightTime, name } = req.query;
+		const { price, flightTime, category } = req.query;
 		console.log("QUERY", req.query);
 		// Prepare the filter object based on the selected filters
 		const filter: any = {};
@@ -78,17 +79,25 @@ export default async function handle(
 			};
 		}
 
-		if (typeof name === "string") {
+		if (typeof category === "string" && category !== null) {
 			// Retrieve the category object based on the name
-			const category = await Category.findOne({ name }).exec();
-			if (typeof name === "string") {
-				// Add the category filter directly using the provided category name
-				filter.category = category._id;
+			const categorys = await Product.find({ category: category }).exec();
+			if (
+				typeof category === "string" &&
+				mongoose.Types.ObjectId.isValid(category)
+			) {
+				filter.category = new mongoose.Types.ObjectId(category);
 			}
 			// if (category) {
 			// 	// Add the category filter
 			// 	filter.category = category._id;
 			// }
+		} else {
+			const category = await Category.find().exec();
+			if (category) {
+				// // Add the category filter
+				filter.category = category;
+			}
 		}
 
 		console.log("FILTER RESULT", filter);

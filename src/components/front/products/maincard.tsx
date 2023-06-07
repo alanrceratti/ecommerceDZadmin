@@ -31,13 +31,13 @@ export default function MainCard() {
 	const categoryPath2 = path?.split("/")[2];
 	const params = searchParams?.get("category");
 
-	console.log("PATH", path);
-	console.log("teste1", categoryPath);
-	console.log("teste2", categoryPath2);
-	console.log("teste3333333", queryKeys.length);
+	// console.log("PATH", params);
+	// console.log("teste1", categoryPath);
+	// console.log("teste2", categoryPath2);
+	// console.log("teste3333333", queryKeys.length);
 	const selectCategory = () => {
 		if (categoryPath2 !== "all" && queryKeys.length === 1) {
-			fetch(`/api/productsIndividualFilter?name=${params}`)
+			fetch(`/api/productsIndividualFilter?category=${params}`)
 				// fetch(`/api/productsIndividualFilter?name=Foldable`)
 				.then((response) => response.json())
 				.then((data) => {

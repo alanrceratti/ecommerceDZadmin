@@ -2,9 +2,8 @@
 import useMedia from "@/app/hooks/useMedia";
 import { NewProductsProps } from "@/app/types";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import Loading from "./loading";
 
 export default function CategoriesFilter() {
 	const [categories, setCategories] = useState<NewProductsProps[]>([]);
@@ -14,6 +13,8 @@ export default function CategoriesFilter() {
 	const mobile = useMedia("(max-width: 640px)");
 	const [isOpen, setIsOpen] = useState(false);
 	const path = usePathname()?.split("/")[2];
+	const searchParams = useSearchParams();
+	const categoryPath = searchParams?.get("category");
 
 	const active = "text-orange";
 	const notActive = "text-white";
@@ -73,20 +74,23 @@ export default function CategoriesFilter() {
 		});
 
 	// Map the categories array to create an array of category names with their respective counts
-	const result = categories.map((category) => {
-		if (category?.name) {
-			const count = categoryCounts[category?.name] || 0;
-			return count > 0
-				? `${category?.name} (${count})` // Include the count if it's greater than 0
-				: `${category?.name}(0)`; // Append (0) if the count is 0
-		}
-	});
+
 	const allCategories = categories
 		.filter((category) => category?.name)
 		.map((category) => ({ key: category._id, value: category.name }));
 
-	console.log(allCategories, "WQEWQEWQE");
+	const result = allCategories.map((category) => {
+		if (category?.value) {
+			const count = categoryCounts[category?.value] || 0;
+			return {
+				value: category.value,
+				key: category.key,
+				count: count > 0 ? `(${count})` : "(0)",
+			};
+		}
+	});
 
+	console.log(result);
 	return (
 		<main className="w-fit ">
 			{result && result.length > 0 ? (
@@ -165,12 +169,10 @@ export default function CategoriesFilter() {
 								<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
 									{result.map((category, index) => (
 										<Link
-											href={`/products/filter?category=${
-												category?.split(" ")[0]
-											}`}
-											key={category}
+											href={`/products/filter?category=${category?.key}`}
+											key={category?.key}
 											className={`${
-												path === category?.split(" ")[0]
+												categoryPath === category?.key
 													? active
 													: notActive
 											} flex w-full p-2 hover:text-orange ${
@@ -179,8 +181,8 @@ export default function CategoriesFilter() {
 													: ""
 											}`}
 										>
-											{/* {category} */}
-											{allCategories[index].value}
+											{category?.value}
+											{category?.count}
 										</Link>
 									))}
 								</div>
