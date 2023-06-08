@@ -19,8 +19,11 @@ export default function ProductsFilter() {
 	const searchParams = useSearchParams();
 	const searchParams2 = usePathname();
 	const params = searchParams2?.split("/")[2];
+	const urlSearchParams = new URLSearchParams(window.location.search);
+	const retrieveParams = searchParams?.getAll("prices");
 
 	const categoryPath = searchParams?.get("category");
+	const pricePath = searchParams?.get("price");
 
 	// console.log("FILTER FILTER ", searchParams2);
 
@@ -57,7 +60,11 @@ export default function ProductsFilter() {
 		};
 	}, []);
 
-	const handleFilterChange = (option: FilterOption) => {
+	const handleFilterChange = (
+		option: FilterOption,
+		event: React.ChangeEvent<HTMLInputElement>
+	) => {
+		event?.preventDefault();
 		const isSelected = selectedFilters.includes(option);
 		if (isSelected) {
 			setSelectedFilters(
@@ -66,8 +73,26 @@ export default function ProductsFilter() {
 		} else {
 			setSelectedFilters([...selectedFilters, option]);
 		}
+
+		const updatedFilters = isSelected
+			? selectedFilters.filter((filter) => filter !== option)
+			: [...selectedFilters, option];
+
+		const queryParams = new URLSearchParams();
+		updatedFilters.forEach((filter) => {
+			const paramName = `${filter.labelName}=${filter.value}`;
+			queryParams.append("filters", paramName);
+		});
+
+		const updatedQuery = queryParams.toString();
+		const updatedUrl = `/products/filter${
+			updatedQuery ? `?${updatedQuery}` : ""
+		}`;
+		router.replace(updatedUrl);
+
 		return isSelected;
 	};
+
 	let selectedFilters2 = [] as string[];
 	selectedFilters.forEach((filter) => {
 		const filterParam = `${filter.labelName}=${filter.value}`;
@@ -78,66 +103,60 @@ export default function ProductsFilter() {
 	const router = useRouter();
 	const urlOnlyFilter = `/products/filter?${queryString}`;
 	const urlWithCategoryWithFilter = `/products/filter?category=${categoryPath}&${queryString}`;
-	const urlWithCategory = `/products/filter?category=${categoryPath}`;
 	const urlAll = `/products/all`;
-	// const url = `/products/filter?category=FPV&price=10100-25000`;
-	console.log("categoryPath ", selectedFilters2);
-	// console.log("urlAll ", urlAll);
-	// console.log("selectedFilters.length ", selectedFilters.length);
-	// console.log("queryString ", queryString);
-	// console.log("params ", params);
+
+	// console.log("categoryPath ", selectedFilters2);
 
 	const handleClickOutside = () => {
 		setIsOpen(false);
 	};
-	useEffect(() => {
-		selectedFilters2 = [];
-	}, [selectedFilters2]);
-
+	// useEffect(() => {
+	// 	selectedFilters2 = [];
+	// }, [selectedFilters2]);
+	console.log(selectedFilters2, "selectedFilters2", "selectedFilters2");
 	useEffect(() => {
 		if (queryString.length > 0 && !categoryPath) {
+			console.log("urlOnlyFilter");
 			router.push(urlOnlyFilter);
-		} else if (queryString.length === 0 && !categoryPath) {
+		} else if (
+			queryString.length === 0 &&
+			!categoryPath &&
+			params === "all"
+		) {
 			router.replace(urlAll);
-		} else if (categoryPath) {
+		} else if (categoryPath && params === "filter") {
+			console.log("urlWithCategoryWithFilter");
 			router.replace(urlWithCategoryWithFilter);
+		} else if (
+			queryString.length === 0 &&
+			!pricePath &&
+			selectedFilters2.length === 0
+		) {
+			console.log("categoryPath", selectedFilters2.length, categoryPath);
+			router.replace(urlAll);
 		}
+	}, [queryString, selectedFilters2]);
+	console.log("pricePath", pricePath);
+	useEffect(() => {
+		const urlSearchParams = queryString;
+		const filterOptions = [] as FilterOption[];
+
+		filters.filters.forEach((filter) => {
+			filter.options.forEach((option) => {
+				const paramName = `${option.labelName}=${option.value}`;
+				if (urlSearchParams.includes(paramName)) {
+					filterOptions.push(option);
+				}
+			});
+		});
+
+		setSelectedFilters(filterOptions);
+		// console.log(queryString, "urlSearchParams");
+		// console.log(filterOptions, "filterOptions");
 	}, [queryString]);
 
-	console.log(queryString.length, "queryString");
-	console.log(params, "params");
-	// useEffect(() => {
-	// 	if (params === "all") {
-	// 		router.push(urlAll);
-	// 	} else if (queryString.length > 0) {
-	// 		router.push("ACHO QUE EH ISSO");
-	// 	}
-	// }, [params]);
-	// useEffect(() => {
-	// 	if (
-	// 		selectedFilters.length > 0 &&
-	// 		categoryPath === null &&
-	// 		params === "all"
-	// 	) {
-	// 		router.replace(url);
-	// 		console.log("NUMERO 1", selectedFilters.length);
-	// 		console.log("NUMERO 1", categoryPath);
-	// 		console.log("NUMERO 1", params);
-	// 		console.log("NUMERO 1", queryString);
-	// 	} else if (categoryPath) {
-	// 		router.replace(urlWithCategory);
-	// 		console.log("NUMERO 2", categoryPath);
-	// 	} else if (params === "all") {
-	// 		router.replace(urlAll);
-	// 		console.log("NUMERO 333", selectedFilters.length);
-	// 		console.log("NUMERO 333", categoryPath);
-	// 		console.log("NUMERO 333", params);
-	// 		console.log("NUMERO 333", queryString);
-	// 	}
-	// }, [selectedFilters, url, urlAll, categoryPath, queryString]);
-
 	useOutsideClick(ref, handleClickOutside);
-
+	// console.log("queryString", queryString.length);
 	return (
 		<main className="w-[150px] ">
 			{/* {result && result.length > 0 ? ( */}
@@ -243,9 +262,12 @@ export default function ProductsFilter() {
 																		checked={selectedFilters.includes(
 																			option
 																		)}
-																		onChange={() =>
+																		onChange={(
+																			event
+																		) =>
 																			handleFilterChange(
-																				option
+																				option,
+																				event
 																			)
 																		}
 																	/>
@@ -329,9 +351,10 @@ export default function ProductsFilter() {
 															checked={selectedFilters.includes(
 																option
 															)}
-															onChange={() =>
+															onChange={(event) =>
 																handleFilterChange(
-																	option
+																	option,
+																	event
 																)
 															}
 														/>
