@@ -12,17 +12,17 @@ export default function Products() {
 
 	const categoryPath = path?.split("/")[2];
 
-	console.log("1", path);
-	console.log("2", categoryPath);
+	// console.log("1", path);
+	// console.log("2", categoryPath);
 
 	useEffect(() => {
 		if (categoryPath && path !== "products/all") {
 			setParam(JSON.stringify(categoryPath));
 		}
 	}, [path, categoryPath]);
-	useEffect(() => {
-		console.log(param, "PARAMSSS");
-	}, [param]);
+	// useEffect(() => {
+	// 	console.log(param, "PARAMSSS");
+	// }, [param]);
 
 	return (
 		<section>

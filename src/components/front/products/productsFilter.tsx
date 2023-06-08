@@ -6,6 +6,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import productsFilter from "../products/productsFilters.json";
 import useOutsideClick from "@/app/hooks/useOnClickOutside";
+import path from "path";
 
 export default function ProductsFilter() {
 	const [isOpen, setIsOpen] = useState(false);
@@ -16,9 +17,12 @@ export default function ProductsFilter() {
 
 	const ref = useRef<HTMLDivElement | null>(null);
 	const searchParams = useSearchParams();
+	const searchParams2 = usePathname();
+	const params = searchParams2?.split("/")[2];
+
 	const categoryPath = searchParams?.get("category");
 
-	console.log("FILTER FILTER ", categoryPath);
+	// console.log("FILTER FILTER ", searchParams2);
 
 	const filters = productsFilter as Filters;
 	const active = "text-orange";
@@ -62,8 +66,9 @@ export default function ProductsFilter() {
 		} else {
 			setSelectedFilters([...selectedFilters, option]);
 		}
+		return isSelected;
 	};
-	const selectedFilters2 = [] as string[];
+	let selectedFilters2 = [] as string[];
 	selectedFilters.forEach((filter) => {
 		const filterParam = `${filter.labelName}=${filter.value}`;
 		selectedFilters2.push(filterParam);
@@ -71,24 +76,65 @@ export default function ProductsFilter() {
 	const queryString = selectedFilters2.join("&");
 
 	const router = useRouter();
-	const url = `/products/filter?${queryString}`;
-	const urlWithCategory = `/products/filter?category=${categoryPath}&${queryString}`;
+	const urlOnlyFilter = `/products/filter?${queryString}`;
+	const urlWithCategoryWithFilter = `/products/filter?category=${categoryPath}&${queryString}`;
+	const urlWithCategory = `/products/filter?category=${categoryPath}`;
 	const urlAll = `/products/all`;
 	// const url = `/products/filter?category=FPV&price=10100-25000`;
+	console.log("categoryPath ", selectedFilters2);
+	// console.log("urlAll ", urlAll);
+	// console.log("selectedFilters.length ", selectedFilters.length);
+	// console.log("queryString ", queryString);
+	// console.log("params ", params);
 
 	const handleClickOutside = () => {
 		setIsOpen(false);
 	};
+	useEffect(() => {
+		selectedFilters2 = [];
+	}, [selectedFilters2]);
 
 	useEffect(() => {
-		if (selectedFilters.length > 0 && !categoryPath && !urlAll) {
-			router.replace(url);
-		} else if (categoryPath) {
-			router.replace(urlWithCategory);
-		} else {
+		if (queryString.length > 0 && !categoryPath) {
+			router.push(urlOnlyFilter);
+		} else if (queryString.length === 0 && !categoryPath) {
 			router.replace(urlAll);
+		} else if (categoryPath) {
+			router.replace(urlWithCategoryWithFilter);
 		}
-	}, [selectedFilters, url, urlAll]);
+	}, [queryString]);
+
+	console.log(queryString.length, "queryString");
+	console.log(params, "params");
+	// useEffect(() => {
+	// 	if (params === "all") {
+	// 		router.push(urlAll);
+	// 	} else if (queryString.length > 0) {
+	// 		router.push("ACHO QUE EH ISSO");
+	// 	}
+	// }, [params]);
+	// useEffect(() => {
+	// 	if (
+	// 		selectedFilters.length > 0 &&
+	// 		categoryPath === null &&
+	// 		params === "all"
+	// 	) {
+	// 		router.replace(url);
+	// 		console.log("NUMERO 1", selectedFilters.length);
+	// 		console.log("NUMERO 1", categoryPath);
+	// 		console.log("NUMERO 1", params);
+	// 		console.log("NUMERO 1", queryString);
+	// 	} else if (categoryPath) {
+	// 		router.replace(urlWithCategory);
+	// 		console.log("NUMERO 2", categoryPath);
+	// 	} else if (params === "all") {
+	// 		router.replace(urlAll);
+	// 		console.log("NUMERO 333", selectedFilters.length);
+	// 		console.log("NUMERO 333", categoryPath);
+	// 		console.log("NUMERO 333", params);
+	// 		console.log("NUMERO 333", queryString);
+	// 	}
+	// }, [selectedFilters, url, urlAll, categoryPath, queryString]);
 
 	useOutsideClick(ref, handleClickOutside);
 

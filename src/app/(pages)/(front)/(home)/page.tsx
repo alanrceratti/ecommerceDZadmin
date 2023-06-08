@@ -37,6 +37,7 @@ export default function MainPage() {
 							alt="scene1"
 							fill
 							className="object-cover "
+							sizes="60vw"
 						/>
 					</div>
 					<div className="w-full h-[200px] sm:h-[400px] relative">
@@ -45,6 +46,7 @@ export default function MainPage() {
 							alt="scene2"
 							fill
 							className="object-cover "
+							sizes="60vw"
 						/>
 					</div>
 					<div className="w-3/5 h-[200px] sm:h-[400px] relative ">
@@ -53,6 +55,7 @@ export default function MainPage() {
 							alt="scene3"
 							fill
 							className="object-cover "
+							sizes="60vw"
 						/>
 					</div>
 				</div>

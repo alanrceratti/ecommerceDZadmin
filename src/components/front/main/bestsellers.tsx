@@ -43,6 +43,7 @@ export default function BestSellers() {
 														alt="drone"
 														fill
 														className="ml-auto mr-auto rounded-md object-cover"
+														sizes="(max-width: 280px) 100vw"
 													/>
 												)}
 											</div>

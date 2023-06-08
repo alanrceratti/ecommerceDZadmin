@@ -25,16 +25,17 @@ export default function MainCard() {
 	const decodedParamsString = decodeURIComponent(paramsString);
 	const reconstructedURL = `${decodedParamsString}`;
 
-	console.log("Reconstructed URL:", reconstructedURL);
-
 	const categoryPath = path?.split("/")[4];
 	const categoryPath2 = path?.split("/")[2];
 	const params = searchParams?.get("category");
 
-	// console.log("PATH", params);
-	// console.log("teste1", categoryPath);
-	// console.log("teste2", categoryPath2);
-	// console.log("teste3333333", queryKeys.length);
+	// console.log("params", params);
+	// console.log("categoryPath", categoryPath);
+	// console.log("categoryPath2", categoryPath2);
+	// console.log("queryKeysLENGTH", queryKeys.length);
+	// console.log("queryKeys", queryKeys[0]);
+	// console.log("Reconstructed URL:", reconstructedURL);
+
 	const selectCategory = () => {
 		if (
 			categoryPath2 !== "all" &&
@@ -74,7 +75,7 @@ export default function MainCard() {
 				.catch((error) => {
 					console.error(error);
 				});
-		} else {
+		} else if (categoryPath2 === "all") {
 			fetch(`/api/productsAll`)
 				.then((response) => response.json())
 				.then((data) => {
@@ -109,6 +110,7 @@ export default function MainCard() {
 													alt="drone"
 													fill
 													className="ml-auto mr-auto rounded-md object-cover"
+													sizes="(max-width: 280px) 100vw"
 												/>
 											)}
 										</div>

@@ -14,20 +14,22 @@ export default function Footer() {
 			<div className="bg-black text-white ">
 				<div className="flex justify-center pb-8 ">
 					<aside className="hidden lg:block bg-white m-8 rounded-md ">
-						<div className="w-[350px] h-[225px]   relative">
+						<div className="w-[350px] h-[233px]  relative">
 							<Image
 								src="/assets/footer/drones1.webp"
 								alt="drone-photo"
 								fill
 								className="rounded-t-md"
+								sizes="(max-width: 350px) 100vw"
 							/>
 						</div>
-						<div className="w-[350px] h-[205px]  relative">
+						<div className="w-[350px] h-[233px]  relative">
 							<Image
 								src="/assets/footer/drones2.webp"
 								alt="drone-photo"
 								fill
 								className="rounded-b-md"
+								sizes="(max-width: 350px) 100vw"
 							/>
 						</div>
 					</aside>

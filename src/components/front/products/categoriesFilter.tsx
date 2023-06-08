@@ -90,7 +90,7 @@ export default function CategoriesFilter() {
 		}
 	});
 
-	console.log(result);
+	// console.log(result);
 	return (
 		<main className="w-fit ">
 			{result && result.length > 0 ? (
