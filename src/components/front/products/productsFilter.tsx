@@ -19,13 +19,14 @@ export default function ProductsFilter() {
 	const searchParams = useSearchParams();
 	const searchParams2 = usePathname();
 	const params = searchParams2?.split("/")[2];
-	const urlSearchParams = new URLSearchParams(window.location.search);
+	// const urlSearchParams = new URLSearchParams(window.location.search);
 	const retrieveParams = searchParams?.getAll("prices");
 
 	const categoryPath = searchParams?.get("category");
-	const pricePath = searchParams?.get("price");
-
-	// console.log("FILTER FILTER ", searchParams2);
+	const pricePath = searchParams?.getAll("price") ?? [];
+	const timePath = searchParams?.getAll("time") ?? [];
+	const allURLFilter = [...pricePath, ...timePath];
+	console.log("FILTER FILTER ", allURLFilter);
 
 	const filters = productsFilter as Filters;
 	const active = "text-orange";
@@ -64,7 +65,7 @@ export default function ProductsFilter() {
 		option: FilterOption,
 		event: React.ChangeEvent<HTMLInputElement>
 	) => {
-		event?.preventDefault();
+		event.preventDefault();
 		const isSelected = selectedFilters.includes(option);
 		if (isSelected) {
 			setSelectedFilters(
@@ -105,7 +106,7 @@ export default function ProductsFilter() {
 	const urlWithCategoryWithFilter = `/products/filter?category=${categoryPath}&${queryString}`;
 	const urlAll = `/products/all`;
 
-	// console.log("categoryPath ", selectedFilters2);
+	console.log("pricePath ", pricePath);
 
 	const handleClickOutside = () => {
 		setIsOpen(false);
@@ -113,10 +114,14 @@ export default function ProductsFilter() {
 	// useEffect(() => {
 	// 	selectedFilters2 = [];
 	// }, [selectedFilters2]);
-	console.log(selectedFilters2, "selectedFilters2", "selectedFilters2");
+	// console.log(selectedFilters2, "selectedFilters2", "selectedFilters2");
 	useEffect(() => {
-		if (queryString.length > 0 && !categoryPath) {
-			console.log("urlOnlyFilter");
+		if (
+			queryString.length > 0 &&
+			!categoryPath &&
+			selectedFilters2.length > 0
+		) {
+			console.log("urlOnlyFilter", selectedFilters2);
 			router.push(urlOnlyFilter);
 		} else if (
 			queryString.length === 0 &&
@@ -132,11 +137,20 @@ export default function ProductsFilter() {
 			!pricePath &&
 			selectedFilters2.length === 0
 		) {
-			console.log("categoryPath", selectedFilters2.length, categoryPath);
+			console.log("urlAll", selectedFilters2);
+			router.replace(urlAll);
+		} else if (
+			selectedFilters2.length === 0 &&
+			params === "filter" &&
+			allURLFilter.length < 1
+		) {
 			router.replace(urlAll);
 		}
+		console.log("selectedFilters2.length", selectedFilters2.length);
+		console.log("params", params);
+		console.log("allURLFilterh", allURLFilter);
 	}, [queryString, selectedFilters2]);
-	console.log("pricePath", pricePath);
+	// console.log("pricePath", pricePath);
 	useEffect(() => {
 		const urlSearchParams = queryString;
 		const filterOptions = [] as FilterOption[];
@@ -348,8 +362,8 @@ export default function ProductsFilter() {
 														<input
 															className="w-4 h-6 mx-1 mt-2"
 															type="checkbox"
-															checked={selectedFilters.includes(
-																option
+															checked={allURLFilter?.includes(
+																option.value
 															)}
 															onChange={(event) =>
 																handleFilterChange(
