@@ -51,7 +51,7 @@ export default function HeaderNav() {
 						<Link href={"/"} className="hover">
 							Home
 						</Link>
-						<Link href={"/shop"} className="hover">
+						<Link href={"/products/all"} className="hover">
 							Shop
 						</Link>
 						<Link href={"/about"} className="hover">
@@ -89,7 +89,10 @@ export default function HeaderNav() {
 										<Link href={"/"} className="hover">
 											Home
 										</Link>
-										<Link href={"/shop"} className="hover">
+										<Link
+											href={"/products/all"}
+											className="hover"
+										>
 											Shop
 										</Link>
 										<Link href={"/about"} className="hover">

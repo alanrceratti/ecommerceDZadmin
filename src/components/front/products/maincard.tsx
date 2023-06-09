@@ -63,7 +63,7 @@ export default function MainCard() {
 				.catch((error) => {
 					console.error(error);
 				});
-		} else if (queryKeys.length >= 1 && queryKeys[0] === "category") {
+		} else if (queryKeys.length > 1 && queryKeys[0] === "category") {
 			fetch(`/api/productsIndividualFilter?${reconstructedURL}`)
 				// fetch(
 				// 	`/api/productsIndividualFilter?category=FPV&price=10100-25000`
@@ -90,6 +90,11 @@ export default function MainCard() {
 	useEffect(() => {
 		selectCategory();
 	}, [path, reconstructedURL]);
+	// useEffect(() => {
+	// 	selectCategory();
+	// }, [path, reconstructedURL]);
+	// console.log("reconstructedURL", reconstructedURL);
+	// console.log("path", path);
 
 	return (
 		<>

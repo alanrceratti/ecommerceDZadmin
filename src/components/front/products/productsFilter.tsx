@@ -36,7 +36,12 @@ export default function ProductsFilter() {
 		setIsOpen((isOpen) => !isOpen);
 	}
 
-	function handleFiltersOpen(filterName: string) {
+	function handleFiltersOpen(
+		filterName: string,
+		event: React.MouseEvent<HTMLHeadingElement | SVGSVGElement>
+	) {
+		event.preventDefault();
+		event.stopPropagation();
 		if (openFilter.includes(filterName)) {
 			setOpenFilter(openFilter.filter((filter) => filter !== filterName));
 		} else {
@@ -61,11 +66,7 @@ export default function ProductsFilter() {
 	// 	};
 	// }, []);
 
-	const handleFilterChange = (
-		option: FilterOption,
-		event: React.ChangeEvent<HTMLInputElement>
-	) => {
-		event.preventDefault();
+	const handleFilterChange = (option: FilterOption) => {
 		const isSelected = selectedFilters.includes(option);
 		if (isSelected) {
 			setSelectedFilters(
@@ -89,16 +90,25 @@ export default function ProductsFilter() {
 		const updatedUrl = `/products/filter${
 			updatedQuery ? `?${updatedQuery}` : ""
 		}`;
-		router.replace(updatedUrl);
 
+		router.replace(updatedUrl);
 		return isSelected;
 	};
+	const [selectedFilters2, setSelectedFilters2] = useState<string[]>([]);
 
-	let selectedFilters2 = [] as string[];
-	selectedFilters.forEach((filter) => {
-		const filterParam = `${filter.labelName}=${filter.value}`;
-		selectedFilters2.push(filterParam);
-	});
+	useEffect(() => {
+		const newSelectedFilters2 = selectedFilters.map(
+			(filter) => `${filter.labelName}=${filter.value}`
+		);
+		setSelectedFilters2(newSelectedFilters2);
+	}, [selectedFilters]);
+
+	// selectedFilters.forEach((filter) => {
+	// 	const filterParam = `${filter.labelName}=${filter.value}`;
+	// 	selectedFilters2.push(filterParam);
+	// });
+	//
+
 	const queryString = selectedFilters2.join("&");
 
 	const router = useRouter();
@@ -107,6 +117,9 @@ export default function ProductsFilter() {
 	const urlAll = `/products/all`;
 
 	// console.log("pricePath ", pricePath);
+	// console.log("selectedFilters2.length", selectedFilters2.length);
+	// console.log("params", params);
+	// console.log("allURLFilterh", allURLFilter);
 
 	const handleClickOutside = () => {
 		setIsOpen(false);
@@ -114,6 +127,7 @@ export default function ProductsFilter() {
 	// useEffect(() => {
 	// 	selectedFilters2 = [];
 	// }, [selectedFilters2]);
+
 	// console.log(selectedFilters2, "selectedFilters2", "selectedFilters2");
 	useEffect(() => {
 		if (
@@ -121,55 +135,38 @@ export default function ProductsFilter() {
 			!categoryPath &&
 			selectedFilters2.length > 0
 		) {
-			console.log("urlOnlyFilter111111111111111", selectedFilters2);
 			router.push(urlOnlyFilter);
+			console.log("urlOnlyFilter", urlOnlyFilter);
 		} else if (
 			queryString.length === 0 &&
 			!categoryPath &&
 			params === "all"
 		) {
+			console.log("urlAll", urlAll);
+
 			router.replace(urlAll);
 		} else if (categoryPath && params === "filter") {
-			console.log("urlWithCategoryWithFilter22222222222222222");
+			console.log("urlWithCategoryWithFilter", urlWithCategoryWithFilter);
+
 			router.replace(urlWithCategoryWithFilter);
 		} else if (
 			queryString.length === 0 &&
 			!pricePath &&
 			selectedFilters2.length === 0
 		) {
-			console.log("urlAll3333333333333333", selectedFilters2);
+			console.log("urlAll3333", urlAll);
+
 			router.replace(urlAll);
 		} else if (
 			selectedFilters2.length === 0 &&
 			params === "filter" &&
 			allURLFilter.length < 1
 		) {
-			console.log("params44444444444444444", params);
+			console.log("urlAll3333", urlAll);
 
 			router.replace(urlAll);
 		}
-		// console.log("selectedFilters2.length", selectedFilters2.length);
-		// console.log("params", params);
-		// console.log("allURLFilterh", allURLFilter);
-	}, [queryString, selectedFilters2]);
-	// console.log("pricePath", pricePath);
-	// useEffect(() => {
-	// 	const urlSearchParams = queryString;
-	// 	const filterOptions = [] as FilterOption[];
-
-	// 	filters.filters.forEach((filter) => {
-	// 		filter.options.forEach((option) => {
-	// 			const paramName = `${option.labelName}=${option.value}`;
-	// 			if (urlSearchParams.includes(paramName)) {
-	// 				filterOptions.push(option);
-	// 			}
-	// 		});
-	// 	});
-
-	// 	setSelectedFilters(filterOptions);
-	// 	// console.log(queryString, "urlSearchParams");
-	// 	// console.log(filterOptions, "filterOptions");
-	// }, [queryString]);
+	}, [selectedFilters2]);
 
 	useOutsideClick(ref, handleClickOutside);
 	// console.log("queryString", queryString.length);
@@ -211,13 +208,13 @@ export default function ProductsFilter() {
 								>
 									All
 								</Link>
-								<Link
-									href={`/products/all`}
+								<button
+									onClick={() => router.push("/products/all")}
 									className="flex w-full p-2
 							border-b-2 border-gray-700"
 								>
 									Reset
-								</Link>
+								</button>
 								<button
 									className="text-orange btn-third ml-2 mt-2"
 									onClick={() => {
@@ -234,9 +231,10 @@ export default function ProductsFilter() {
 													<div className="flex items-center gap-2">
 														<h2
 															className="pl-2 mt-4 font-semibold cursor-pointer"
-															onClick={() =>
+															onClick={(event) =>
 																handleFiltersOpen(
-																	filter.name
+																	filter.name,
+																	event
 																)
 															}
 														>
@@ -249,9 +247,10 @@ export default function ProductsFilter() {
 															strokeWidth={1.5}
 															stroke="currentColor"
 															className="w-5 h-5 mt-3 cursor-pointer"
-															onClick={() =>
+															onClick={(event) =>
 																handleFiltersOpen(
-																	filter.name
+																	filter.name,
+																	event
 																)
 															}
 														>
@@ -281,12 +280,9 @@ export default function ProductsFilter() {
 																		checked={selectedFilters.includes(
 																			option
 																		)}
-																		onChange={(
-																			event
-																		) =>
+																		onChange={() =>
 																			handleFilterChange(
-																				option,
-																				event
+																				option
 																			)
 																		}
 																	/>
@@ -326,9 +322,10 @@ export default function ProductsFilter() {
 											<div className="flex items-center gap-2">
 												<h2
 													className=" mt-4 font-semibold cursor-pointer"
-													onClick={() =>
+													onClick={(event) =>
 														handleFiltersOpen(
-															filter.name
+															filter.name,
+															event
 														)
 													}
 												>
@@ -341,9 +338,10 @@ export default function ProductsFilter() {
 													strokeWidth={1.5}
 													stroke="currentColor"
 													className="w-5 h-5 mt-3 cursor-pointer"
-													onClick={() =>
+													onClick={(event) =>
 														handleFiltersOpen(
-															filter.name
+															filter.name,
+															event
 														)
 													}
 												>
@@ -370,10 +368,9 @@ export default function ProductsFilter() {
 															checked={allURLFilter?.includes(
 																option.value
 															)}
-															onChange={(event) =>
+															onChange={() =>
 																handleFilterChange(
-																	option,
-																	event
+																	option
 																)
 															}
 														/>
