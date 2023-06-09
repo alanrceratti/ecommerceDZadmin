@@ -42,14 +42,10 @@ export default function ProductDetails() {
 						<div className="w-full max-w-[1440px] m-auto ">
 							<div className="m-4">
 								<button
-									onClick={() =>
-										router.push(
-											`/products/${product?.category?.name}`
-										)
-									}
+									onClick={() => router.back()}
 									className="text-sm h-fit w-fit font-poppins text-gray-500 mb-4 hover:text-white cursor-pointer"
 								>
-									Back to results
+									Back
 								</button>
 								<div className=" sm:flex sm:justify-between w-full mx-auto text-center ">
 									<div className="w-[280px] h-[250px] sm:w-[300px] sm:h-[350px]  md:w-[450px] md:h-[440px] lg:w-[600px] lg:h-[580px] relative m-auto ">
@@ -106,9 +102,8 @@ export default function ProductDetails() {
 													width={20}
 													height={20}
 												/>
-												Battery duration up to&nbsp;
-												{product.battery}
-												minutes
+												Battery up to -&nbsp;
+												{product.battery} minutes
 											</div>
 											<div className="flex gap-1 items-center ">
 												<Image
@@ -117,7 +112,7 @@ export default function ProductDetails() {
 													width={20}
 													height={20}
 												/>
-												Water proof -{" "}
+												Water proof -&nbsp;
 												{product.waterProof}
 											</div>
 											<div className="flex gap-1 items-center ">
@@ -131,13 +126,13 @@ export default function ProductDetails() {
 												kg
 											</div>
 
-											<hr className=" h-4/6 sm:h-3/6 lg:h-2/5 absolute -right-2 top-14 w-[1px] bg-white border-none  "></hr>
+											<hr className=" h-3/6 sm:h-3/6 lg:h-2/5 absolute -right-2 top-14 w-[1px] bg-white border-none  "></hr>
 
 											<hr className="h-[1px] w-full  bg-white border-none   "></hr>
 										</div>
 										<div className="flex items-center justify-between pt-8">
 											<div>
-												<h3 className="text-white font-poppins text-base font-normal sm:text-2xl">
+												<h3 className="text-white font-poppins text-lg font-normal sm:text-2xl">
 													£
 													{product.price &&
 														(
@@ -155,7 +150,7 @@ export default function ProductDetails() {
 												</p>
 											</div>
 
-											<button className="btn-primary items-center !text-lg  !text-black hover:!text-white hover:!bg-black flex gap-1 shadow-xl">
+											<button className="btn-third !bg-orange items-center !text-lg  !text-black hover:!text-white hover:!bg-black flex gap-1 shadow-xl">
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
 													fill="none"

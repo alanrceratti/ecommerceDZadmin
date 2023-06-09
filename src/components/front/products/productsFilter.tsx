@@ -26,7 +26,7 @@ export default function ProductsFilter() {
 	const pricePath = searchParams?.getAll("price") ?? [];
 	const timePath = searchParams?.getAll("time") ?? [];
 	const allURLFilter = [...pricePath, ...timePath];
-	console.log("FILTER FILTER ", allURLFilter);
+	// console.log("FILTER FILTER ", allURLFilter);
 
 	const filters = productsFilter as Filters;
 	const active = "text-orange";
@@ -46,20 +46,20 @@ export default function ProductsFilter() {
 	}
 
 	//if user scroll any direction, menu close
-	useEffect(() => {
-		let prevScrollY = window.pageYOffset;
-		const scrollListener = () => {
-			const scrollY = window.pageYOffset;
-			if (scrollY !== prevScrollY) {
-				setIsOpen(false);
-			}
-			prevScrollY = scrollY;
-		};
-		window.addEventListener("touchmove", scrollListener);
-		return () => {
-			window.removeEventListener("touchmove", scrollListener);
-		};
-	}, []);
+	// useEffect(() => {
+	// 	let prevScrollY = window.pageYOffset;
+	// 	const scrollListener = () => {
+	// 		const scrollY = window.pageYOffset;
+	// 		if (scrollY !== prevScrollY) {
+	// 			setIsOpen(false);
+	// 		}
+	// 		prevScrollY = scrollY;
+	// 	};
+	// 	window.addEventListener("touchmove", scrollListener);
+	// 	return () => {
+	// 		window.removeEventListener("touchmove", scrollListener);
+	// 	};
+	// }, []);
 
 	const handleFilterChange = (
 		option: FilterOption,
@@ -106,7 +106,7 @@ export default function ProductsFilter() {
 	const urlWithCategoryWithFilter = `/products/filter?category=${categoryPath}&${queryString}`;
 	const urlAll = `/products/all`;
 
-	console.log("pricePath ", pricePath);
+	// console.log("pricePath ", pricePath);
 
 	const handleClickOutside = () => {
 		setIsOpen(false);
@@ -121,7 +121,7 @@ export default function ProductsFilter() {
 			!categoryPath &&
 			selectedFilters2.length > 0
 		) {
-			console.log("urlOnlyFilter", selectedFilters2);
+			console.log("urlOnlyFilter111111111111111", selectedFilters2);
 			router.push(urlOnlyFilter);
 		} else if (
 			queryString.length === 0 &&
@@ -130,79 +130,84 @@ export default function ProductsFilter() {
 		) {
 			router.replace(urlAll);
 		} else if (categoryPath && params === "filter") {
-			console.log("urlWithCategoryWithFilter");
+			console.log("urlWithCategoryWithFilter22222222222222222");
 			router.replace(urlWithCategoryWithFilter);
 		} else if (
 			queryString.length === 0 &&
 			!pricePath &&
 			selectedFilters2.length === 0
 		) {
-			console.log("urlAll", selectedFilters2);
+			console.log("urlAll3333333333333333", selectedFilters2);
 			router.replace(urlAll);
 		} else if (
 			selectedFilters2.length === 0 &&
 			params === "filter" &&
 			allURLFilter.length < 1
 		) {
+			console.log("params44444444444444444", params);
+
 			router.replace(urlAll);
 		}
-		console.log("selectedFilters2.length", selectedFilters2.length);
-		console.log("params", params);
-		console.log("allURLFilterh", allURLFilter);
+		// console.log("selectedFilters2.length", selectedFilters2.length);
+		// console.log("params", params);
+		// console.log("allURLFilterh", allURLFilter);
 	}, [queryString, selectedFilters2]);
 	// console.log("pricePath", pricePath);
-	useEffect(() => {
-		const urlSearchParams = queryString;
-		const filterOptions = [] as FilterOption[];
+	// useEffect(() => {
+	// 	const urlSearchParams = queryString;
+	// 	const filterOptions = [] as FilterOption[];
 
-		filters.filters.forEach((filter) => {
-			filter.options.forEach((option) => {
-				const paramName = `${option.labelName}=${option.value}`;
-				if (urlSearchParams.includes(paramName)) {
-					filterOptions.push(option);
-				}
-			});
-		});
+	// 	filters.filters.forEach((filter) => {
+	// 		filter.options.forEach((option) => {
+	// 			const paramName = `${option.labelName}=${option.value}`;
+	// 			if (urlSearchParams.includes(paramName)) {
+	// 				filterOptions.push(option);
+	// 			}
+	// 		});
+	// 	});
 
-		setSelectedFilters(filterOptions);
-		// console.log(queryString, "urlSearchParams");
-		// console.log(filterOptions, "filterOptions");
-	}, [queryString]);
+	// 	setSelectedFilters(filterOptions);
+	// 	// console.log(queryString, "urlSearchParams");
+	// 	// console.log(filterOptions, "filterOptions");
+	// }, [queryString]);
 
 	useOutsideClick(ref, handleClickOutside);
 	// console.log("queryString", queryString.length);
 	return (
-		<main className="w-[150px] ">
+		<main className="w-[100px] sm:w-[150px] ">
 			{/* {result && result.length > 0 ? ( */}
-			<div className="m-2 font-poppins text-black ">
+			<div className="m-2 font-poppins text-black w-fit">
 				{mobile ? (
 					<>
-						<h1 className="font-bold  text-black m-0">Filter by</h1>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							strokeWidth={1.5}
-							stroke="currentColor"
-							className="w-8 h-8"
-							onClick={handleFilters}
-						>
-							<path
-								strokeLinecap="round"
-								strokeLinejoin="round"
-								d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5"
-							/>
-						</svg>
-
+						<div className="flex w-[100px]">
+							<h1 className="font-bold  text-black m-0 ">
+								Filter by
+							</h1>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								fill="none"
+								viewBox="0 0 24 24"
+								strokeWidth={1.5}
+								stroke="currentColor"
+								className="w-8 h-8"
+								onClick={handleFilters}
+							>
+								<path
+									strokeLinecap="round"
+									strokeLinejoin="round"
+									d="M6 13.5V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 010 3m0-3a1.5 1.5 0 000 3m0 9.75V10.5"
+								/>
+							</svg>
+						</div>
 						{isOpen ? (
 							<div
 								ref={ref}
-								className="bg-black text-white absolute h-fit w-2/4 z-10 rounded-md font-poppins py-1"
+								className="bg-black right-2 text-white absolute  h-fit w-2/5 z-10 rounded-md font-poppins py-1"
 							>
 								<Link
 									href={`/products/all`}
 									className="flex w-full p-2
-							border-b-2 border-gray-700"
+							border-b-2 border-gray-700 "
 								>
 									All
 								</Link>
