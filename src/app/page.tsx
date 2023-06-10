@@ -7,7 +7,7 @@ export default function App() {
 	return (
 		<main>
 			<HomeLayout>
-				<MainPage/>
+				<MainPage />
 			</HomeLayout>
 		</main>
 	);

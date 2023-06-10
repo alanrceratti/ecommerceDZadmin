@@ -99,7 +99,7 @@ export default function MainCard() {
 	return (
 		<>
 			<div className="flex justify-center w-full sm:justify-normal bg-white min-h-[500px]   ">
-				{products.length > 0 ? (
+				{products.length === 0 ? (
 					<div className="flex flex-wrap items-center justify-center pt-9 ">
 						{products.map((product) => (
 							<div className="sm:p-8 p-2 " key={product._id}>
@@ -220,7 +220,9 @@ export default function MainCard() {
 						))}
 					</div>
 				) : (
-					<Loading />
+					<div className="m-auto w-full flex-grow">
+						<Loading />
+					</div>
 				)}
 			</div>
 		</>

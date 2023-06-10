@@ -19,14 +19,13 @@ export default function ProductsFilter() {
 	const searchParams = useSearchParams();
 	const searchParams2 = usePathname();
 	const params = searchParams2?.split("/")[2];
-	// const urlSearchParams = new URLSearchParams(window.location.search);
-	const retrieveParams = searchParams?.getAll("prices");
 
 	const categoryPath = searchParams?.get("category");
 	const pricePath = searchParams?.getAll("price") ?? [];
 	const timePath = searchParams?.getAll("time") ?? [];
 	const allURLFilter = [...pricePath, ...timePath];
-	// console.log("FILTER FILTER ", allURLFilter);
+	const URLwithSearch = window.location.href.includes("?");
+	console.log("FILTER FILTER ", URLwithSearch);
 
 	const filters = productsFilter as Filters;
 	const active = "text-orange";
@@ -34,6 +33,11 @@ export default function ProductsFilter() {
 
 	function handleFilters() {
 		setIsOpen((isOpen) => !isOpen);
+	}
+
+	function resetFilter() {
+		router.push("/products/all");
+		setIsOpen(false);
 	}
 
 	function handleFiltersOpen(
@@ -160,12 +164,14 @@ export default function ProductsFilter() {
 		} else if (
 			selectedFilters2.length === 0 &&
 			params === "filter" &&
-			allURLFilter.length < 1
+			URLwithSearch
 		) {
 			console.log("urlAll3333", urlAll);
-
 			router.replace(urlAll);
 		}
+		console.log("selectedFilters2.lengt", selectedFilters2.length);
+		console.log("params", params);
+		console.log("URLwithSearch", URLwithSearch);
 	}, [selectedFilters2]);
 
 	useOutsideClick(ref, handleClickOutside);
@@ -209,7 +215,7 @@ export default function ProductsFilter() {
 									All
 								</Link>
 								<button
-									onClick={() => router.push("/products/all")}
+									onClick={resetFilter}
 									className="flex w-full p-2
 							border-b-2 border-gray-700"
 								>
