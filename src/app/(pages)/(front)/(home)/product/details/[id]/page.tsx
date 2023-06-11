@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 
 import Loading from "@/components/front/products/loading";
 import SimilarProducts from "@/components/front/products/similarProducts";
+import HeaderNav from "@/components/front/main/header";
+import Footer from "@/components/front/footer/footer";
 
 export default function ProductDetails() {
 	const [product, setProduct] = useState<NewProductsProps>();
@@ -34,6 +36,7 @@ export default function ProductDetails() {
 
 	return (
 		<main>
+			<HeaderNav />
 			{isLoading ? (
 				<Loading />
 			) : (
@@ -179,6 +182,7 @@ export default function ProductDetails() {
 				</>
 			)}
 			<SimilarProducts Category={product?.category?._id as string} />
+			<Footer />
 		</main>
 	);
 }

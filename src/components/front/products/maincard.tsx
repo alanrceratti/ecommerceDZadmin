@@ -208,7 +208,7 @@ export default function MainCard() {
 											</button>
 
 											<Link
-												href={`products/details/${product._id}`}
+												href={`/product/details/${product._id}`}
 												className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl"
 											>
 												View More

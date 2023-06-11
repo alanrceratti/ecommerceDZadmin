@@ -24,8 +24,7 @@ export default function ProductsFilter() {
 	const pricePath = searchParams?.getAll("price") ?? [];
 	const timePath = searchParams?.getAll("time") ?? [];
 	const allURLFilter = [...pricePath, ...timePath];
-	const URLwithSearch = window.location.href.includes("?");
-	console.log("FILTER FILTER ", URLwithSearch);
+	// console.log("FILTER FILTER ", URLwithSearch);
 
 	const filters = productsFilter as Filters;
 	const active = "text-orange";
@@ -115,6 +114,12 @@ export default function ProductsFilter() {
 
 	const queryString = selectedFilters2.join("&");
 
+	useEffect(() => {
+		if (queryString.length === 0 && params === "filter") {
+			router.push(urlAll);
+		}
+	}, [queryString]);
+
 	const router = useRouter();
 	const urlOnlyFilter = `/products/filter?${queryString}`;
 	const urlWithCategoryWithFilter = `/products/filter?category=${categoryPath}&${queryString}`;
@@ -131,7 +136,7 @@ export default function ProductsFilter() {
 	// useEffect(() => {
 	// 	selectedFilters2 = [];
 	// }, [selectedFilters2]);
-
+	console.log("queryString", pricePath);
 	// console.log(selectedFilters2, "selectedFilters2", "selectedFilters2");
 	useEffect(() => {
 		if (
@@ -148,11 +153,11 @@ export default function ProductsFilter() {
 		) {
 			console.log("urlAll", urlAll);
 
-			router.replace(urlAll);
+			router.push(urlAll);
 		} else if (categoryPath && params === "filter") {
 			console.log("urlWithCategoryWithFilter", urlWithCategoryWithFilter);
 
-			router.replace(urlWithCategoryWithFilter);
+			router.push(urlWithCategoryWithFilter);
 		} else if (
 			queryString.length === 0 &&
 			!pricePath &&
@@ -160,19 +165,20 @@ export default function ProductsFilter() {
 		) {
 			console.log("urlAll3333", urlAll);
 
-			router.replace(urlAll);
+			router.push(urlAll);
 		} else if (
 			selectedFilters2.length === 0 &&
 			params === "filter" &&
-			URLwithSearch
+			allURLFilter.length === 0
 		) {
 			console.log("urlAll3333", urlAll);
-			router.replace(urlAll);
+			router.push(urlAll);
 		}
-		console.log("selectedFilters2.lengt", selectedFilters2.length);
-		console.log("params", params);
-		console.log("URLwithSearch", URLwithSearch);
 	}, [selectedFilters2]);
+
+	// console.log("selectedFilters", selectedFilters2.length);
+	// console.log("params", params);
+	// console.log("allURLFilter", allURLFilter.length);
 
 	useOutsideClick(ref, handleClickOutside);
 	// console.log("queryString", queryString.length);
