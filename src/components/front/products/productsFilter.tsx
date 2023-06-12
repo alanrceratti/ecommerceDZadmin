@@ -6,12 +6,12 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import productsFilter from "../products/productsFilters.json";
 import useOutsideClick from "@/app/hooks/useOnClickOutside";
-import path from "path";
 
 export default function ProductsFilter() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [openFilter, setOpenFilter] = useState<string[]>([]);
 	const [selectedFilters, setSelectedFilters] = useState<FilterOption[]>([]);
+	const [selectedFilters2, setSelectedFilters2] = useState<string[]>([]);
 
 	const mobile = useMedia("(max-width: 640px)");
 
@@ -24,11 +24,14 @@ export default function ProductsFilter() {
 	const pricePath = searchParams?.getAll("price") ?? [];
 	const timePath = searchParams?.getAll("time") ?? [];
 	const allURLFilter = [...pricePath, ...timePath];
-	// console.log("FILTER FILTER ", URLwithSearch);
+	const price = pricePath.map((value) => "price=" + value);
+	const time = timePath.map((value) => "time=" + value);
+	const allFilters = [...price, ...time];
 
 	const filters = productsFilter as Filters;
 	const active = "text-orange";
 	const notActive = "text-black";
+	console.log("ASASDASDASDASD", allFilters);
 
 	function handleFilters() {
 		setIsOpen((isOpen) => !isOpen);
@@ -97,7 +100,6 @@ export default function ProductsFilter() {
 		router.replace(updatedUrl);
 		return isSelected;
 	};
-	const [selectedFilters2, setSelectedFilters2] = useState<string[]>([]);
 
 	useEffect(() => {
 		const newSelectedFilters2 = selectedFilters.map(
@@ -114,11 +116,11 @@ export default function ProductsFilter() {
 
 	const queryString = selectedFilters2.join("&");
 
-	useEffect(() => {
-		if (queryString.length === 0 && params === "filter") {
-			router.push(urlAll);
-		}
-	}, [queryString]);
+	// useEffect(() => {
+	// 	if (queryString.length === 0 && params === "filter") {
+	// 		router.push(urlAll);
+	// 	}
+	// }, [queryString]);
 
 	const router = useRouter();
 	const urlOnlyFilter = `/products/filter?${queryString}`;
@@ -128,7 +130,6 @@ export default function ProductsFilter() {
 	// console.log("pricePath ", pricePath);
 	// console.log("selectedFilters2.length", selectedFilters2.length);
 	// console.log("params", params);
-	// console.log("allURLFilterh", allURLFilter);
 
 	const handleClickOutside = () => {
 		setIsOpen(false);
@@ -136,7 +137,7 @@ export default function ProductsFilter() {
 	// useEffect(() => {
 	// 	selectedFilters2 = [];
 	// }, [selectedFilters2]);
-	console.log("queryString", pricePath);
+	// console.log("queryString", pricePath);
 	// console.log(selectedFilters2, "selectedFilters2", "selectedFilters2");
 	useEffect(() => {
 		if (
@@ -144,8 +145,8 @@ export default function ProductsFilter() {
 			!categoryPath &&
 			selectedFilters2.length > 0
 		) {
-			router.push(urlOnlyFilter);
 			console.log("urlOnlyFilter", urlOnlyFilter);
+			router.push(urlOnlyFilter);
 		} else if (
 			queryString.length === 0 &&
 			!categoryPath &&
@@ -171,9 +172,11 @@ export default function ProductsFilter() {
 			params === "filter" &&
 			allURLFilter.length === 0
 		) {
-			console.log("urlAll3333", urlAll);
+			console.log("urlAll44444", urlAll);
 			router.push(urlAll);
 		}
+		const urlParam = window.location.toString().includes("?");
+		console.log("ALOALOALO", urlParam);
 	}, [selectedFilters2]);
 
 	// console.log("selectedFilters", selectedFilters2.length);
@@ -182,6 +185,17 @@ export default function ProductsFilter() {
 
 	useOutsideClick(ref, handleClickOutside);
 	// console.log("queryString", queryString.length);
+	useEffect(() => {
+		if (selectedFilters.length === 0 && params !== "filter") {
+			setSelectedFilters2(allFilters);
+			console.log("ASASDASDASDASD", selectedFilters2);
+		}
+	}, [selectedFilters2]);
+
+	// console.log("FILTER FILTER ", [price, time]);
+	// console.log("allURLFilterh", allURLFilter);
+	// console.log("selectedFilters", selectedFilters);
+	// console.log("selectedFilters2", selectedFilters2);
 	return (
 		<main className="w-[100px] sm:w-[150px] ">
 			{/* {result && result.length > 0 ? ( */}
@@ -289,8 +303,8 @@ export default function ProductsFilter() {
 																	<input
 																		className="w-4 h-6 mx-1 mt-2"
 																		type="checkbox"
-																		checked={selectedFilters.includes(
-																			option
+																		checked={allURLFilter?.includes(
+																			option.value
 																		)}
 																		onChange={() =>
 																			handleFilterChange(
@@ -377,7 +391,9 @@ export default function ProductsFilter() {
 														<input
 															className="w-4 h-6 mx-1 mt-2"
 															type="checkbox"
-															checked={allURLFilter?.includes(
+															checked={Object.values(
+																allURLFilter
+															).includes(
 																option.value
 															)}
 															onChange={() =>
