@@ -28,7 +28,7 @@ export default function HomeLayout({
 					{/* <Suspense fallback={<Loading />}> */}
 					<CategoriesFilter />
 					{/* </Suspense> */}
-					{/* <Suspense fallback={<Loading />}> */}
+					{/* <Suspense fallback={<Loading/>}> */}
 					<ProductsFilter />
 					{/* </Suspense> */}
 				</div>
