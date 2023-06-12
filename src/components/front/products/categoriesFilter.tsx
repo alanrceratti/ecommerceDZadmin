@@ -40,21 +40,30 @@ export default function CategoriesFilter() {
 	}, []);
 
 	//fetch all categories from mongodb
-	useEffect(() => {
-		fetch("/api/categoriesAll")
-			.then((response) => response.json())
-			.then((data) => {
-				setCategories(data);
-			});
-	}, []);
+	async function fetchAllCategories() {
+		try {
+			const response = await fetch("/api/categoriesAll");
+			const data = await response.json();
+			setCategories(data);
+		} catch (error) {
+			console.error("Error fetching all categories:", error);
+		}
+	}
 
 	//fetch all categories from mongodb from Products Schema (show only the categories that exist)
+	async function countCategories() {
+		try {
+			const response = await fetch("/api/categoriesCount");
+			const data = await response.json();
+			setCategoriesCount(data);
+		} catch (error) {
+			console.error("Error fetching categories count:", error);
+		}
+	}
+
 	useEffect(() => {
-		fetch("/api/categoriesCount")
-			.then((response) => response.json())
-			.then((data) => {
-				setCategoriesCount(data);
-			});
+		countCategories();
+		fetchAllCategories();
 	}, []);
 
 	const categoryCounts = {} as Record<string, number>;

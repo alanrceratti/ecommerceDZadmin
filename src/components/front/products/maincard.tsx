@@ -36,54 +36,37 @@ export default function MainCard() {
 	// console.log("queryKeys", queryKeys[0]);
 	// console.log("Reconstructed URL:", reconstructedURL);
 
-	const selectCategory = () => {
-		if (
-			categoryPath2 !== "all" &&
-			queryKeys.length === 1 &&
-			queryKeys[0] === "category"
-		) {
-			fetch(`/api/productsIndividualFilter?category=${params}`)
-				// fetch(`/api/productsIndividualFilter?name=Foldable`)
-				.then((response) => response.json())
-				.then((data) => {
-					setProducts(data);
-				})
-				.catch((error) => {
-					console.error(error);
-				});
-		} else if (queryKeys.length >= 1 && queryKeys[0] !== "category") {
-			fetch(`/api/productsIndividualFilter?${reconstructedURL}`)
-				// fetch(
-				// 	`/api/productsIndividualFilter?category=FPV&price=10100-25000`
-				// )
-				.then((response) => response.json())
-				.then((data) => {
-					setProducts(data);
-				})
-				.catch((error) => {
-					console.error(error);
-				});
-		} else if (queryKeys.length > 1 && queryKeys[0] === "category") {
-			fetch(`/api/productsIndividualFilter?${reconstructedURL}`)
-				// fetch(
-				// 	`/api/productsIndividualFilter?category=FPV&price=10100-25000`
-				// )
-				.then((response) => response.json())
-				.then((data) => {
-					setProducts(data);
-				})
-				.catch((error) => {
-					console.error(error);
-				});
-		} else if (categoryPath2 === "all") {
-			fetch(`/api/productsAll`)
-				.then((response) => response.json())
-				.then((data) => {
-					setProducts(data);
-				})
-				.catch((error) => {
-					console.error(error);
-				});
+	const selectCategory = async () => {
+		try {
+			if (
+				categoryPath2 !== "all" &&
+				queryKeys.length === 1 &&
+				queryKeys[0] === "category"
+			) {
+				const response = await fetch(
+					`/api/productsIndividualFilter?category=${params}`
+				);
+				const data = await response.json();
+				setProducts(data);
+			} else if (queryKeys.length >= 1 && queryKeys[0] !== "category") {
+				const response = await fetch(
+					`/api/productsIndividualFilter?${reconstructedURL}`
+				);
+				const data = await response.json();
+				setProducts(data);
+			} else if (queryKeys.length > 1 && queryKeys[0] === "category") {
+				const response = await fetch(
+					`/api/productsIndividualFilter?${reconstructedURL}`
+				);
+				const data = await response.json();
+				setProducts(data);
+			} else if (categoryPath2 === "all") {
+				const response = await fetch(`/api/productsAll`);
+				const data = await response.json();
+				setProducts(data);
+			}
+		} catch (error) {
+			console.error(error);
 		}
 	};
 

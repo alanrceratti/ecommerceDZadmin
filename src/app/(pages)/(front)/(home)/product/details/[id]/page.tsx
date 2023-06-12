@@ -16,18 +16,16 @@ export default function ProductDetails() {
 	const idPath = path?.split("/")[3];
 	const router = useRouter();
 
-	console.log(product?.category?.name);
-	const selectedProduct = () => {
-		fetch(`/api/productDetails?id=${idPath}`)
-			.then((response) => response.json())
-			.then((data) => {
-				setProduct(data);
-				setIsLoading(false);
-			})
-			.catch((error) => {
-				console.error(error);
-				setIsLoading(false);
-			});
+	const selectedProduct = async () => {
+		try {
+			const response = await fetch(`/api/productDetails?id=${idPath}`);
+			const data = await response.json();
+			setProduct(data);
+			setIsLoading(false);
+		} catch (error) {
+			console.error(error);
+			setIsLoading(false);
+		}
 	};
 
 	useEffect(() => {
