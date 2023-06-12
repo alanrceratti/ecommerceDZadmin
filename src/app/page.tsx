@@ -1,4 +1,3 @@
-import HomeLayout from "./(pages)/(front)/products/layout";
 import MainPage from "./(pages)/(front)/(home)/page";
 
 export default function App() {
@@ -6,9 +5,7 @@ export default function App() {
 	// console.log(session);
 	return (
 		<main>
-			<HomeLayout>
-				<MainPage />
-			</HomeLayout>
+			<MainPage />
 		</main>
 	);
 }
