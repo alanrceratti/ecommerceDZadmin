@@ -9,15 +9,18 @@ export default function BestSellers() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const mobile = useMedia("(max-width: 640px)");
 
+	const productsBestSellers = async () => {
+		try {
+			const response = await fetch("/api/productsBestSellers");
+			const data = await response.json();
+			setProducts(data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
 	useEffect(() => {
-		fetch("/api/productsBestSellers")
-			.then((response) => response.json())
-			.then((data) => {
-				setProducts(data);
-			})
-			.catch((error) => {
-				console.error(error);
-			});
+		productsBestSellers();
 	}, []);
 
 	return (
@@ -137,7 +140,7 @@ export default function BestSellers() {
 												</button>
 
 												<Link
-													href={"/details"}
+													href={`/product/details/${product._id}`}
 													className="btn-third !bg-white !text-black hover:!bg-orange   "
 												>
 													View More

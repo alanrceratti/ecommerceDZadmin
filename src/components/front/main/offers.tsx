@@ -9,12 +9,18 @@ import { NewProductsProps } from "@/app/types";
 export default function Offers() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 
+	const productOffers = async () => {
+		try {
+			const response = await fetch("/api/productsOffers");
+			const data = await response.json();
+			setProducts(data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
+
 	useEffect(() => {
-		fetch("/api/productsOffers")
-			.then((response) => response.json())
-			.then((data) => {
-				setProducts(data);
-			});
+		productOffers();
 	}, []);
 
 	return (
@@ -140,7 +146,7 @@ export default function Offers() {
 												</button>
 
 												<Link
-													href={"/details"}
+													href={`/product/details/${product._id}`}
 													className="btn-third !bg-white !text-black hover:!bg-orange shadow-md shadow-slate-300 "
 												>
 													View More
