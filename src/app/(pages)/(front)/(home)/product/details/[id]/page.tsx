@@ -6,8 +6,6 @@ import { useEffect, useState } from "react";
 
 import Loading from "@/components/front/products/loading";
 import SimilarProducts from "@/components/front/products/similarProducts";
-import HeaderNav from "@/components/front/main/header";
-import Footer from "@/components/front/footer/footer";
 
 export default function ProductDetails() {
 	const [product, setProduct] = useState<NewProductsProps>();
@@ -34,7 +32,6 @@ export default function ProductDetails() {
 
 	return (
 		<main>
-			<HeaderNav />
 			{isLoading ? (
 				<Loading />
 			) : (
@@ -49,7 +46,7 @@ export default function ProductDetails() {
 									Back
 								</button>
 								<div className=" sm:flex sm:justify-between w-full mx-auto text-center ">
-									<div className="w-[280px] h-[250px] sm:w-[300px] sm:h-[350px]  md:w-[450px] md:h-[440px] lg:w-[600px] lg:h-[580px] relative m-auto ">
+									<div className="w-[320px] h-[330px] sm:w-[280px] sm:h-[300px]  md:w-[390px] md:h-[440px] lg:w-[600px] lg:h-[580px] relative m-auto ">
 										{product.images && (
 											<Image
 												src={product?.images[0]}
@@ -131,7 +128,7 @@ export default function ProductDetails() {
 
 											<hr className="h-[1px] w-full  bg-white border-none   "></hr>
 										</div>
-										<div className="flex items-center justify-between pt-8">
+										<div className="flex items-center justify-between gap-4 pt-8">
 											<div>
 												<h3 className="text-white font-poppins text-lg font-normal sm:text-2xl">
 													£
@@ -180,7 +177,6 @@ export default function ProductDetails() {
 				</>
 			)}
 			<SimilarProducts Category={product?.category?._id as string} />
-			<Footer />
 		</main>
 	);
 }

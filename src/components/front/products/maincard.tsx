@@ -91,7 +91,7 @@ export default function MainCard() {
 					<div className="flex flex-wrap items-center justify-center pt-9 ">
 						{products.map((product) => (
 							<div className="sm:p-8 p-2 " key={product._id}>
-								<div className="w-[270px] sm:w-[340px] h-[340px] sm:h-[470px] text-center font-poppins text-black font-light  bg-white shadow-2xl  rounded-md ">
+								<div className="w-[270px] sm:w-[340px] h-fit pb-4 sm:h-[470px] text-center font-poppins text-black font-light  bg-white shadow-2xl  rounded-md ">
 									<h2 className="sm:py-4 py-2 font-semibold text-black ">
 										{product.name}
 									</h2>
@@ -108,7 +108,7 @@ export default function MainCard() {
 											)}
 										</div>
 
-										<div className="flex flex-wrap sm:gap-x-4 sm:mx-2 gap-2 text-black text-sm sm:text-base   justify-center py-2">
+										<div className="flex flex-wrap sm:gap-x-4 sm:mx-2 gap-x-2 gap-y-1 mx-2 text-black text-sm sm:text-base   justify-center py-2">
 											<div className="flex gap-1 items-center  ">
 												<Image
 													src="/assets/svgs/speed.svg"
@@ -143,7 +143,7 @@ export default function MainCard() {
 													delayShow={500}
 												/>
 											</div>
-											<div className="flex gap-1 items-center ">
+											<div className="flex gap-1  items-center ">
 												<Image
 													src="/assets/svgs/camera.svg"
 													alt="drone"
@@ -232,11 +232,11 @@ export default function MainCard() {
 											</div>
 											{mobile ? (
 												<Image
-													src="/assets/svgs/heart.svg"
+													src="/assets/svgs/heart-black.svg"
 													alt="drone"
 													width={20}
 													height={20}
-													className="cursor-pointer "
+													className="cursor-pointer opacity-50"
 												/>
 											) : (
 												<Image

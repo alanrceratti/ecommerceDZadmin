@@ -187,7 +187,11 @@ export default function ProductsFilter() {
 								strokeWidth={1.5}
 								stroke="currentColor"
 								className="w-8 h-8"
-								// onClick={handleFilters}
+								onClick={() =>
+									handleFiltersOpen(
+										filters.filters.filter.name
+									)
+								}
 							>
 								<path
 									strokeLinecap="round"
@@ -196,105 +200,107 @@ export default function ProductsFilter() {
 								/>
 							</svg>
 						</div>
-						isOpen && (
-						<div
-							ref={ref}
-							className="bg-black right-2 text-white absolute  h-fit w-2/5 z-10 rounded-md font-poppins py-1"
-						>
-							<Link
-								href={`/products/all`}
-								className="flex w-full p-2
+						{isOpen && (
+							<div
+								ref={ref}
+								className="bg-black right-2 text-white absolute  h-fit w-2/5 z-10 rounded-md font-poppins py-1"
+							>
+								<Link
+									href={`/products/all`}
+									className="flex w-full p-2
 							border-b-2 border-gray-700 "
-							>
-								All
-							</Link>
-							<button
-								onClick={resetFilter}
-								className="flex w-full p-2
+								>
+									All
+								</Link>
+								<button
+									onClick={resetFilter}
+									className="flex w-full p-2
 							border-b-2 border-gray-700"
-							>
-								Reset
-							</button>
-							<button
-								className="text-orange btn-third ml-2 mt-2"
-								onClick={() => {
-									setIsOpen(false);
-								}}
-							>
-								Apply
-							</button>
-							{filters && (
-								<div className=" text-white  h-fit rounded-md font-poppins py-1">
-									<div>
-										{filters.filters.map((filter) => (
-											<div key={filter.name}>
-												<div className="flex items-center gap-2">
-													<h2
-														className="pl-2 mt-4 font-semibold cursor-pointer"
-														onClick={() =>
-															handleFiltersOpen(
-																filter.name
-															)
-														}
-													>
-														{filter.name}
-													</h2>
-													<svg
-														xmlns="http://www.w3.org/2000/svg"
-														fill="none"
-														viewBox="0 0 24 24"
-														strokeWidth={1.5}
-														stroke="currentColor"
-														className="w-5 h-5 mt-3 cursor-pointer"
-														onClick={() =>
-															handleFiltersOpen(
-																filter.name
-															)
-														}
-													>
-														<path
-															strokeLinecap="round"
-															strokeLinejoin="round"
-															d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-														/>
-													</svg>
-												</div>
+								>
+									Reset
+								</button>
+								<button
+									className="text-orange btn-third ml-2 mt-2"
+									onClick={() => {
+										setIsOpen(false);
+									}}
+								>
+									Apply
+								</button>
+								{filters && (
+									<div className=" text-white  h-fit rounded-md font-poppins py-1">
+										<div>
+											{filters.filters.map((filter) => (
+												<div key={filter.name}>
+													<div className="flex items-center gap-2">
+														<h2
+															className="pl-2 mt-4 font-semibold cursor-pointer"
+															onClick={() =>
+																handleFiltersOpen(
+																	filter.name
+																)
+															}
+														>
+															{filter.name}
+														</h2>
+														<svg
+															xmlns="http://www.w3.org/2000/svg"
+															fill="none"
+															viewBox="0 0 24 24"
+															strokeWidth={1.5}
+															stroke="currentColor"
+															className="w-5 h-5 mt-3 cursor-pointer"
+															onClick={() =>
+																handleFiltersOpen(
+																	filter.name
+																)
+															}
+														>
+															<path
+																strokeLinecap="round"
+																strokeLinejoin="round"
+																d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+															/>
+														</svg>
+													</div>
 
-												{isOpen &&
-													openFilter.includes(
-														filter.name
-													) &&
-													filter.options.map(
-														(option) => (
-															<label
-																key={
-																	option.value
-																}
-																className="flex justify-start items-center"
-															>
-																<input
-																	className="w-4 h-6 mx-1 mt-2"
-																	type="checkbox"
-																	checked={allURLFilter.includes(
+													{isOpen &&
+														openFilter.includes(
+															filter.name
+														) &&
+														filter.options.map(
+															(option) => (
+																<label
+																	key={
 																		option.value
-																	)}
-																	onChange={() =>
-																		handleFilterBoxChange(
-																			option
-																		)
 																	}
-																/>
-																{option.label}
-															</label>
-														)
-													)}
-											</div>
-										))}
+																	className="flex justify-start items-center"
+																>
+																	<input
+																		className="w-4 h-6 mx-1 mt-2"
+																		type="checkbox"
+																		checked={allURLFilter.includes(
+																			option.value
+																		)}
+																		onChange={() =>
+																			handleFilterBoxChange(
+																				option
+																			)
+																		}
+																	/>
+																	{
+																		option.label
+																	}
+																</label>
+															)
+														)}
+												</div>
+											))}
+										</div>
 									</div>
-								</div>
-							)}
-						</div>
-						)
+								)}
+							</div>
+						)}
 					</>
 				) : (
 					<div>
