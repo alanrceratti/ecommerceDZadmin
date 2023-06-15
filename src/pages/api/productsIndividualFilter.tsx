@@ -71,13 +71,67 @@ export default async function handle(
 			}
 		}
 
-		if (typeof flightTime === "string") {
-			const [minFlightTime, maxFlightTime] = flightTime.split("-");
-			filter.flightTime = {
-				$gte: parseInt(minFlightTime),
-				$lte: parseInt(maxFlightTime),
-			};
+		/////////////////////////////////////////////
+		if (Array.isArray(flightTime)) {
+			const timeFilters = flightTime.flatMap((value) => {
+				if (value.includes("-")) {
+					const [mintime, maxtime] = value.split("-");
+					return {
+						$and: [
+							{
+								time: {
+									$gte: parseInt(mintime),
+									$lte: parseInt(maxtime),
+								},
+							},
+						],
+					};
+				} else if (value === "<30") {
+					const singletime = parseInt(value);
+					return { time: { $lt: singletime } };
+				} else if (value === ">61") {
+					const singletime = parseInt(value);
+					return { time: { $gt: singletime } };
+				}
+			});
+
+			if (Array.isArray(flightTime)) {
+				filter.$or = [...(filter.$or || []), ...timeFilters];
+			} else if (typeof flightTime === "string") {
+				filter.$or = [...(filter.$or || []), ...[timeFilters]];
+			}
+		} else if (typeof flightTime === "string") {
+			if (flightTime.includes("-")) {
+				const [mintime, maxtime] = flightTime.split("-");
+				filter.$and = [
+					{
+						time: {
+							$gte: parseInt(mintime),
+							$lte: parseInt(maxtime),
+						},
+					},
+				];
+			} else if (flightTime === "<30") {
+				const singletime = parseInt(flightTime);
+				filter.$or = [
+					{ time: { $lt: singletime } }, // Add filter for time less than 30 min
+				];
+			} else if (flightTime === ">61") {
+				const singletime = parseInt(flightTime);
+				filter.$or = [
+					{ time: { $gt: singletime } }, // Add filter for time less than 60 min
+				];
+			}
 		}
+		//////////////////////////////////////////
+
+		// if (typeof flightTime === "string") {
+		// 	const [minFlightTime, maxFlightTime] = flightTime.split("-");
+		// 	filter.flightTime = {
+		// 		$gte: parseInt(minFlightTime),
+		// 		$lte: parseInt(maxFlightTime),
+		// 	};
+		// }
 
 		if (typeof category === "string") {
 			// Retrieve the category object based on the name

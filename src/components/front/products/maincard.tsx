@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
 import Loading from "@/components/front/products/loading";
+import { Tooltip as ReactTooltip } from "react-tooltip";
 
 export default function MainCard() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
@@ -107,35 +108,108 @@ export default function MainCard() {
 											)}
 										</div>
 
-										<div className="flex sm:gap-4 gap-2 text-black text-sm sm:text-base   justify-center py-2">
+										<div className="flex flex-wrap sm:gap-x-4 sm:mx-2 gap-2 text-black text-sm sm:text-base   justify-center py-2">
 											<div className="flex gap-1 items-center  ">
 												<Image
 													src="/assets/svgs/speed.svg"
 													alt="drone"
 													width={20}
 													height={20}
+													id="speed"
 												/>
 												{product.speed} mph
+												<ReactTooltip
+													anchorSelect="#speed"
+													place="bottom"
+													content="Maximum speed"
+													variant="dark"
+													delayShow={500}
+												/>
 											</div>
-
 											<div className="flex gap-1 items-center ">
 												<Image
 													src="/assets/svgs/range.svg"
 													alt="drone"
 													width={20}
 													height={20}
+													id="range"
 												/>
 												{product.range} miles
+												<ReactTooltip
+													anchorSelect="#range"
+													place="bottom"
+													content="Maximum Range For Control"
+													variant="dark"
+													delayShow={500}
+												/>
 											</div>
-
+											<div className="flex gap-1 items-center ">
+												<Image
+													src="/assets/svgs/camera.svg"
+													alt="drone"
+													width={20}
+													height={20}
+													id="camera"
+												/>
+												{product.camera}
+												<ReactTooltip
+													anchorSelect="#camera"
+													place="bottom"
+													content="Camera Quality"
+													variant="dark"
+													delayShow={500}
+												/>
+											</div>
 											<div className="flex gap-1 items-center ">
 												<Image
 													src="/assets/svgs/battery.svg"
 													alt="drone"
 													width={20}
 													height={20}
+													id="battery"
 												/>
 												{product.battery} min
+												<ReactTooltip
+													anchorSelect="#battery"
+													place="bottom"
+													content="Battery Duration"
+													variant="dark"
+													delayShow={500}
+												/>
+											</div>{" "}
+											<div className="flex gap-1 items-center ">
+												<Image
+													src="/assets/svgs/water.svg"
+													alt="drone"
+													width={20}
+													height={20}
+													id="water"
+												/>
+												{product.waterProof}
+												<ReactTooltip
+													anchorSelect="#water"
+													place="bottom"
+													content="Water Proof"
+													variant="dark"
+													delayShow={500}
+												/>
+											</div>{" "}
+											<div className="flex gap-1 items-center ">
+												<Image
+													src="/assets/svgs/weight.svg"
+													alt="drone"
+													width={20}
+													height={20}
+													id="weight"
+												/>
+												{product.weight} kg
+												<ReactTooltip
+													anchorSelect="#weight"
+													place="bottom"
+													content="Drone Weight"
+													variant="dark"
+													delayShow={500}
+												/>
 											</div>
 										</div>
 										<hr className="h-[1px] w-4/5 bg-white border-none mb-2 ml-auto mr-auto  "></hr>

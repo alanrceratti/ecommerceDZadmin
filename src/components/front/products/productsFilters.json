@@ -24,7 +24,7 @@
 					"value": "40100-70000"
 				},
 				{
-					"label": "> £701",
+					"label": "> £700",
 					"labelName": "price",
 					"value": "70100"
 				}
@@ -39,19 +39,19 @@
 					"value": "<30"
 				},
 				{
-					"label": "30 min-45 min",
+					"label": "31 min-45 min",
 					"labelName": "time",
-					"value": "30-45"
+					"value": "31-45"
 				},
 				{
-					"label": "> 45 min-60 min",
+					"label": "> 46 min-60 min",
 					"labelName": "time",
-					"value": "45-60"
+					"value": "46-60"
 				},
 				{
 					"label": "> 60 min",
 					"labelName": "time",
-					"value": ">60"
+					"value": ">61"
 				}
 			]
 		}
