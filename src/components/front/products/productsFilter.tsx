@@ -25,12 +25,12 @@ export default function ProductsFilter() {
 	const categoryPath = searchParams?.get("category");
 
 	const pricePath = searchParams?.getAll("price") ?? [];
-	const timePath = searchParams?.getAll("time") ?? [];
-	const allURLFilter = [...pricePath, ...timePath];
+	const batteryPath = searchParams?.getAll("battery") ?? [];
+	const allURLFilter = [...pricePath, ...batteryPath];
 
 	const price = pricePath.map((value) => "price=" + value);
-	const time = timePath.map((value) => "time=" + value);
-	const allFilters = [...price, ...time];
+	const battery = batteryPath.map((value) => "battery=" + value);
+	const allFilters = [...price, ...battery];
 
 	// Resets the selected filters and navigates to the default products page
 	function resetFilter() {

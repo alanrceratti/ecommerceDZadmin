@@ -6,7 +6,7 @@
 				{
 					"label": "£0 £100",
 					"labelName": "price",
-					"value": "10000"
+					"value": "0-10000"
 				},
 				{
 					"label": "£101-£250",
@@ -26,7 +26,7 @@
 				{
 					"label": "> £700",
 					"labelName": "price",
-					"value": "70100"
+					"value": "70100-9999999"
 				}
 			]
 		},
@@ -35,23 +35,23 @@
 			"options": [
 				{
 					"label": "< 30 min",
-					"labelName": "time",
-					"value": "<30"
+					"labelName": "battery",
+					"value": "0-30"
 				},
 				{
 					"label": "31 min-45 min",
-					"labelName": "time",
+					"labelName": "battery",
 					"value": "31-45"
 				},
 				{
 					"label": "> 46 min-60 min",
-					"labelName": "time",
+					"labelName": "battery",
 					"value": "46-60"
 				},
 				{
 					"label": "> 60 min",
-					"labelName": "time",
-					"value": ">61"
+					"labelName": "battery",
+					"value": "61-9999"
 				}
 			]
 		}
