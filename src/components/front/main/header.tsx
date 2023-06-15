@@ -86,20 +86,30 @@ export default function HeaderNav() {
 							{isOpen ? (
 								<div className="absolute bg-black rounded-lg px-8 py-4 -left-5 transition-all">
 									<nav className="flex flex-col gap-2 ">
-										<Link href={"/"} className="hover">
+										<Link
+											href={"/"}
+											onClick={() => setIsOpen(false)}
+											className="hover"
+										>
 											Home
 										</Link>
 										<Link
 											href={"/products/all"}
+											onClick={() => setIsOpen(false)}
 											className="hover"
 										>
 											Shop
 										</Link>
-										<Link href={"/about"} className="hover">
+										<Link
+											href={"/about"}
+											onClick={() => setIsOpen(false)}
+											className="hover"
+										>
 											About Us
 										</Link>
 										<Link
 											href={"/contact"}
+											onClick={() => setIsOpen(false)}
 											className="hover"
 										>
 											Contact

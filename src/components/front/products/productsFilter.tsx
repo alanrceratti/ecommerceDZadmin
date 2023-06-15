@@ -177,7 +177,10 @@ export default function ProductsFilter() {
 				{mobile ? (
 					<>
 						<div className="flex w-[100px]">
-							<h1 className="font-bold  text-black m-0 ">
+							<h1
+								className="font-bold  text-black m-0 "
+								onClick={() => setIsOpen((isOpen) => !isOpen)}
+							>
 								Filter by
 							</h1>
 							<svg
@@ -187,11 +190,7 @@ export default function ProductsFilter() {
 								strokeWidth={1.5}
 								stroke="currentColor"
 								className="w-8 h-8"
-								onClick={() =>
-									handleFiltersOpen(
-										filters.filters.filter.name
-									)
-								}
+								onClick={() => setIsOpen((isOpen) => !isOpen)}
 							>
 								<path
 									strokeLinecap="round"
@@ -203,15 +202,15 @@ export default function ProductsFilter() {
 						{isOpen && (
 							<div
 								ref={ref}
-								className="bg-black right-2 text-white absolute  h-fit w-2/5 z-10 rounded-md font-poppins py-1"
+								className="bg-black right-2 text-white absolute  h-fit w-3/6 z-10 rounded-md font-poppins py-1"
 							>
-								<Link
-									href={`/products/all`}
+								<button
+									onClick={resetFilter}
 									className="flex w-full p-2
 							border-b-2 border-gray-700 "
 								>
 									All
-								</Link>
+								</button>
 								<button
 									onClick={resetFilter}
 									className="flex w-full p-2
@@ -274,7 +273,7 @@ export default function ProductsFilter() {
 																	key={
 																		option.value
 																	}
-																	className="flex justify-start items-center"
+																	className="flex ml-1 justify-start items-center"
 																>
 																	<input
 																		className="w-4 h-6 mx-1 mt-2"

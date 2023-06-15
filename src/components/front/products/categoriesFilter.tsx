@@ -31,20 +31,20 @@ export default function CategoriesFilter() {
 	}
 
 	//if user scroll any direction, menu close
-	useEffect(() => {
-		let prevScrollY = window.pageYOffset;
-		const scrollListener = () => {
-			const scrollY = window.pageYOffset;
-			if (scrollY !== prevScrollY) {
-				setIsOpen(false);
-			}
-			prevScrollY = scrollY;
-		};
-		window.addEventListener("scroll", scrollListener);
-		return () => {
-			window.removeEventListener("scroll", scrollListener);
-		};
-	}, []);
+	// useEffect(() => {
+	// 	let prevScrollY = window.pageYOffset;
+	// 	const scrollListener = () => {
+	// 		const scrollY = window.pageYOffset;
+	// 		if (scrollY !== prevScrollY) {
+	// 			setIsOpen(false);
+	// 		}
+	// 		prevScrollY = scrollY;
+	// 	};
+	// 	window.addEventListener("scroll", scrollListener);
+	// 	return () => {
+	// 		window.removeEventListener("scroll", scrollListener);
+	// 	};
+	// }, []);
 
 	//fetch all categories from mongodb
 	async function fetchAllCategories() {
@@ -113,7 +113,10 @@ export default function CategoriesFilter() {
 					{mobile ? (
 						<>
 							<div className="flex items-center ml-auto ">
-								<h1 className="font-bold  text-black m-0">
+								<h1
+									onClick={handleMenu}
+									className="font-bold  text-black m-0"
+								>
 									Categories
 								</h1>
 								<svg
