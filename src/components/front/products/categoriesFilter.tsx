@@ -108,7 +108,7 @@ export default function CategoriesFilter() {
 
 	return (
 		<main className="w-fit ">
-			{result && result.length > 5 ? (
+			{result && categoriesCount.length === categories.length ? (
 				<div className="m-2 font-poppins ">
 					{mobile ? (
 						<>
