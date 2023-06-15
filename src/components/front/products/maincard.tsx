@@ -29,12 +29,12 @@ export default function MainCard() {
 	const categoryPath2 = path?.split("/")[2];
 	const params = searchParams?.get("category");
 
-	console.log("params", params);
-	console.log("categoryPath", categoryPath);
-	console.log("categoryPath2", categoryPath2);
-	console.log("queryKeysLENGTH", queryKeys.length);
-	console.log("queryKeys", queryKeys[0]);
-	console.log("Reconstructed URL:", reconstructedURL);
+	// console.log("params", params);
+	// console.log("categoryPath", categoryPath);
+	// console.log("categoryPath2", categoryPath2);
+	// console.log("queryKeysLENGTH", queryKeys.length);
+	// console.log("queryKeys", queryKeys[0]);
+	// console.log("Reconstructed URL:", reconstructedURL);
 
 	const selectCategory = async () => {
 		try {
@@ -55,7 +55,7 @@ export default function MainCard() {
 				);
 				const data = await response.json();
 				setProducts(data);
-				console.log("222222222");
+				console.log("222222222", reconstructedURL);
 			} else if (queryKeys.length > 1 && queryKeys[0] === "category") {
 				const response = await fetch(
 					`/api/productsIndividualFilter?${reconstructedURL}`

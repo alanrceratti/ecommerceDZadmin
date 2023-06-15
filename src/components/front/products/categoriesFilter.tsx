@@ -2,7 +2,7 @@
 import useMedia from "@/app/hooks/useMedia";
 import { NewProductsProps } from "@/app/types";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function CategoriesFilter() {
@@ -11,6 +11,8 @@ export default function CategoriesFilter() {
 		[]
 	);
 	const mobile = useMedia("(max-width: 640px)");
+	const router = useRouter();
+
 	const [isOpen, setIsOpen] = useState(false);
 	const path = usePathname()?.split("/")[2];
 	const searchParams = useSearchParams();
@@ -21,6 +23,11 @@ export default function CategoriesFilter() {
 
 	function handleMenu() {
 		setIsOpen((isOpen) => !isOpen);
+	}
+
+	function resetFilter() {
+		router.push("/products/all");
+		setIsOpen(false);
 	}
 
 	//if user scroll any direction, menu close
@@ -99,10 +106,9 @@ export default function CategoriesFilter() {
 		}
 	});
 
-	// console.log(result);
 	return (
 		<main className="w-fit ">
-			{result && result.length > 0 ? (
+			{result && result.length > 5 ? (
 				<div className="m-2 font-poppins ">
 					{mobile ? (
 						<>
@@ -127,13 +133,13 @@ export default function CategoriesFilter() {
 							</div>
 							{isOpen ? (
 								<div className="bg-black text-white absolute h-fit w-2/4 z-10 rounded-md font-poppins py-1">
-									<Link
-										href={`/products/all`}
+									<button
+										onClick={resetFilter}
 										className="flex w-full p-2
 							border-b-2 border-gray-700"
 									>
 										All
-									</Link>
+									</button>
 									{result && result.length > 0 && (
 										<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
 											{result.map((category, index) => (

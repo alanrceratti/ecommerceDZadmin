@@ -11,43 +11,36 @@ export default function ProductsFilter() {
 	const [isOpen, setIsOpen] = useState(false);
 	const [openFilter, setOpenFilter] = useState<string[]>([]);
 	const [selectedFilters, setSelectedFilters] = useState<FilterOption[]>([]);
-	const [selectedFilters2, setSelectedFilters2] = useState<string[]>([]);
+
+	// const [selectedFilters2, setSelectedFilters2] = useState<string[]>([]);
+	const router = useRouter();
 
 	const mobile = useMedia("(max-width: 640px)");
+	const filters = productsFilter as Filters;
 
 	const ref = useRef<HTMLDivElement | null>(null);
 	const searchParams = useSearchParams();
 	const searchParams2 = usePathname();
 	const params = searchParams2?.split("/")[2];
-
 	const categoryPath = searchParams?.get("category");
+
 	const pricePath = searchParams?.getAll("price") ?? [];
 	const timePath = searchParams?.getAll("time") ?? [];
 	const allURLFilter = [...pricePath, ...timePath];
+
 	const price = pricePath.map((value) => "price=" + value);
 	const time = timePath.map((value) => "time=" + value);
 	const allFilters = [...price, ...time];
 
-	const filters = productsFilter as Filters;
-	const active = "text-orange";
-	const notActive = "text-black";
-	console.log("ASASDASDASDASD", allFilters);
-
-	function handleFilters() {
-		setIsOpen((isOpen) => !isOpen);
-	}
-
+	// Resets the selected filters and navigates to the default products page
 	function resetFilter() {
+		setSelectedFilters([]);
 		router.push("/products/all");
 		setIsOpen(false);
 	}
 
-	function handleFiltersOpen(
-		filterName: string,
-		event: React.MouseEvent<HTMLHeadingElement | SVGSVGElement>
-	) {
-		event.preventDefault();
-		event.stopPropagation();
+	// Toggles the visibility of filter options for a given filter category
+	function handleFiltersOpen(filterName: string) {
 		if (openFilter.includes(filterName)) {
 			setOpenFilter(openFilter.filter((filter) => filter !== filterName));
 		} else {
@@ -56,149 +49,130 @@ export default function ProductsFilter() {
 		}
 	}
 
-	//if user scroll any direction, menu close
-	// useEffect(() => {
-	// 	let prevScrollY = window.pageYOffset;
-	// 	const scrollListener = () => {
-	// 		const scrollY = window.pageYOffset;
-	// 		if (scrollY !== prevScrollY) {
-	// 			setIsOpen(false);
-	// 		}
-	// 		prevScrollY = scrollY;
-	// 	};
-	// 	window.addEventListener("touchmove", scrollListener);
-	// 	return () => {
-	// 		window.removeEventListener("touchmove", scrollListener);
-	// 	};
-	// }, []);
+	// Handles the change of a filter option
+	const handleFilterBoxChange = (option: FilterOption) => {
+		const isSelected = allURLFilter.includes(option.value);
 
-	const handleFilterChange = (option: FilterOption) => {
-		const isSelected = selectedFilters.includes(option);
 		if (isSelected) {
 			setSelectedFilters(
-				selectedFilters.filter((filter) => filter !== option)
+				selectedFilters.filter(
+					(filter) => filter.value !== option.value
+				)
 			);
 		} else {
 			setSelectedFilters([...selectedFilters, option]);
 		}
-
-		const updatedFilters = isSelected
-			? selectedFilters.filter((filter) => filter !== option)
-			: [...selectedFilters, option];
-
-		const queryParams = new URLSearchParams();
-		updatedFilters.forEach((filter) => {
-			const paramName = `${filter.labelName}=${filter.value}`;
-			queryParams.append("filters", paramName);
-		});
-
-		const updatedQuery = queryParams.toString();
-		const updatedUrl = `/products/filter${
-			updatedQuery ? `?${updatedQuery}` : ""
-		}`;
-
-		router.replace(updatedUrl);
-		return isSelected;
 	};
 
-	useEffect(() => {
-		const newSelectedFilters2 = selectedFilters.map(
-			(filter) => `${filter.labelName}=${filter.value}`
-		);
-		setSelectedFilters2(newSelectedFilters2);
-	}, [selectedFilters]);
+	// Constructs the URL based on the selected filters
+	const newSelectedFilters = selectedFilters.map(
+		(filter) => `${filter.labelName}=${filter.value}`
+	);
 
-	// selectedFilters.forEach((filter) => {
-	// 	const filterParam = `${filter.labelName}=${filter.value}`;
-	// 	selectedFilters2.push(filterParam);
-	// });
-	//
+	const groupSelectedFilters = newSelectedFilters.join("&");
 
-	const queryString = selectedFilters2.join("&");
-
-	// useEffect(() => {
-	// 	if (queryString.length === 0 && params === "filter") {
-	// 		router.push(urlAll);
-	// 	}
-	// }, [queryString]);
-
-	const router = useRouter();
-	const urlOnlyFilter = `/products/filter?${queryString}`;
-	const urlWithCategoryWithFilter = `/products/filter?category=${categoryPath}&${queryString}`;
+	const urlOnlyFilter = `/products/filter?${groupSelectedFilters}`;
+	const urlWithCategoryWithFilter = `/products/filter?category=${categoryPath}&${groupSelectedFilters}`;
+	const urlWithCategoryOnly = `/products/filter?category=${categoryPath}`;
 	const urlAll = `/products/all`;
 
-	// console.log("pricePath ", pricePath);
-	// console.log("selectedFilters2.length", selectedFilters2.length);
-	// console.log("params", params);
-
-	const handleClickOutside = () => {
-		setIsOpen(false);
-	};
-	// useEffect(() => {
-	// 	selectedFilters2 = [];
-	// }, [selectedFilters2]);
-	// console.log("queryString", pricePath);
-	// console.log(selectedFilters2, "selectedFilters2", "selectedFilters2");
-	useEffect(() => {
+	// Updates the URL based on the selected filters and category
+	const updateURL = () => {
 		if (
-			queryString.length > 0 &&
-			!categoryPath &&
-			selectedFilters2.length > 0
+			searchParams2 === "/products/all" &&
+			groupSelectedFilters.length === 0
 		) {
-			console.log("urlOnlyFilter", urlOnlyFilter);
+			setSelectedFilters([]);
+			console.log("aaaaa");
+			router.push(urlAll);
+		} else if (
+			groupSelectedFilters.length > 0 &&
+			searchParams2 === "/products/all" &&
+			categoryPath === null
+		) {
+			console.log("bbbb");
+
 			router.push(urlOnlyFilter);
 		} else if (
-			queryString.length === 0 &&
-			!categoryPath &&
-			params === "all"
+			groupSelectedFilters.length > 0 &&
+			searchParams2 === "/products/filter" &&
+			categoryPath === null
 		) {
-			console.log("urlAll", urlAll);
+			console.log("ccccc");
 
-			router.push(urlAll);
-		} else if (categoryPath && params === "filter") {
-			console.log("urlWithCategoryWithFilter", urlWithCategoryWithFilter);
-
+			router.push(urlOnlyFilter);
+		} else if (
+			groupSelectedFilters.length > 0 &&
+			searchParams2 === "/products/filter" &&
+			categoryPath &&
+			selectedFilters.length !== 0
+		) {
+			console.log("dddddd");
 			router.push(urlWithCategoryWithFilter);
 		} else if (
-			queryString.length === 0 &&
-			!pricePath &&
-			selectedFilters2.length === 0
+			groupSelectedFilters.length === 0 &&
+			searchParams2 === "/products/filter" &&
+			!categoryPath
 		) {
-			console.log("urlAll3333", urlAll);
+			console.log("eeeee");
 
+			setSelectedFilters([]);
 			router.push(urlAll);
 		} else if (
-			selectedFilters2.length === 0 &&
-			params === "filter" &&
-			allURLFilter.length === 0
+			groupSelectedFilters.length === 0 &&
+			searchParams2 === "/products/filter" &&
+			categoryPath
 		) {
-			console.log("urlAll44444", urlAll);
-			router.push(urlAll);
+			console.log("eeeee");
+
+			setSelectedFilters([]);
+			router.push(urlWithCategoryOnly);
+		} else if (
+			groupSelectedFilters.length > 0 &&
+			categoryPath &&
+			allFilters.length === 0 &&
+			selectedFilters.length !== 0
+		) {
+			setSelectedFilters([]);
+			console.log("fffffff");
+			router.push(urlWithCategoryOnly);
 		}
-		const urlParam = window.location.toString().includes("?");
-		console.log("ALOALOALO", urlParam);
-	}, [selectedFilters2]);
+	};
 
-	// console.log("selectedFilters", selectedFilters2.length);
-	// console.log("params", params);
-	// console.log("allURLFilter", allURLFilter.length);
+	// params to update the URL in case selectedFitlers is empty
+	const refreshedURL = allFilters.map((filter) => filter).join("&");
 
-	useOutsideClick(ref, handleClickOutside);
-	// console.log("queryString", queryString.length);
+	const paramsArray = refreshedURL.split("&");
+	const refreshedURL2 = paramsArray.map((param) => {
+		const [labelName, value] = param.split("=");
+		return {
+			label: value, // Use value as label for this example, but adjust as needed
+			labelName,
+			value,
+		};
+	});
+
 	useEffect(() => {
-		if (selectedFilters.length === 0 && params !== "filter") {
-			setSelectedFilters2(allFilters);
-			console.log("ASASDASDASDASD", selectedFilters2);
+		if (selectedFilters.length === 0 && refreshedURL.length !== 0) {
+			setSelectedFilters(refreshedURL2);
+			router.push(`/products/filter?${refreshedURL}`);
+		} else if (selectedFilters.length !== 0 && allURLFilter.length === 0) {
+			setSelectedFilters([]);
 		}
-	}, [selectedFilters2]);
+	}, []);
 
-	// console.log("FILTER FILTER ", [price, time]);
-	// console.log("allURLFilterh", allURLFilter);
-	// console.log("selectedFilters", selectedFilters);
-	// console.log("selectedFilters2", selectedFilters2);
+	useEffect(() => {
+		if (allURLFilter.length === 0 && selectedFilters.length > 0) {
+			setSelectedFilters([]);
+		}
+	}, [categoryPath]);
+
+	useEffect(() => {
+		updateURL();
+	}, [groupSelectedFilters]);
+
 	return (
 		<main className="w-[100px] sm:w-[150px] ">
-			{/* {result && result.length > 0 ? ( */}
 			<div className="m-2 font-poppins text-black w-fit">
 				{mobile ? (
 					<>
@@ -213,7 +187,7 @@ export default function ProductsFilter() {
 								strokeWidth={1.5}
 								stroke="currentColor"
 								className="w-8 h-8"
-								onClick={handleFilters}
+								// onClick={handleFilters}
 							>
 								<path
 									strokeLinecap="round"
@@ -222,109 +196,105 @@ export default function ProductsFilter() {
 								/>
 							</svg>
 						</div>
-						{isOpen ? (
-							<div
-								ref={ref}
-								className="bg-black right-2 text-white absolute  h-fit w-2/5 z-10 rounded-md font-poppins py-1"
-							>
-								<Link
-									href={`/products/all`}
-									className="flex w-full p-2
+						isOpen && (
+						<div
+							ref={ref}
+							className="bg-black right-2 text-white absolute  h-fit w-2/5 z-10 rounded-md font-poppins py-1"
+						>
+							<Link
+								href={`/products/all`}
+								className="flex w-full p-2
 							border-b-2 border-gray-700 "
-								>
-									All
-								</Link>
-								<button
-									onClick={resetFilter}
-									className="flex w-full p-2
+							>
+								All
+							</Link>
+							<button
+								onClick={resetFilter}
+								className="flex w-full p-2
 							border-b-2 border-gray-700"
-								>
-									Reset
-								</button>
-								<button
-									className="text-orange btn-third ml-2 mt-2"
-									onClick={() => {
-										setIsOpen(false);
-									}}
-								>
-									Apply
-								</button>
-								{filters && (
-									<div className=" text-white  h-fit rounded-md font-poppins py-1">
-										<div>
-											{filters.filters.map((filter) => (
-												<div key={filter.name}>
-													<div className="flex items-center gap-2">
-														<h2
-															className="pl-2 mt-4 font-semibold cursor-pointer"
-															onClick={(event) =>
-																handleFiltersOpen(
-																	filter.name,
-																	event
-																)
-															}
-														>
-															{filter.name}
-														</h2>
-														<svg
-															xmlns="http://www.w3.org/2000/svg"
-															fill="none"
-															viewBox="0 0 24 24"
-															strokeWidth={1.5}
-															stroke="currentColor"
-															className="w-5 h-5 mt-3 cursor-pointer"
-															onClick={(event) =>
-																handleFiltersOpen(
-																	filter.name,
-																	event
-																)
-															}
-														>
-															<path
-																strokeLinecap="round"
-																strokeLinejoin="round"
-																d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-															/>
-														</svg>
-													</div>
-
-													{isOpen &&
-														openFilter.includes(
-															filter.name
-														) &&
-														filter.options.map(
-															(option) => (
-																<label
-																	key={
-																		option.value
-																	}
-																	className="flex justify-start items-center"
-																>
-																	<input
-																		className="w-4 h-6 mx-1 mt-2"
-																		type="checkbox"
-																		checked={allURLFilter?.includes(
-																			option.value
-																		)}
-																		onChange={() =>
-																			handleFilterChange(
-																				option
-																			)
-																		}
-																	/>
-																	{
-																		option.label
-																	}
-																</label>
+							>
+								Reset
+							</button>
+							<button
+								className="text-orange btn-third ml-2 mt-2"
+								onClick={() => {
+									setIsOpen(false);
+								}}
+							>
+								Apply
+							</button>
+							{filters && (
+								<div className=" text-white  h-fit rounded-md font-poppins py-1">
+									<div>
+										{filters.filters.map((filter) => (
+											<div key={filter.name}>
+												<div className="flex items-center gap-2">
+													<h2
+														className="pl-2 mt-4 font-semibold cursor-pointer"
+														onClick={() =>
+															handleFiltersOpen(
+																filter.name
 															)
-														)}
+														}
+													>
+														{filter.name}
+													</h2>
+													<svg
+														xmlns="http://www.w3.org/2000/svg"
+														fill="none"
+														viewBox="0 0 24 24"
+														strokeWidth={1.5}
+														stroke="currentColor"
+														className="w-5 h-5 mt-3 cursor-pointer"
+														onClick={() =>
+															handleFiltersOpen(
+																filter.name
+															)
+														}
+													>
+														<path
+															strokeLinecap="round"
+															strokeLinejoin="round"
+															d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+														/>
+													</svg>
 												</div>
-											))}
-										</div>
+
+												{isOpen &&
+													openFilter.includes(
+														filter.name
+													) &&
+													filter.options.map(
+														(option) => (
+															<label
+																key={
+																	option.value
+																}
+																className="flex justify-start items-center"
+															>
+																<input
+																	className="w-4 h-6 mx-1 mt-2"
+																	type="checkbox"
+																	checked={allURLFilter.includes(
+																		option.value
+																	)}
+																	onChange={() =>
+																		handleFilterBoxChange(
+																			option
+																		)
+																	}
+																/>
+																{option.label}
+															</label>
+														)
+													)}
+											</div>
+										))}
 									</div>
-								)}
-							</div>
-						) : null}
+								</div>
+							)}
+						</div>
+						)
 					</>
 				) : (
 					<div>
@@ -333,13 +303,13 @@ export default function ProductsFilter() {
 								Filter by
 							</h1>
 						</div>
-						<Link
-							href={`/products/all`}
+						<button
+							onClick={resetFilter}
 							className="flex w-full p-2
 							border-b-2 border-gray-700"
 						>
 							Reset
-						</Link>
+						</button>
 						{filters && (
 							<div className=" text-black  h-fit rounded-md font-poppins py-1">
 								<div>
@@ -348,10 +318,9 @@ export default function ProductsFilter() {
 											<div className="flex items-center gap-2">
 												<h2
 													className=" mt-4 font-semibold cursor-pointer"
-													onClick={(event) =>
+													onClick={() =>
 														handleFiltersOpen(
-															filter.name,
-															event
+															filter.name
 														)
 													}
 												>
@@ -364,10 +333,9 @@ export default function ProductsFilter() {
 													strokeWidth={1.5}
 													stroke="currentColor"
 													className="w-5 h-5 mt-3 cursor-pointer"
-													onClick={(event) =>
+													onClick={() =>
 														handleFiltersOpen(
-															filter.name,
-															event
+															filter.name
 														)
 													}
 												>
@@ -391,13 +359,11 @@ export default function ProductsFilter() {
 														<input
 															className="w-4 h-6 mx-1 mt-2"
 															type="checkbox"
-															checked={Object.values(
-																allURLFilter
-															).includes(
+															checked={allURLFilter.includes(
 																option.value
 															)}
 															onChange={() =>
-																handleFilterChange(
+																handleFilterBoxChange(
 																	option
 																)
 															}
@@ -413,7 +379,6 @@ export default function ProductsFilter() {
 					</div>
 				)}
 			</div>
-			{/* ) : null} */}
 		</main>
 	);
 }
