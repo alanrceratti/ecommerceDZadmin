@@ -119,10 +119,6 @@ export default function CategoriesFilter() {
 		}
 	});
 
-	console.log(result);
-	console.log(categoriesCount);
-	console.log(categoriesCount.length);
-
 	return (
 		<main className="w-fit ">
 			{resultsUpdate && categoriesCount.length > 0 ? (
