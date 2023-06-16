@@ -13,6 +13,7 @@ export default function MainCard() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const [noProducts, setNoProducts] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(false);
+	const [bestSeller, setBestSeller] = useState<boolean>(false);
 	const [page, setPage] = useState(1);
 	const mobile = useMedia("(max-width: 640px)");
 	const path = usePathname();
@@ -26,6 +27,27 @@ export default function MainCard() {
 
 	const categoryPath2 = path?.split("/")[2];
 	const params = searchParams?.get("category");
+
+	const productsBestSellers = async () => {
+		setBestSeller(true);
+		try {
+			const response = await fetch("/api/productsBestSellers");
+			const data = await response.json();
+			setProducts(data);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const productOffers = async () => {
+		try {
+			const response = await fetch("/api/productsOffers");
+			const data = await response.json();
+			setProducts(data);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	// console.log("params", params);
 	// console.log("categoryPath", categoryPath);
@@ -117,26 +139,47 @@ export default function MainCard() {
 	return (
 		<>
 			<div className="  w-full text-center  bg-white min-h-[500px]   ">
-				<div className="flex h-fit w-fit">
-					<div className="flex h-fit w-fit">
-						<button className=" btn-primaryy text-black m-2">
-							All Offers
-						</button>
-						<button className=" btn-primaryy text-black m-2">
-							Best Sellers
-						</button>
+				{!mobile && (
+					<div className="flex mt-2 h-fit w-full justify-center items-center">
+						<div className="flex h-fit w-fit  flex-wrap ">
+							<button
+								className=" btn-primaryy !text-red-600 m-2"
+								onClick={productOffers}
+							>
+								All Offers
+							</button>
+							<button
+								className=" btn-primaryy !text-green-600 m-2"
+								onClick={productsBestSellers}
+							>
+								Best Sellers
+							</button>
+						</div>
+
+						<form className="btn-primaryy hover:!bg-white w-10/12 md:w-fit hover:!text-black flex justify-center items-center text-black !font-normal m-2">
+							<label>Sort By</label>
+							<select>
+								<option value="">Price: Low - High</option>
+								<option value="">Price: High - Low</option>
+							</select>
+						</form>
 					</div>
-					<button className=" btn-primaryy text-black m-2">
-						Sort by
-					</button>
-				</div>
+				)}
 				{products && products.length > 0 ? (
 					<>
 						<div className="flex flex-wrap items-center justify-center pt-9 ">
 							{products.map((product) => (
 								<div className="sm:p-8 p-2 " key={product._id}>
 									<div className="w-[270px] sm:w-[340px] h-fit pb-4 sm:h-[470px] text-center font-poppins text-black font-light  bg-white shadow-2xl  rounded-md ">
-										<h2 className="sm:py-4 py-2 font-semibold text-black ">
+										<h2
+											className={`${
+												product.bestSeller
+													? "text-green-600"
+													: product.offer
+													? "text-red-600"
+													: ""
+											} sm:py-4 py-2 font-semibold text-black`}
+										>
 											{product.name}
 										</h2>
 										<div>
@@ -258,23 +301,67 @@ export default function MainCard() {
 											</div>
 											<hr className="h-[1px] w-4/5 bg-white border-none mb-2 ml-auto mr-auto  "></hr>
 											<div className="flex justify-center items-center text-black  gap-4">
-												<div className="flex items-center justify-between ">
-													<h3 className="text-orange text-base font-normal font-poppins sm:text-lg">
-														£
-														{product.price &&
-															(
-																product.price /
-																100
-															).toLocaleString(
-																undefined,
-																{
-																	minimumFractionDigits: 2,
-																}
-															)}
-														&nbsp;
-													</h3>
-													<p>Or Pay monthly</p>
-												</div>
+												{product.offer ? (
+													<div className="flex items-center justify-between ">
+														<div className="flex">
+															<h3 className="text-orange text-xl items-center flex">
+																<p className="text-black text-sm font-normal sm:text-base">
+																	From &nbsp;
+																</p>
+																£
+																<s className=" text-base font-normal ">
+																	{product.price &&
+																		(
+																			product.price /
+																			100
+																		).toLocaleString(
+																			undefined,
+																			{
+																				minimumFractionDigits: 2,
+																			}
+																		)}
+																</s>
+																&nbsp;
+															</h3>
+														</div>
+														<div className="flex items-center">
+															<p className="text-base font-normal sm:text-lg  ">
+																Now&nbsp;
+															</p>
+															<h3 className="text-base font-normal sm:text-lg text-red-500">
+																£
+																{product.offerPrice &&
+																	(
+																		product.offerPrice /
+																		100
+																	).toLocaleString(
+																		undefined,
+																		{
+																			minimumFractionDigits: 2,
+																		}
+																	)}
+															</h3>
+														</div>
+													</div>
+												) : (
+													<div className="flex items-center justify-between ">
+														<h3 className="text-orange text-base font-normal font-poppins sm:text-lg">
+															£
+															{product.price &&
+																(
+																	product.price /
+																	100
+																).toLocaleString(
+																	undefined,
+																	{
+																		minimumFractionDigits: 2,
+																	}
+																)}
+															&nbsp;
+														</h3>
+														<p>Or Pay monthly</p>
+													</div>
+												)}
 												{mobile ? (
 													<Image
 														src="/assets/svgs/heart-black.svg"

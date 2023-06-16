@@ -15,8 +15,9 @@ export default function CategoriesFilter() {
 	const router = useRouter();
 
 	const [isOpen, setIsOpen] = useState(false);
-	const path = usePathname()?.split("/")[2];
+
 	const searchParams = useSearchParams();
+	const searchParams2 = usePathname();
 	const categoryPath = searchParams?.get("category");
 
 	const active = "text-orange";
@@ -25,10 +26,14 @@ export default function CategoriesFilter() {
 	function handleMenu() {
 		setIsOpen((isOpen) => !isOpen);
 	}
-
 	function resetFilter() {
-		router.push("/products/all");
-		setIsOpen(false);
+		if (searchParams2 === "/products/all") {
+			location.reload();
+			console.log("refreshedi");
+		} else {
+			router.push("/products/all");
+			setIsOpen(false);
+		}
 	}
 
 	//if user scroll any direction, menu close

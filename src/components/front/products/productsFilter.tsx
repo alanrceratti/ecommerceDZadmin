@@ -54,9 +54,15 @@ export default function ProductsFilter() {
 	// Resets the selected filters and navigates to the default products page
 	function resetFilter() {
 		setSelectedFilters([]);
-		router.push("/products/all");
-		setIsOpen(false);
+		if (searchParams2 === "/products/all") {
+			location.reload();
+			console.log("refreshedi");
+		} else {
+			router.push("/products/all");
+			setIsOpen(false);
+		}
 	}
+	console.log(searchParams2);
 
 	// Toggles the visibility of filter options for a given filter category
 	function handleFiltersOpen(filterName: string) {
