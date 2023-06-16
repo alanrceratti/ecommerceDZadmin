@@ -81,6 +81,26 @@
 			]
 		},
 		{
+			"name": "Skill Level",
+			"options": [
+				{
+					"label": "Beginner",
+					"labelName": "skill",
+					"value": "Beginner"
+				},
+				{
+					"label": "Semi-Pro",
+					"labelName": "skill",
+					"value": "Semi-Professional"
+				},
+				{
+					"label": "Professional",
+					"labelName": "skill",
+					"value": "Professional"
+				}
+			]
+		},
+		{
 			"name": "Camera",
 			"options": [
 				{
@@ -147,6 +167,11 @@
 					"label": "Indoor",
 					"labelName": "ambient",
 					"value": "Indoor"
+				},
+				{
+					"label": "Both",
+					"labelName": "ambient",
+					"value": "Both"
 				}
 			]
 		},

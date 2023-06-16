@@ -18,6 +18,7 @@ export default async function handle(
 			battery,
 			category,
 			range,
+			skill,
 			speed,
 			camera,
 			ambient,
@@ -168,6 +169,38 @@ export default async function handle(
 		}
 
 		/////////////////////////////////////////////////////////
+		// SKILL LEVEL FILTER
+		/////////////////////////////////////////////////////////
+
+		if (Array.isArray(skill)) {
+			const skillFilters = skill.map((value) => {
+				if (value !== "string") {
+					return {
+						skillLevel: value,
+					};
+				}
+				return null;
+			});
+
+			filter.$and = [
+				...(filter.$and || []),
+				{
+					$or: skillFilters.filter(
+						(skillFilter) => skillFilter !== null
+					),
+				},
+			];
+		} else if (typeof skill === "string") {
+			if (skill === "Beginner") {
+				filter.skillLevel = "Beginner";
+			} else if (skill === "Semi-Professional") {
+				filter.skillLevel = "Semi-Professional";
+			} else if (skill === "Professional") {
+				filter.skillLevel = "Professional";
+			}
+		}
+
+		/////////////////////////////////////////////////////////
 		// CAMERA FILTER
 		/////////////////////////////////////////////////////////
 
@@ -268,6 +301,8 @@ export default async function handle(
 				filter.ambient = "Outdoor";
 			} else if (ambient === "Indoor") {
 				filter.ambient = "Indoor";
+			} else if (ambient === "Both") {
+				filter.ambient = "Both";
 			}
 		}
 

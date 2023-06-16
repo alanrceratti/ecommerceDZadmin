@@ -27,6 +27,7 @@ export default function ProductsFilter() {
 	const pricePath = searchParams?.getAll("price") ?? [];
 	const batteryPath = searchParams?.getAll("battery") ?? [];
 	const rangePath = searchParams?.getAll("range") ?? [];
+	const skillPath = searchParams?.getAll("skill") ?? [];
 	const speedPath = searchParams?.getAll("speed") ?? [];
 	const cameraPath = searchParams?.getAll("camera") ?? [];
 	const ambientPath = searchParams?.getAll("ambient") ?? [];
@@ -37,6 +38,7 @@ export default function ProductsFilter() {
 		...pricePath,
 		...batteryPath,
 		...rangePath,
+		...skillPath,
 		...speedPath,
 		...cameraPath,
 		...ambientPath,

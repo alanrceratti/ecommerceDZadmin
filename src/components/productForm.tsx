@@ -43,7 +43,7 @@ export default function ProductForm({
 	const [skillLevel, setSkillLevel] = useState(currentSkillLevel || "");
 	const skillL = ["Beginner", "Semi-Professional", "Professional"];
 	const [ambient, setAmbient] = useState(currentAmbient || "");
-	const amb = ["Indoor", "Outdoor"];
+	const amb = ["Indoor", "Outdoor", "Both"];
 	const [followMode, setFollowMode] = useState(currentFollowMode || "");
 	const followM = ["No", "Yes"];
 	const [autoReturn, setAutoReturn] = useState(currentAutoReturn || "");
