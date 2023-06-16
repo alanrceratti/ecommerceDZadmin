@@ -342,6 +342,7 @@ export default function ProductsFilter() {
 											<div className="flex items-center gap-2">
 												<h2
 													className=" mt-4 font-semibold cursor-pointer"
+													
 													onClick={() =>
 														handleFiltersOpen(
 															filter.name

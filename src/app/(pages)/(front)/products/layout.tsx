@@ -25,12 +25,8 @@ export default function HomeLayout({
 			<hr className=" h-6 w-full  bg-black border-none  "></hr>
 			<div className="block bg-white   sm:flex ">
 				<div className="w-full flex justify-between px-8 sm:px-1 sm:block sm:justify-normal sm:w-fit">
-					<Suspense fallback={<Loading />}>
-						<CategoriesFilter />
-					</Suspense>
-					{/* <Suspense fallback={<Loading/>}> */}
-					<ProductsFilter />
-					{/* </Suspense> */}
+					<CategoriesFilter pre-fetch={true} />
+					<ProductsFilter pre-fetch={true} />
 				</div>
 
 				{children}
