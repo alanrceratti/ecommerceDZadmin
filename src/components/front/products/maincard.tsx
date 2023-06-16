@@ -5,11 +5,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useParams, usePathname, useSearchParams } from "next/navigation";
-import Loading from "@/components/front/products/loading";
+import Loading from "@/components/front/products/loadingComponents";
 import { Tooltip as ReactTooltip } from "react-tooltip";
+import NoProductsLoad from "./noProductsLoad";
 
 export default function MainCard() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
+	const [noProducts, setNoProducts] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(false);
 	const mobile = useMedia("(max-width: 640px)");
 	const path = usePathname();
 
@@ -44,31 +47,59 @@ export default function MainCard() {
 				queryKeys.length === 1 &&
 				queryKeys[0] === "category"
 			) {
+				setLoading(true);
 				const response = await fetch(
 					`/api/productsIndividualFilter?category=${params}`
 				);
 				const data = await response.json();
-				setProducts(data);
-				console.log("1111111");
+				if (data) {
+					setLoading(false);
+					setProducts(data);
+					console.log("NO DATA");
+				} else if (!data) {
+					setNoProducts(true);
+					console.log("NO PRODUCTS");
+				}
 			} else if (queryKeys.length >= 1 && queryKeys[0] !== "category") {
+				setLoading(true);
 				const response = await fetch(
 					`/api/productsIndividualFilter?${reconstructedURL}`
 				);
 				const data = await response.json();
-				setProducts(data);
-				console.log("222222222", reconstructedURL);
+				if (data) {
+					setLoading(false);
+					setProducts(data);
+					console.log("NO DATA");
+				} else if (!data) {
+					setNoProducts(true);
+					console.log("NO PRODUCTS");
+				}
 			} else if (queryKeys.length > 1 && queryKeys[0] === "category") {
+				setLoading(true);
 				const response = await fetch(
 					`/api/productsIndividualFilter?${reconstructedURL}`
 				);
 				const data = await response.json();
-				setProducts(data);
-				console.log("33333333");
+				if (data) {
+					setLoading(false);
+					setProducts(data);
+					console.log("NO DATA");
+				} else if (!data) {
+					setNoProducts(true);
+					console.log("NO PRODUCTS");
+				}
 			} else if (categoryPath2 === "all") {
 				const response = await fetch(`/api/productsAll`);
+				setLoading(true);
 				const data = await response.json();
-				setProducts(data);
-				console.log("44444444");
+				if (data) {
+					setLoading(false);
+					setProducts(data);
+					console.log("NO DATA");
+				} else if (!data) {
+					setNoProducts(true);
+					console.log("NO PRODUCTS");
+				}
 			}
 		} catch (error) {
 			console.error(error);
@@ -280,9 +311,13 @@ export default function MainCard() {
 							</div>
 						))}
 					</div>
-				) : (
+				) : loading ? (
 					<div className="m-auto w-full flex-grow">
 						<Loading />
+					</div>
+				) : (
+					<div className="m-auto w-full flex-grow">
+						<NoProductsLoad />
 					</div>
 				)}
 			</div>

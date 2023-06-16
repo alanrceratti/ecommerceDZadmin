@@ -100,23 +100,19 @@ export default function ProductsFilter() {
 			groupSelectedFilters.length === 0
 		) {
 			setSelectedFilters([]);
-			console.log("aaaaa");
+
 			router.push(urlAll);
 		} else if (
 			groupSelectedFilters.length > 0 &&
 			searchParams2 === "/products/all" &&
 			categoryPath === null
 		) {
-			console.log("bbbb");
-
 			router.push(urlOnlyFilter);
 		} else if (
 			groupSelectedFilters.length > 0 &&
 			searchParams2 === "/products/filter" &&
 			categoryPath === null
 		) {
-			console.log("ccccc");
-
 			router.push(urlOnlyFilter);
 		} else if (
 			groupSelectedFilters.length > 0 &&
@@ -124,15 +120,12 @@ export default function ProductsFilter() {
 			categoryPath &&
 			selectedFilters.length !== 0
 		) {
-			console.log("dddddd");
 			router.push(urlWithCategoryWithFilter);
 		} else if (
 			groupSelectedFilters.length === 0 &&
 			searchParams2 === "/products/filter" &&
 			!categoryPath
 		) {
-			console.log("eeeee");
-
 			setSelectedFilters([]);
 			router.push(urlAll);
 		} else if (
@@ -140,8 +133,6 @@ export default function ProductsFilter() {
 			searchParams2 === "/products/filter" &&
 			categoryPath
 		) {
-			console.log("eeeee");
-
 			setSelectedFilters([]);
 			router.push(urlWithCategoryOnly);
 		} else if (
@@ -151,7 +142,6 @@ export default function ProductsFilter() {
 			selectedFilters.length !== 0
 		) {
 			setSelectedFilters([]);
-			console.log("fffffff");
 			router.push(urlWithCategoryOnly);
 		}
 	};
@@ -188,8 +178,8 @@ export default function ProductsFilter() {
 		updateURL();
 	}, [groupSelectedFilters]);
 
-	console.log("selectedFilters", selectedFilters);
-	console.log("allURLFilter", allURLFilter);
+	// console.log("selectedFilters", selectedFilters);
+	// console.log("allURLFilter", allURLFilter);
 
 	return (
 		<main className="w-[100px] sm:w-[150px] ">

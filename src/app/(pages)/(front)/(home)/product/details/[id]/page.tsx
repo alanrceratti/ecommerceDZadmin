@@ -4,8 +4,8 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import Loading from "@/components/front/products/loading";
 import SimilarProducts from "@/components/front/products/similarProducts";
+import Loading from "@/components/front/products/loadingComponents";
 
 export default function ProductDetails() {
 	const [product, setProduct] = useState<NewProductsProps>();

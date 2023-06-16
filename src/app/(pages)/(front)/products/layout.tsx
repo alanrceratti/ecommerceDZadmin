@@ -1,7 +1,7 @@
 import Footer from "@/components/front/footer/footer";
 import HeaderNav from "@/components/front/main/header";
 import CategoriesFilter from "@/components/front/products/categoriesFilter";
-import Loading from "@/components/front/products/loading";
+import Loading from "@/components/front/products/loadingComponents";
 import ProductsFilter from "@/components/front/products/productsFilter";
 import { Suspense } from "react";
 
