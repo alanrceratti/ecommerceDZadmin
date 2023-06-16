@@ -114,12 +114,25 @@ export default function CategoriesFilter() {
 	});
 
 	useEffect(() => {
-		if (result.length > 0 && categoriesCount.length > 0) {
-			setResultsUpdate(true);
-			console.log("now is true");
-		} else {
-			console.log("not true");
+		let intervalId: NodeJS.Timeout;
+
+		const checkCategoriesCount = () => {
+			if (categoriesCount.length > 0) {
+				setResultsUpdate(true);
+				console.log("now is true");
+			} else {
+				console.log("not true");
+				intervalId = setTimeout(checkCategoriesCount, 1000); // Check again after 1 second
+			}
+		};
+
+		if (result.length > 0 && categoriesCount.length === 0) {
+			intervalId = setTimeout(checkCategoriesCount, 1000); // Start the initial check
 		}
+
+		return () => {
+			clearTimeout(intervalId); // Clean up the timeout on component unmount
+		};
 	}, [result, categoriesCount.length]);
 
 	console.log(result.length, categoriesCount.length);
