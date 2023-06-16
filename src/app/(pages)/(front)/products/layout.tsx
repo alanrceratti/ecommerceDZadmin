@@ -37,7 +37,6 @@ export default function HomeLayout({
 
 				{/* </Suspense> */}
 			</div>
-			<Footer />
 		</section>
 	);
 }
