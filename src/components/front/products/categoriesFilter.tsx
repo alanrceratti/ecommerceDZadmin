@@ -116,10 +116,11 @@ export default function CategoriesFilter() {
 	useEffect(() => {
 		if (result.length > 0) {
 			setResultsUpdate(true);
+			console.log("now is true");
 		}
-	}, [result]);
+	}, [result, categoriesCount.length]);
 
-	console.log(result, categoriesCount.length);
+	console.log(result.length, categoriesCount.length);
 	return (
 		<main className="w-fit ">
 			{resultsUpdate && categoriesCount.length > 0 ? (
