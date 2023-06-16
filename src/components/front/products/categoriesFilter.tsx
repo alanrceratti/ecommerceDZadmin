@@ -114,9 +114,11 @@ export default function CategoriesFilter() {
 	});
 
 	useEffect(() => {
-		if (result.length > 0) {
+		if (result.length > 0 && categoriesCount.length > 0) {
 			setResultsUpdate(true);
 			console.log("now is true");
+		} else {
+			console.log("not true");
 		}
 	}, [result, categoriesCount.length]);
 
