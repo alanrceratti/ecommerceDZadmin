@@ -39,12 +39,12 @@
 					"value": "0-30"
 				},
 				{
-					"label": "31 min-45 min",
+					"label": "31-45 min",
 					"labelName": "battery",
 					"value": "31-45"
 				},
 				{
-					"label": "> 46 min-60 min",
+					"label": "46-60 min",
 					"labelName": "battery",
 					"value": "46-60"
 				},
@@ -52,6 +52,146 @@
 					"label": "> 60 min",
 					"labelName": "battery",
 					"value": "61-9999"
+				}
+			]
+		},
+		{
+			"name": "Range",
+			"options": [
+				{
+					"label": "< 1 mile",
+					"labelName": "range",
+					"value": "0-1"
+				},
+				{
+					"label": "1-2 miles",
+					"labelName": "range",
+					"value": "1-2"
+				},
+				{
+					"label": "3-4 mile",
+					"labelName": "range",
+					"value": "3-4"
+				},
+				{
+					"label": "> 4 mile",
+					"labelName": "range",
+					"value": "4-99"
+				}
+			]
+		},
+		{
+			"name": "Camera",
+			"options": [
+				{
+					"label": "No camera",
+					"labelName": "camera",
+					"value": "No camera"
+				},
+				{
+					"label": "720",
+					"labelName": "camera",
+					"value": "720"
+				},
+				{
+					"label": "1080",
+					"labelName": "camera",
+					"value": "1080"
+				},
+				{
+					"label": "2K",
+					"labelName": "camera",
+					"value": "2K"
+				},
+				{
+					"label": "4K",
+					"labelName": "camera",
+					"value": "4K"
+				}
+			]
+		},
+		{
+			"name": "Speed",
+			"options": [
+				{
+					"label": "< 20",
+					"labelName": "camera",
+					"value": "0-20"
+				},
+				{
+					"label": "21-30",
+					"labelName": "camera",
+					"value": "21-30"
+				},
+				{
+					"label": "31-50",
+					"labelName": "camera",
+					"value": "31-50"
+				},
+				{
+					"label": "> 50",
+					"labelName": "camera",
+					"value": "50-999"
+				}
+			]
+		},
+		{
+			"name": "Ambient",
+			"options": [
+				{
+					"label": "Outdoor",
+					"labelName": "ambient",
+					"value": "outdoor"
+				},
+				{
+					"label": "Indoor",
+					"labelName": "ambient",
+					"value": "indoor"
+				}
+			]
+		},
+		{
+			"name": "Follow Mode",
+			"options": [
+				{
+					"label": "Yes",
+					"labelName": "follow-mode",
+					"value": "yes"
+				},
+				{
+					"label": "No",
+					"labelName": "follow-mode",
+					"value": "no"
+				}
+			]
+		},
+		{
+			"name": "Auto Return",
+			"options": [
+				{
+					"label": "Yes",
+					"labelName": "auto-return",
+					"value": "yes"
+				},
+				{
+					"label": "No",
+					"labelName": "auto-return",
+					"value": "no"
+				}
+			]
+		},
+		{
+			"name": "Water Proof",
+			"options": [
+				{
+					"label": "Yes",
+					"labelName": "water-proof",
+					"value": "yes"
+				},
+				{
+					"label": "No",
+					"labelName": "water-proof",
+					"value": "no"
 				}
 			]
 		}

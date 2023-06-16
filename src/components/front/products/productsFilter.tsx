@@ -26,7 +26,24 @@ export default function ProductsFilter() {
 
 	const pricePath = searchParams?.getAll("price") ?? [];
 	const batteryPath = searchParams?.getAll("battery") ?? [];
-	const allURLFilter = [...pricePath, ...batteryPath];
+	const rangePath = searchParams?.getAll("range") ?? [];
+	const speedPath = searchParams?.getAll("speed") ?? [];
+	const cameraPath = searchParams?.getAll("camera") ?? [];
+	const ambientPath = searchParams?.getAll("ambient") ?? [];
+	const followModePath = searchParams?.getAll("follow-mode") ?? [];
+	const autoReturnPath = searchParams?.getAll("auto-return") ?? [];
+	const waterProofPath = searchParams?.getAll("water-proof") ?? [];
+	const allURLFilter = [
+		...pricePath,
+		...batteryPath,
+		...rangePath,
+		...speedPath,
+		...cameraPath,
+		...ambientPath,
+		...followModePath,
+		...autoReturnPath,
+		...waterProofPath,
+	];
 
 	const price = pricePath.map((value) => "price=" + value);
 	const battery = batteryPath.map((value) => "battery=" + value);
@@ -170,6 +187,9 @@ export default function ProductsFilter() {
 	useEffect(() => {
 		updateURL();
 	}, [groupSelectedFilters]);
+
+	console.log("selectedFilters", selectedFilters);
+	console.log("allURLFilter", allURLFilter);
 
 	return (
 		<main className="w-[100px] sm:w-[150px] ">
