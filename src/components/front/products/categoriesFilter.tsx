@@ -89,19 +89,20 @@ export default function CategoriesFilter() {
 	const categoryCounts = {} as Record<string, number>;
 
 	// Loop through the categoriesCount array and count the occurrences of each category
-	categoriesCount &&
-		categoriesCount.forEach((catcount) => {
-			if (catcount.category && catcount.category.name) {
-				// Increment the count if the category already exists in categoryCounts
-				if (categoryCounts[catcount.category.name]) {
-					categoryCounts[catcount.category.name] += 1;
-				} else {
-					// Initialize the count to 1 if it's the first occurrence of the category
-					categoryCounts[catcount.category.name] = 1;
+	if (categoriesCount && categoriesCount.length > 0) {
+		categoriesCount &&
+			categoriesCount.forEach((catcount) => {
+				if (catcount.category && catcount.category.name) {
+					// Increment the count if the category already exists in categoryCounts
+					if (categoryCounts[catcount.category.name]) {
+						categoryCounts[catcount.category.name] += 1;
+					} else {
+						// Initialize the count to 1 if it's the first occurrence of the category
+						categoryCounts[catcount.category.name] = 1;
+					}
 				}
-			}
-		});
-
+			});
+	}
 	// Map the categories array to create an array of category names with their respective counts
 
 	const allCategories = categories
