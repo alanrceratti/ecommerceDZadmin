@@ -75,16 +75,16 @@ export default function CategoriesFilter() {
 			console.error("Error fetching categories count:", error);
 		}
 	}
+	useEffect(() => {
+		if (categoriesCount.length > 0) {
+			setResultsUpdate(true);
+		}
+	}, [categoriesCount]);
 
 	useEffect(() => {
 		countCategories();
 		fetchAllCategories();
-		if (categoriesCount.length > 0) {
-			setResultsUpdate(true);
-		} else {
-			countCategories();
-		}
-	}, [categoriesCount]);
+	}, []);
 
 	const categoryCounts = {} as Record<string, number>;
 
