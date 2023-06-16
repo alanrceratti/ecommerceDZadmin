@@ -70,10 +70,16 @@ export default function CategoriesFilter() {
 			const response = await fetch("/api/categoriesCount");
 			const data = await response.json();
 			setCategoriesCount(data);
+			setResultsUpdate(true); // Set resultsUpdate to true once the data is fetched
 		} catch (error) {
 			console.error("Error fetching categories count:", error);
 		}
 	}
+	useEffect(() => {
+		if (categoriesCount.length > 0) {
+			setResultsUpdate(true);
+		}
+	}, [categoriesCount]);
 
 	useEffect(() => {
 		countCategories();
@@ -113,29 +119,6 @@ export default function CategoriesFilter() {
 		}
 	});
 
-	useEffect(() => {
-		let intervalId: NodeJS.Timeout;
-
-		const checkCategoriesCount = () => {
-			if (categoriesCount.length > 0) {
-				setResultsUpdate(true);
-				console.log("now is true");
-			} else {
-				console.log("not true");
-				intervalId = setTimeout(checkCategoriesCount, 1000); // Check again after 1 second
-			}
-		};
-
-		if (result.length > 0 && categoriesCount.length === 0) {
-			intervalId = setTimeout(checkCategoriesCount, 1000); // Start the initial check
-		}
-
-		return () => {
-			clearTimeout(intervalId); // Clean up the timeout on component unmount
-		};
-	}, [result, categoriesCount.length]);
-
-	console.log(result.length, categoriesCount.length);
 	return (
 		<main className="w-fit ">
 			{resultsUpdate && categoriesCount.length > 0 ? (
