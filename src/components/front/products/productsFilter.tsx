@@ -56,13 +56,11 @@ export default function ProductsFilter() {
 		setSelectedFilters([]);
 		if (searchParams2 === "/products/all") {
 			location.reload();
-			console.log("refreshedi");
 		} else {
 			router.push("/products/all");
 			setIsOpen(false);
 		}
 	}
-	console.log(searchParams2);
 
 	// Toggles the visibility of filter options for a given filter category
 	function handleFiltersOpen(filterName: string) {
@@ -342,7 +340,6 @@ export default function ProductsFilter() {
 											<div className="flex items-center gap-2">
 												<h2
 													className=" mt-4 font-semibold cursor-pointer"
-													
 													onClick={() =>
 														handleFiltersOpen(
 															filter.name

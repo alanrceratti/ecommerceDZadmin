@@ -111,7 +111,7 @@ export default function CategoriesFilter() {
 			};
 		}
 	});
-
+	console.log(result, categoriesCount.length);
 	return (
 		<main className="w-fit ">
 			{result && categoriesCount.length > 0 ? (

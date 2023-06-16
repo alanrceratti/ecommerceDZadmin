@@ -3,7 +3,6 @@ import HeaderNav from "@/components/front/main/header";
 import CategoriesFilter from "@/components/front/products/categoriesFilter";
 import Loading from "@/components/front/products/loadingComponents";
 import ProductsFilter from "@/components/front/products/productsFilter";
-import { Suspense } from "react";
 
 export default function HomeLayout({
 	children,
@@ -25,8 +24,8 @@ export default function HomeLayout({
 			<hr className=" h-6 w-full  bg-black border-none  "></hr>
 			<div className="block bg-white   sm:flex ">
 				<div className="w-full flex justify-between px-8 sm:px-1 sm:block sm:justify-normal sm:w-fit">
-					<CategoriesFilter pre-fetch={true} />
-					<ProductsFilter pre-fetch={true} />
+					<CategoriesFilter />
+					<ProductsFilter />
 				</div>
 
 				{children}
