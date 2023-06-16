@@ -55,10 +55,8 @@ export default function MainCard() {
 				if (data) {
 					setLoading(false);
 					setProducts(data);
-					console.log("NO DATA");
 				} else if (!data) {
 					setNoProducts(true);
-					console.log("NO PRODUCTS");
 				}
 			} else if (queryKeys.length >= 1 && queryKeys[0] !== "category") {
 				setLoading(true);
@@ -69,10 +67,8 @@ export default function MainCard() {
 				if (data) {
 					setLoading(false);
 					setProducts(data);
-					console.log("NO DATA");
 				} else if (!data) {
 					setNoProducts(true);
-					console.log("NO PRODUCTS");
 				}
 			} else if (queryKeys.length > 1 && queryKeys[0] === "category") {
 				setLoading(true);
@@ -83,10 +79,8 @@ export default function MainCard() {
 				if (data) {
 					setLoading(false);
 					setProducts(data);
-					console.log("NO DATA");
 				} else if (!data) {
 					setNoProducts(true);
-					console.log("NO PRODUCTS");
 				}
 			} else if (categoryPath2 === "all") {
 				const response = await fetch(`/api/productsAll`);
@@ -95,10 +89,6 @@ export default function MainCard() {
 				if (data) {
 					setLoading(false);
 					setProducts(data);
-					console.log("NO DATA");
-				} else if (!data) {
-					setNoProducts(true);
-					console.log("NO PRODUCTS");
 				}
 			}
 		} catch (error) {

@@ -115,22 +115,22 @@
 			"options": [
 				{
 					"label": "< 20",
-					"labelName": "camera",
+					"labelName": "speed",
 					"value": "0-20"
 				},
 				{
 					"label": "21-30",
-					"labelName": "camera",
+					"labelName": "speed",
 					"value": "21-30"
 				},
 				{
 					"label": "31-50",
-					"labelName": "camera",
+					"labelName": "speed",
 					"value": "31-50"
 				},
 				{
 					"label": "> 50",
-					"labelName": "camera",
+					"labelName": "speed",
 					"value": "50-999"
 				}
 			]
@@ -141,12 +141,12 @@
 				{
 					"label": "Outdoor",
 					"labelName": "ambient",
-					"value": "outdoor"
+					"value": "Outdoor"
 				},
 				{
 					"label": "Indoor",
 					"labelName": "ambient",
-					"value": "indoor"
+					"value": "Indoor"
 				}
 			]
 		},
@@ -155,13 +155,13 @@
 			"options": [
 				{
 					"label": "Yes",
-					"labelName": "follow-mode",
-					"value": "yes"
+					"labelName": "followMode",
+					"value": "Yes"
 				},
 				{
 					"label": "No",
-					"labelName": "follow-mode",
-					"value": "no"
+					"labelName": "followMode",
+					"value": "No"
 				}
 			]
 		},
@@ -170,13 +170,13 @@
 			"options": [
 				{
 					"label": "Yes",
-					"labelName": "auto-return",
-					"value": "yes"
+					"labelName": "autoReturn",
+					"value": "Yes"
 				},
 				{
 					"label": "No",
-					"labelName": "auto-return",
-					"value": "no"
+					"labelName": "autoReturn",
+					"value": "No"
 				}
 			]
 		},
@@ -185,13 +185,13 @@
 			"options": [
 				{
 					"label": "Yes",
-					"labelName": "water-proof",
-					"value": "yes"
+					"labelName": "waterProof",
+					"value": "Yes"
 				},
 				{
 					"label": "No",
-					"labelName": "water-proof",
-					"value": "no"
+					"labelName": "waterProof",
+					"value": "No"
 				}
 			]
 		}

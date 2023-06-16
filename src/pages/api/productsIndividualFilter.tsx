@@ -29,6 +29,9 @@ export default async function handle(
 		// Prepare the filter object based on the selected filters
 		const filter: any = {};
 
+		/////////////////////////////////////////////////////////
+		// PRICE FILTER
+		/////////////////////////////////////////////////////////
 		// Apply specific filters based on the selected options
 		if (Array.isArray(price)) {
 			const priceFilters = price.map((value) => {
@@ -71,7 +74,8 @@ export default async function handle(
 		}
 
 		/////////////////////////////////////////////////////////
-
+		// BATTERY FILTER
+		/////////////////////////////////////////////////////////
 		if (Array.isArray(battery)) {
 			const batteryFilters = battery.map((value) => {
 				if (value.includes("-")) {
@@ -119,7 +123,9 @@ export default async function handle(
 		// 	}
 		// }
 
-		////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		// RANGE FILTER
+		/////////////////////////////////////////////////////////
 
 		if (Array.isArray(range)) {
 			const rangeFilters = range.map((value) => {
@@ -161,7 +167,9 @@ export default async function handle(
 			}
 		}
 
-		///////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		// CAMERA FILTER
+		/////////////////////////////////////////////////////////
 
 		if (Array.isArray(camera)) {
 			const cameraFilters = camera.map((value) => {
@@ -189,7 +197,9 @@ export default async function handle(
 			}
 		}
 
-		///////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		// SPEED FILTER
+		/////////////////////////////////////////////////////////
 
 		if (Array.isArray(speed)) {
 			const speedFilters = speed.map((value) => {
@@ -220,18 +230,136 @@ export default async function handle(
 					$gte: parseInt(minSpeed),
 					$lte: parseInt(maxSpeed),
 				};
-			} else if (speed === "0-1") {
+			} else if (speed === "0-20") {
 				filter.speed = {
-					$lt: 1,
+					$lt: 20,
 				};
-			} else if (speed === "4-99") {
+			} else if (speed === "50-999") {
 				filter.speed = {
-					$gte: 4,
+					$gte: 50,
 				};
 			}
 		}
 
-		///////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////
+		// AMBIENT FILTER
+		/////////////////////////////////////////////////////////
+
+		if (Array.isArray(ambient)) {
+			const ambientFilters = ambient.map((value) => {
+				if (value !== "string") {
+					return {
+						ambient: value,
+					};
+				}
+				return null;
+			});
+
+			filter.$and = [
+				...(filter.$and || []),
+				{
+					$or: ambientFilters.filter(
+						(ambientFilter) => ambientFilter !== null
+					),
+				},
+			];
+		} else if (typeof ambient === "string") {
+			if (ambient === "Outdoor") {
+				filter.ambient = "Outdoor";
+			} else if (ambient === "Indoor") {
+				filter.ambient = "Indoor";
+			}
+		}
+
+		/////////////////////////////////////////////////////////
+		// FOLLOW MODE FILTER
+		/////////////////////////////////////////////////////////
+
+		if (Array.isArray(followMode)) {
+			const followModeFilters = followMode.map((value) => {
+				if (value !== "string") {
+					return {
+						followMode: value,
+					};
+				}
+				return null;
+			});
+
+			filter.$and = [
+				...(filter.$and || []),
+				{
+					$or: followModeFilters.filter(
+						(followModeFilter) => followModeFilter !== null
+					),
+				},
+			];
+		} else if (typeof followMode === "string") {
+			if (followMode === "Yes") {
+				filter.followMode = "Yes";
+			} else if (followMode === "No") {
+				filter.followMode = "No";
+			}
+		}
+
+		/////////////////////////////////////////////////////////
+		// AUTO RETURN FILTER
+		/////////////////////////////////////////////////////////
+
+		if (Array.isArray(autoReturn)) {
+			const autoReturnFilters = autoReturn.map((value) => {
+				if (value !== "string") {
+					return {
+						autoReturn: value,
+					};
+				}
+				return null;
+			});
+
+			filter.$and = [
+				...(filter.$and || []),
+				{
+					$or: autoReturnFilters.filter(
+						(autoReturnFilter) => autoReturnFilter !== null
+					),
+				},
+			];
+		} else if (typeof autoReturn === "string") {
+			if (autoReturn === "Yes") {
+				filter.autoReturn = "Yes";
+			} else if (autoReturn === "No") {
+				filter.autoReturn = "No";
+			}
+		}
+
+		/////////////////////////////////////////////////////////
+		// WATER PROOF FILTER
+		/////////////////////////////////////////////////////////
+
+		if (Array.isArray(waterProof)) {
+			const waterProofFilters = waterProof.map((value) => {
+				if (value !== "string") {
+					return {
+						waterProof: value,
+					};
+				}
+				return null;
+			});
+
+			filter.$and = [
+				...(filter.$and || []),
+				{
+					$or: waterProofFilters.filter(
+						(waterProofFilter) => waterProofFilter !== null
+					),
+				},
+			];
+		} else if (typeof waterProof === "string") {
+			if (waterProof === "Yes") {
+				filter.waterProof = "Yes";
+			} else if (waterProof === "No") {
+				filter.waterProof = "No";
+			}
+		}
 
 		if (typeof category === "string") {
 			const categoryId = mongoose.Types.ObjectId.isValid(category)
@@ -241,6 +369,7 @@ export default async function handle(
 		}
 
 		// Query the database with the applied filters
+		console.log("RESULTS", filter);
 		const products = await Product.find(filter).populate("category").exec();
 
 		res.json(products);

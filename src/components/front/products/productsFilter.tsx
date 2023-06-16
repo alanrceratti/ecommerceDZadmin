@@ -30,9 +30,9 @@ export default function ProductsFilter() {
 	const speedPath = searchParams?.getAll("speed") ?? [];
 	const cameraPath = searchParams?.getAll("camera") ?? [];
 	const ambientPath = searchParams?.getAll("ambient") ?? [];
-	const followModePath = searchParams?.getAll("follow-mode") ?? [];
-	const autoReturnPath = searchParams?.getAll("auto-return") ?? [];
-	const waterProofPath = searchParams?.getAll("water-proof") ?? [];
+	const followModePath = searchParams?.getAll("followMode") ?? [];
+	const autoReturnPath = searchParams?.getAll("autoReturn") ?? [];
+	const waterProofPath = searchParams?.getAll("waterProof") ?? [];
 	const allURLFilter = [
 		...pricePath,
 		...batteryPath,
@@ -313,20 +313,21 @@ export default function ProductsFilter() {
 					</>
 				) : (
 					<div>
-						<div className="bg-white shadow-lg rounded-md my-4">
-							<h1 className="font-bold  text-center text-black m-2">
-								Filter by
-							</h1>
-						</div>
 						<button
 							onClick={resetFilter}
 							className="flex w-full p-2
 							border-b-2 border-gray-700"
 						>
-							Reset
+							Reset filters
 						</button>
+						<div className="bg-white shadow-lg rounded-md mt-4 ">
+							<h1 className="font-bold  text-center text-black mx-2">
+								Filter by
+							</h1>
+						</div>
+
 						{filters && (
-							<div className=" text-black  h-fit rounded-md font-poppins py-1">
+							<div className=" text-black  h-fit rounded-md font-poppins py-0">
 								<div>
 									{filters.filters.map((filter) => (
 										<div key={filter.name}>

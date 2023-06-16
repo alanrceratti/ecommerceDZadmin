@@ -4,6 +4,7 @@ import { NewProductsProps } from "@/app/types";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import CategoriesSkeleton from "./categoriesSkeleton";
 
 export default function CategoriesFilter() {
 	const [categories, setCategories] = useState<NewProductsProps[]>([]);
@@ -180,13 +181,14 @@ export default function CategoriesFilter() {
 									Categories
 								</h1>
 							</div>
-							<Link
-								href={`/products/all`}
-								className="flex w-full p-2
-							border-b-2 border-gray-700"
-							>
-								All
-							</Link>
+							<div className="bg-orange font-semibold shadow-xl rounded-md mt-4 cursor-pointer ">
+								<h1
+									className="  text-black m-2"
+									onClick={resetFilter}
+								>
+									Show All
+								</h1>
+							</div>
 							{result && result.length > 0 && (
 								<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
 									{result.map((category, index) => (
@@ -212,7 +214,9 @@ export default function CategoriesFilter() {
 						</div>
 					)}
 				</div>
-			) : null}
+			) : (
+				<CategoriesSkeleton />
+			)}
 		</main>
 	);
 }
