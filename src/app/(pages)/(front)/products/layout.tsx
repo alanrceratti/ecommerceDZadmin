@@ -32,6 +32,7 @@ export default function HomeLayout({
 					<ProductsFilter />
 					{/* </Suspense> */}
 				</div>
+
 				{children}
 				{/* <Suspense fallback={<Loading />}> */}
 

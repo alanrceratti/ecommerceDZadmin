@@ -13,6 +13,7 @@ export interface DataProps {
 	description: string;
 	price: number;
 	_id: Object;
+	category: string;
 }
 
 export interface NewProductsProps {

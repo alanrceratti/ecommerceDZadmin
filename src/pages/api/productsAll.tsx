@@ -12,7 +12,12 @@ export default async function handle(
 	await mongooseConnect();
 
 	if (req.method === "GET") {
-		const query = Product.find();
-		res.json(await query);
+		const pageSize = parseInt(req.query.pageSize as string) || 9;
+		const page = parseInt(req.query.page as string) || 1;
+
+		const skip = (page - 1) * pageSize;
+		const query = Product.find().skip(skip).limit(pageSize);
+		const products = await query.exec();
+		res.json(products);
 	}
 }

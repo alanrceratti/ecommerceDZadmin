@@ -5,6 +5,7 @@ export default function Products() {
 		<section>
 			<main className="bg-black">
 				<div className="block bg-white w-full sm:flex ">
+					
 					<MainCard />
 				</div>
 			</main>

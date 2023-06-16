@@ -181,13 +181,13 @@ export default function CategoriesFilter() {
 									Categories
 								</h1>
 							</div>
-							<div className="bg-orange font-semibold shadow-xl rounded-md mt-4 cursor-pointer ">
-								<h1
-									className="  text-black m-2"
+							<div className=" font-semibold shadow-xl rounded-md mt-4 cursor-pointer ">
+								<button
+									className=" btn-primaryy  text-black m-2"
 									onClick={resetFilter}
 								>
 									Show All
-								</h1>
+								</button>
 							</div>
 							{result && result.length > 0 && (
 								<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
