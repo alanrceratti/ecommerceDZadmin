@@ -11,6 +11,7 @@ export default function CategoriesFilter() {
 	const [categoriesCount, setCategoriesCount] = useState<NewProductsProps[]>(
 		[]
 	);
+	const [resultsUpdate, setResultsUpdate] = useState<boolean>(false);
 	const mobile = useMedia("(max-width: 640px)");
 	const router = useRouter();
 
@@ -111,10 +112,17 @@ export default function CategoriesFilter() {
 			};
 		}
 	});
+
+	useEffect(() => {
+		if (result.length > 0) {
+			setResultsUpdate(true);
+		}
+	}, [result]);
+
 	console.log(result, categoriesCount.length);
 	return (
 		<main className="w-fit ">
-			{result.length > 0 && categoriesCount.length > 0 ? (
+			{resultsUpdate && categoriesCount.length > 0 ? (
 				<div className="m-2 font-poppins ">
 					{mobile ? (
 						<>
