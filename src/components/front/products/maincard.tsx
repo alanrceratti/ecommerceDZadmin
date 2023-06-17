@@ -12,7 +12,7 @@ import NoProductsLoad from "./noProductsLoad";
 export default function MainCard() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const [noProducts, setNoProducts] = useState<boolean>(false);
-	const [loading, setLoading] = useState<boolean>(false);
+	const [loading, setLoading] = useState<boolean>(true);
 	const [bestSeller, setBestSeller] = useState<boolean>(false);
 	const [page, setPage] = useState(1);
 	const mobile = useMedia("(max-width: 640px)");
@@ -80,8 +80,8 @@ export default function MainCard() {
 				);
 				const data = await response.json();
 				if (data) {
-					setLoading(false);
 					setProducts(data);
+					setLoading(false);
 				} else if (!data) {
 					setNoProducts(true);
 				}
@@ -92,8 +92,8 @@ export default function MainCard() {
 				);
 				const data = await response.json();
 				if (data) {
-					setLoading(false);
 					setProducts(data);
+					setLoading(false);
 				} else if (!data) {
 					setNoProducts(true);
 				}
@@ -104,20 +104,22 @@ export default function MainCard() {
 				);
 				const data = await response.json();
 				if (data) {
-					setLoading(false);
 					setProducts(data);
+					setLoading(false);
 				} else if (!data) {
 					setNoProducts(true);
 				}
 			} else if (categoryPath2 === "all") {
+				setLoading(true);
 				const response = await fetch(
 					`/api/productsAll?page=${currentPage}&pageSize=${pageSize}`
 				);
-				setLoading(true);
 				const data = await response.json();
 				if (data) {
-					setLoading(false);
 					setProducts((prevProducts) => [...prevProducts, ...data]);
+					setLoading(false);
+				} else if (!data) {
+					setNoProducts(true);
 				}
 			}
 		} catch (error) {
@@ -140,7 +142,7 @@ export default function MainCard() {
 		<>
 			<div className="  w-full text-center  bg-white min-h-[500px]   ">
 				{!mobile && (
-					<div className="flex mt-2 h-fit w-full justify-center items-center">
+					<div className=" mt-2 h-fit w-full justify-center items-center hidden sm:flex">
 						<div className="flex h-fit w-fit  flex-wrap ">
 							<button
 								className=" btn-primaryy !text-red-600 m-2"

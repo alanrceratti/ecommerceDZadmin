@@ -8,6 +8,7 @@ import productsFilter from "../products/productsFilters.json";
 import useOutsideClick from "@/app/hooks/useOnClickOutside";
 
 export default function ProductsFilter() {
+	const mobile = useMedia("(max-width: 640px)");
 	const [isOpen, setIsOpen] = useState(false);
 	const [openFilter, setOpenFilter] = useState<string[]>([]);
 	const [selectedFilters, setSelectedFilters] = useState<FilterOption[]>([]);
@@ -15,7 +16,6 @@ export default function ProductsFilter() {
 	// const [selectedFilters2, setSelectedFilters2] = useState<string[]>([]);
 	const router = useRouter();
 
-	const mobile = useMedia("(max-width: 640px)");
 	const filters = productsFilter as Filters;
 
 	const ref = useRef<HTMLDivElement | null>(null);
@@ -318,7 +318,7 @@ export default function ProductsFilter() {
 						)}
 					</>
 				) : (
-					<div>
+					<div className="hidden sm:block">
 						<button
 							onClick={resetFilter}
 							className="flex w-full p-2

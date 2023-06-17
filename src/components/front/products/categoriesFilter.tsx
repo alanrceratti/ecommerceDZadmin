@@ -122,9 +122,9 @@ export default function CategoriesFilter() {
 
 	return (
 		<main className="w-fit ">
-			{resultsUpdate && categoriesCount.length > 0 ? (
+			{resultsUpdate && categoriesCount.length > 0 && mobile ? (
 				<div className="m-2 font-poppins ">
-					{mobile ? (
+					{mobile && (
 						<>
 							<div className="flex items-center ml-auto ">
 								<h1
@@ -187,48 +187,47 @@ export default function CategoriesFilter() {
 								</div>
 							) : null}
 						</>
-					) : (
-						!mobile && (
-							<div>
-								<div className="bg-white border border-gray-600 rounded-md my-4">
-									<h1 className="font-bold  text-black m-2">
-										Categories
-									</h1>
-								</div>
-								<div className=" font-semibold shadow-xl rounded-md mt-4 cursor-pointer ">
-									<button
-										className=" btn-primaryy  text-black m-2"
-										onClick={resetFilter}
-									>
-										Show All
-									</button>
-								</div>
-								{result && result.length > 0 && (
-									<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
-										{result.map((category, index) => (
-											<Link
-												href={`/products/filter?category=${category?.key}`}
-												key={category?.key}
-												className={`${
-													categoryPath ===
-													category?.key
-														? active
-														: notActive
-												} flex w-full p-2 hover:text-orange ${
-													index !==
-													categories.length - 1
-														? "border-b-2 border-gray-700"
-														: ""
-												}`}
-											>
-												{category?.value}
-												{category?.count}
-											</Link>
-										))}
-									</div>
-								)}
-							</div>
-						)
+					)}
+				</div>
+			) : (
+				mobile && <h1>Loading...</h1>
+			)}
+			{resultsUpdate && categoriesCount.length > 0 && !mobile ? (
+				<div>
+					<div className="bg-white border border-gray-600 rounded-md my-4">
+						<h1 className="font-bold  text-black m-2">
+							Categories
+						</h1>
+					</div>
+					<div className=" font-semibold shadow-xl rounded-md mt-4 cursor-pointer ">
+						<button
+							className=" btn-primaryy  text-black m-2"
+							onClick={resetFilter}
+						>
+							Show All
+						</button>
+					</div>
+					{result && result.length > 0 && (
+						<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
+							{result.map((category, index) => (
+								<Link
+									href={`/products/filter?category=${category?.key}`}
+									key={category?.key}
+									className={`${
+										categoryPath === category?.key
+											? active
+											: notActive
+									} flex w-full p-2 hover:text-orange ${
+										index !== categories.length - 1
+											? "border-b-2 border-gray-700"
+											: ""
+									}`}
+								>
+									{category?.value}
+									{category?.count}
+								</Link>
+							))}
+						</div>
 					)}
 				</div>
 			) : (

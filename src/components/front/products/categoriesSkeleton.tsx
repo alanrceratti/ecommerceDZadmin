@@ -1,6 +1,6 @@
 export default function CategoriesSkeleton() {
 	return (
-		<div className="m-2 font-poppins ">
+		<div className="m-2 font-poppins hidden sm:block ">
 			<div>
 				<div className="bg-white border border-gray-600 rounded-md my-4">
 					<h1 className="font-bold  text-black m-2">Categories</h1>
