@@ -18,19 +18,19 @@ export default function CategoriesSkeleton() {
 					</h1>
 					<h1>
 						<hr className=" h-[15px] rounded-2xl  w-[100px] bg-gray-100 animate-pulse-fast border-none  "></hr>
-					</h1>{" "}
+					</h1>
 					<h1>
 						<hr className=" h-[15px] rounded-2xl  w-[100px] bg-gray-100 animate-pulse-fast border-none  "></hr>
-					</h1>{" "}
+					</h1>
 					<h1>
 						<hr className=" h-[15px] rounded-2xl  w-[100px] bg-gray-100 animate-pulse-fast border-none  "></hr>
-					</h1>{" "}
+					</h1>
 					<h1>
 						<hr className=" h-[15px] rounded-2xl  w-[100px] bg-gray-100 animate-pulse-fast border-none  "></hr>
-					</h1>{" "}
+					</h1>
 					<h1>
 						<hr className=" h-[15px] rounded-2xl  w-[100px] bg-gray-100 animate-pulse-fast border-none  "></hr>
-					</h1>{" "}
+					</h1>
 					<h1>
 						<hr className=" h-[15px] rounded-2xl  w-[100px] bg-gray-100 animate-pulse-fast border-none  "></hr>
 					</h1>
