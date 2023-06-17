@@ -129,7 +129,7 @@ export default function CategoriesFilter() {
 
 	return (
 		<main className="w-fit ">
-			{allCategories.length > 0 && mobile ? (
+			{result.length > 0 && mobile ? (
 				<div className="m-2 font-poppins ">
 					{mobile && (
 						<>
@@ -164,7 +164,7 @@ export default function CategoriesFilter() {
 									>
 										Show All
 									</button>
-									{allCategories && result.length > 0 && (
+									{result && result.length > 0 && (
 										<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
 											{result.map((category, index) => (
 												<Link
