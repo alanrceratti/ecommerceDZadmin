@@ -12,6 +12,9 @@ export default function CategoriesFilter() {
 		[]
 	);
 	const [resultsUpdate, setResultsUpdate] = useState<boolean>(false);
+	const [categoryCounts, setCategoryCounts] = useState<
+		Record<string, number>
+	>({});
 	const mobile = useMedia("(max-width: 640px)");
 	const router = useRouter();
 
@@ -75,34 +78,35 @@ export default function CategoriesFilter() {
 			console.error("Error fetching categories count:", error);
 		}
 	}
-	useEffect(() => {
-		if (categoriesCount.length > 0) {
-			setResultsUpdate(true);
-		}
-	}, [categoriesCount]);
 
 	useEffect(() => {
 		countCategories();
 		fetchAllCategories();
 	}, []);
 
-	const categoryCounts = {} as Record<string, number>;
+	useEffect(() => {
+		if (categoriesCount.length > 0) {
+			setResultsUpdate(true);
+		}
+	}, [categoriesCount]);
 
 	// Loop through the categoriesCount array and count the occurrences of each category
-	if (categoriesCount && categoriesCount.length > 0) {
-		categoriesCount &&
+	useEffect(() => {
+		if (categoriesCount && categoriesCount.length > 0) {
+			const counts: Record<string, number> = {};
 			categoriesCount.forEach((catcount) => {
 				if (catcount.category && catcount.category.name) {
-					// Increment the count if the category already exists in categoryCounts
-					if (categoryCounts[catcount.category.name]) {
-						categoryCounts[catcount.category.name] += 1;
+					if (counts[catcount.category.name]) {
+						counts[catcount.category.name] += 1;
 					} else {
-						// Initialize the count to 1 if it's the first occurrence of the category
-						categoryCounts[catcount.category.name] = 1;
+						counts[catcount.category.name] = 1;
 					}
 				}
 			});
-	}
+			setCategoryCounts(counts);
+		}
+	}, [categoriesCount]);
+
 	// Map the categories array to create an array of category names with their respective counts
 
 	const allCategories = categories
@@ -119,6 +123,9 @@ export default function CategoriesFilter() {
 			};
 		}
 	});
+
+	console.log("results", result);
+	console.log("allCategories", allCategories);
 
 	return (
 		<main className="w-fit ">
