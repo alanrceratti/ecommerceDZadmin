@@ -157,37 +157,33 @@ export default function CategoriesFilter() {
 									>
 										Show All
 									</button>
-									{allCategories &&
-										allCategories.length > 0 && (
-											<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
-												{result.map(
-													(category, index) => (
-														<Link
-															onClick={() =>
-																setIsOpen(false)
-															}
-															href={`/products/filter?category=${category?.key}`}
-															key={category?.key}
-															className={`${
-																categoryPath ===
-																category?.key
-																	? active
-																	: notActive
-															} flex w-full p-2 hover:text-orange ${
-																index !==
-																categories.length -
-																	1
-																	? "border-b-2 border-gray-700"
-																	: ""
-															}`}
-														>
-															{category?.value}
-															{category?.count}
-														</Link>
-													)
-												)}
-											</div>
-										)}
+									{allCategories && result.length > 0 && (
+										<div className="bg-black text-white  h-fit rounded-md font-poppins py-1">
+											{result.map((category, index) => (
+												<Link
+													onClick={() =>
+														setIsOpen(false)
+													}
+													href={`/products/filter?category=${category?.key}`}
+													key={category?.key}
+													className={`${
+														categoryPath ===
+														category?.key
+															? active
+															: notActive
+													} flex w-full p-2 hover:text-orange ${
+														index !==
+														categories.length - 1
+															? "border-b-2 border-gray-700"
+															: ""
+													}`}
+												>
+													{category?.value}
+													{category?.count}
+												</Link>
+											))}
+										</div>
+									)}
 								</div>
 							) : null}
 						</>
