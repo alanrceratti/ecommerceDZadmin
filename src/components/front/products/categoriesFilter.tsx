@@ -131,8 +131,8 @@ export default function CategoriesFilter() {
 		console.log("result 55555555555");
 	});
 
-	// console.log("results", result);
-	// console.log("allCategories", allCategories);
+	console.log("results", result);
+	console.log("allCategories", allCategories);
 
 	return (
 		<main className="w-fit ">
