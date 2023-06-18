@@ -15,9 +15,11 @@ export default function MainCard() {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [bestSeller, setBestSeller] = useState<boolean>(false);
 	const [page, setPage] = useState(1);
+	const [pageSize, setPageSize] = useState(9);
+	const [sortBy, setSortBy] = useState<string>("");
 	const mobile = useMedia("(max-width: 640px)");
 	const path = usePathname();
-	const pageSize = 9;
+
 	const searchParams = useSearchParams();
 	const queryKeys = searchParams ? Array.from(searchParams.keys()) : [];
 
@@ -61,11 +63,20 @@ export default function MainCard() {
 		setPage(nextPage);
 	};
 
+	const handleSortByChange = (
+		event: React.ChangeEvent<HTMLSelectElement>
+	) => {
+		const selectedSortBy = event.target.value;
+		setSortBy(selectedSortBy);
+		setPageSize(pageSize * 2);
+		setPage(1);
+	};
+
 	const canLoadMore = products.length === page * pageSize;
 
 	useEffect(() => {
 		selectCategory(page);
-	}, [page, path, reconstructedURL]);
+	}, [page, path, reconstructedURL, sortBy]);
 
 	const selectCategory = async (currentPage: number) => {
 		try {
@@ -109,10 +120,23 @@ export default function MainCard() {
 				} else if (!data) {
 					setNoProducts(true);
 				}
-			} else if (categoryPath2 === "all") {
+			} else if (categoryPath2 === "all" && sortBy.length === 0) {
 				setLoading(true);
 				const response = await fetch(
 					`/api/productsAll?page=${currentPage}&pageSize=${pageSize}`
+				);
+				const data = await response.json();
+				if (data) {
+					setProducts((prevProducts) => [...prevProducts, ...data]);
+					setLoading(false);
+				} else if (!data) {
+					setNoProducts(true);
+				}
+			} else if (categoryPath2 === "all" && sortBy.length !== 0) {
+				setProducts([]);
+				setLoading(true);
+				const response = await fetch(
+					`/api/productsAll?page=${currentPage}&pageSize=${pageSize}&sortBy=${sortBy}`
 				);
 				const data = await response.json();
 				if (data) {
@@ -136,7 +160,7 @@ export default function MainCard() {
 	// }, [path, reconstructedURL]);
 
 	// console.log("reconstructedURL", reconstructedURL);
-	// console.log("path", path);
+	console.log("sortBy", sortBy.length);
 
 	return (
 		<>
@@ -160,9 +184,17 @@ export default function MainCard() {
 
 						<form className="btn-primaryy hover:!bg-white w-10/12 md:w-fit hover:!text-black flex justify-center items-center text-black !font-normal m-2">
 							<label>Sort By</label>
-							<select>
-								<option value="">Price: Low - High</option>
-								<option value="">Price: High - Low</option>
+							<select
+								value={sortBy}
+								onChange={handleSortByChange}
+							>
+								<option value="">Sort By</option>
+								<option value="priceLowToHigh">
+									Price: Low - High
+								</option>
+								<option value="priceHighToLow">
+									Price: High - Low
+								</option>
 							</select>
 						</form>
 					</div>
