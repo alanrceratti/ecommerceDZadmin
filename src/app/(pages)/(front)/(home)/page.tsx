@@ -21,7 +21,7 @@ export default function MainPage() {
 						Shop All
 					</Link>
 					<Link
-						href={"/products"}
+						href={"/products/all"}
 						className={"btn-secondary-mobile sm:btn-secondary"}
 					>
 						Find Yours

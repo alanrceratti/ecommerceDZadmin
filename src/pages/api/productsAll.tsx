@@ -27,7 +27,7 @@ export default async function handle(
 				sortOption = { price: -1 }; // Sort by price: High - Low
 			}
 
-			query = Product.find().skip(skip).limit(pageSize).sort(sortOption);
+			query = query.sort(sortOption);
 		}
 
 		const products = await query.exec();

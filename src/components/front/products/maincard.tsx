@@ -68,11 +68,14 @@ export default function MainCard() {
 	) => {
 		const selectedSortBy = event.target.value;
 		setSortBy(selectedSortBy);
-		setPageSize(pageSize * 2);
 		setPage(1);
 	};
+	console.log("page", page);
+	console.log("pageSize", pageSize);
+	console.log("products.length", products.length);
 
 	const canLoadMore = products.length === page * pageSize;
+	console.log("canLoadMore", products.length);
 
 	useEffect(() => {
 		selectCategory(page);
@@ -83,11 +86,29 @@ export default function MainCard() {
 			if (
 				categoryPath2 !== "all" &&
 				queryKeys.length === 1 &&
-				queryKeys[0] === "category"
+				queryKeys[0] === "category" &&
+				sortBy.length === 0
 			) {
 				setLoading(true);
 				const response = await fetch(
 					`/api/productsIndividualFilter?category=${params}`
+				);
+				const data = await response.json();
+				if (data) {
+					setProducts(data);
+					setLoading(false);
+				} else if (!data) {
+					setNoProducts(true);
+				}
+			} else if (
+				categoryPath2 !== "all" &&
+				queryKeys.length === 1 &&
+				queryKeys[0] === "category" &&
+				sortBy.length !== 0
+			) {
+				setLoading(true);
+				const response = await fetch(
+					`/api/productsIndividualFilter?category=${params}&sortBy=${sortBy}`
 				);
 				const data = await response.json();
 				if (data) {

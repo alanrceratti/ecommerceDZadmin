@@ -13,149 +13,398 @@
 
 // 	if (req.method === "GET") {
 // 		// Get the selected filters from the query parameters
-// 		const { price, battery, category } = req.query;
+// 		const {
+// 			price,
+// 			battery,
+// 			category,
+// 			range,
+// 			skill,
+// 			speed,
+// 			camera,
+// 			ambient,
+// 			followMode,
+// 			autoReturn,
+// 			waterProof,
+// 		} = req.query;
 // 		console.log("QUERY", req.query);
 // 		// Prepare the filter object based on the selected filters
 // 		const filter: any = {};
 
+// 		/////////////////////////////////////////////////////////
+// 		// PRICE FILTER
+// 		/////////////////////////////////////////////////////////
 // 		// Apply specific filters based on the selected options
 // 		if (Array.isArray(price)) {
-// 			const priceFilters = price.flatMap((value) => {
+// 			const priceFilters = price.map((value) => {
 // 				if (value.includes("-")) {
 // 					const [minPrice, maxPrice] = value.split("-");
 // 					return {
-// 						$and: [
-// 							{
-// 								price: {
-// 									$gte: parseInt(minPrice),
-// 									$lte: parseInt(maxPrice),
-// 								},
-// 							},
-// 						],
-// 					};
-// 				} else if (value === "10000") {
-// 					const singlePrice = parseInt(value);
-// 					return { price: { $lt: singlePrice } };
-// 				} else if (value === "70100") {
-// 					const singlePrice = parseInt(value);
-// 					return { price: { $gt: singlePrice } };
-// 				}
-// 			});
-
-// 			if (Array.isArray(price)) {
-// 				filter.$or = [...(filter.$or || []), ...priceFilters];
-// 			} else if (typeof price === "string") {
-// 				filter.$or = [...(filter.$or || []), ...[priceFilters]];
-// 			}
-// 		} else if (typeof price === "string") {
-// 			if (price.includes("-")) {
-// 				const [minPrice, maxPrice] = price.split("-");
-// 				filter.$and = [
-// 					{
 // 						price: {
 // 							$gte: parseInt(minPrice),
 // 							$lte: parseInt(maxPrice),
 // 						},
-// 					},
-// 				];
-// 			} else if (price === "10000") {
-// 				const singlePrice = parseInt(price);
-// 				filter.$and = [
-// 					{ price: { $lt: singlePrice } }, // Add filter for price less than 10000
-// 				];
-// 			} else if (price === "70100") {
-// 				const singlePrice = parseInt(price);
-// 				filter.$and = [
-// 					{ price: { $gt: singlePrice } }, // Add filter for price less than 10000
-// 				];
-// 			}
-// 		}
-
-// 		/////////////////////////////////////////////
-// 		if (Array.isArray(battery)) {
-// 			const timeFilters = battery.flatMap((value) => {
-// 				if (value.includes("-")) {
-// 					const [minbattery, maxbattery] = value.split("-");
-// 					return {
-// 						$and: [
-// 							{
-// 								battery: {
-// 									$gte: parseInt(minbattery),
-// 									$lte: parseInt(maxbattery),
-// 								},
-// 							},
-// 						],
 // 					};
-// 				} else if (value === "30") {
-// 					return { battery: { $lt: 30 } };
-// 				} else if (value === "61") {
-// 					return { battery: { $gt: 61 } };
 // 				}
+// 				return null;
 // 			});
 
-// 			if (Array.isArray(battery)) {
-// 				filter.$or = [...(filter.$or || []), ...timeFilters];
-// 			} else if (typeof battery === "string") {
-// 				filter.$or = [...(filter.$or || []), ...[timeFilters]];
+// 			filter.$and = [
+// 				...(filter.$and || []),
+// 				{
+// 					$or: priceFilters.filter(
+// 						(priceFilter) => priceFilter !== null
+// 					),
+// 				},
+// 			];
+// 		} else if (typeof price === "string") {
+// 			if (price.includes("-")) {
+// 				const [minPrice, maxPrice] = price.split("-");
+// 				filter.price = {
+// 					$gte: parseInt(minPrice),
+// 					$lte: parseInt(maxPrice),
+// 				};
+// 			} else if (price === "0-10000") {
+// 				filter.price = {
+// 					$lt: 10000,
+// 				};
+// 			} else if (price === "70100-9999999") {
+// 				filter.price = {
+// 					$gt: 70100,
+// 				};
 // 			}
+// 		}
+
+// 		/////////////////////////////////////////////////////////
+// 		// BATTERY FILTER
+// 		/////////////////////////////////////////////////////////
+// 		if (Array.isArray(battery)) {
+// 			const batteryFilters = battery.map((value) => {
+// 				if (value.includes("-")) {
+// 					const [minBattery, maxBattery] = value.split("-");
+// 					return {
+// 						battery: {
+// 							$gte: parseInt(minBattery),
+// 							$lte: parseInt(maxBattery),
+// 						},
+// 					};
+// 				}
+// 				return null;
+// 			});
+
+// 			filter.$and = [
+// 				...(filter.$and || []),
+// 				{
+// 					$or: batteryFilters.filter(
+// 						(batteryFilter) => batteryFilter !== null
+// 					),
+// 				},
+// 			];
 // 		} else if (typeof battery === "string") {
 // 			if (battery.includes("-")) {
-// 				const [minbattery, maxbattery] = battery.split("-");
-// 				filter.$and = [
-// 					{
-// 						battery: {
-// 							$gte: parseInt(minbattery),
-// 							$lte: parseInt(maxbattery),
-// 						},
-// 					},
-// 				];
-// 			} else if (battery === "30") {
-// 				const singletime = 30;
-// 				filter.$or = [
-// 					{ battery: { $lt: singletime } }, // Add filter for time less than 30 min
-// 				];
-// 			} else if (battery === "61") {
-// 				const singletime = 61;
-// 				filter.$or = [
-// 					{ battery: { $gt: singletime } }, // Add filter for time less than 60 min
-// 				];
+// 				const [minBattery, maxBattery] = battery.split("-");
+// 				filter.battery = {
+// 					$gte: parseInt(minBattery),
+// 					$lte: parseInt(maxBattery),
+// 				};
+// 			} else if (battery === "0-30") {
+// 				filter.battery = {
+// 					$lt: 30,
+// 				};
+// 			} else if (battery === "61-9999") {
+// 				filter.battery = {
+// 					$gte: 61,
+// 				};
 // 			}
 // 		}
-// 		//////////////////////////////////////////
-
-// 		// if (typeof battery === "string") {
-// 		// 	const [minbattery, maxbattery] = battery.split("-");
-// 		// 	filter.battery = {
-// 		// 		$gte: parseInt(minbattery),
-// 		// 		$lte: parseInt(maxbattery),
-// 		// 	};
-// 		// }
-
-// 		if (typeof category === "string") {
-// 			// Retrieve the category object based on the name
-// 			const categorys = await Product.find({ category: category }).exec();
-// 			if (
-// 				typeof category === "string" &&
-// 				mongoose.Types.ObjectId.isValid(category)
-// 			) {
-// 				filter.category = new mongoose.Types.ObjectId(category);
-// 			}
-// 			// if (category) {
-// 			// 	// Add the category filter
-// 			// 	filter.category = category._id;
-// 			// }
-// 		}
-// 		// else if (typeof category === null) {
-// 		// 	const category = await Category.find().exec();
-// 		// 	if (category) {
-// 		// 		// // Add the category filter
-// 		// 		filter.category = category;
+// 		// 	} else if (battery === "31-45") {
+// 		// 		filter.battery = {
+// 		// 			$gte: 31,
+// 		// 			$lte: 45,
+// 		// 		};
 // 		// 	}
 // 		// }
 
-// 		console.log("FILTER RESULT", filter);
+// 		/////////////////////////////////////////////////////////
+// 		// RANGE FILTER
+// 		/////////////////////////////////////////////////////////
+
+// 		if (Array.isArray(range)) {
+// 			const rangeFilters = range.map((value) => {
+// 				if (value.includes("-")) {
+// 					const [minRange, maxRange] = value.split("-");
+// 					return {
+// 						range: {
+// 							$gte: parseInt(minRange),
+// 							$lte: parseInt(maxRange),
+// 						},
+// 					};
+// 				}
+// 				return null;
+// 			});
+
+// 			filter.$and = [
+// 				...(filter.$and || []),
+// 				{
+// 					$or: rangeFilters.filter(
+// 						(rangeFilter) => rangeFilter !== null
+// 					),
+// 				},
+// 			];
+// 		} else if (typeof range === "string") {
+// 			if (range.includes("-")) {
+// 				const [minRange, maxRange] = range.split("-");
+// 				filter.range = {
+// 					$gte: parseInt(minRange),
+// 					$lte: parseInt(maxRange),
+// 				};
+// 			} else if (range === "0-1") {
+// 				filter.range = {
+// 					$lt: 1,
+// 				};
+// 			} else if (range === "4-99") {
+// 				filter.range = {
+// 					$gte: 4,
+// 				};
+// 			}
+// 		}
+
+// 		/////////////////////////////////////////////////////////
+// 		// SKILL LEVEL FILTER
+// 		/////////////////////////////////////////////////////////
+
+// 		if (Array.isArray(skill)) {
+// 			const skillFilters = skill.map((value) => {
+// 				if (value !== "string") {
+// 					return {
+// 						skillLevel: value,
+// 					};
+// 				}
+// 				return null;
+// 			});
+
+// 			filter.$and = [
+// 				...(filter.$and || []),
+// 				{
+// 					$or: skillFilters.filter(
+// 						(skillFilter) => skillFilter !== null
+// 					),
+// 				},
+// 			];
+// 		} else if (typeof skill === "string") {
+// 			if (skill === "Beginner") {
+// 				filter.skillLevel = "Beginner";
+// 			} else if (skill === "Semi-Professional") {
+// 				filter.skillLevel = "Semi-Professional";
+// 			} else if (skill === "Professional") {
+// 				filter.skillLevel = "Professional";
+// 			}
+// 		}
+
+// 		/////////////////////////////////////////////////////////
+// 		// CAMERA FILTER
+// 		/////////////////////////////////////////////////////////
+
+// 		if (Array.isArray(camera)) {
+// 			const cameraFilters = camera.map((value) => {
+// 				if (value !== "Nocamera") {
+// 					return {
+// 						camera: value,
+// 					};
+// 				}
+// 				return null;
+// 			});
+
+// 			filter.$and = [
+// 				...(filter.$and || []),
+// 				{
+// 					$or: cameraFilters.filter(
+// 						(cameraFilter) => cameraFilter !== null
+// 					),
+// 				},
+// 			];
+// 		} else if (typeof camera === "string") {
+// 			if (camera !== "Nocamera") {
+// 				filter.camera = camera;
+// 			} else if (camera === "Nocamera") {
+// 				filter.camera = "Nocamera";
+// 			}
+// 		}
+
+// 		/////////////////////////////////////////////////////////
+// 		// SPEED FILTER
+// 		/////////////////////////////////////////////////////////
+
+// 		if (Array.isArray(speed)) {
+// 			const speedFilters = speed.map((value) => {
+// 				if (value.includes("-")) {
+// 					const [minSpeed, maxSpeed] = value.split("-");
+// 					return {
+// 						speed: {
+// 							$gte: parseInt(minSpeed),
+// 							$lte: parseInt(maxSpeed),
+// 						},
+// 					};
+// 				}
+// 				return null;
+// 			});
+
+// 			filter.$and = [
+// 				...(filter.$and || []),
+// 				{
+// 					$or: speedFilters.filter(
+// 						(speedFilter) => speedFilter !== null
+// 					),
+// 				},
+// 			];
+// 		} else if (typeof speed === "string") {
+// 			if (speed.includes("-")) {
+// 				const [minSpeed, maxSpeed] = speed.split("-");
+// 				filter.speed = {
+// 					$gte: parseInt(minSpeed),
+// 					$lte: parseInt(maxSpeed),
+// 				};
+// 			} else if (speed === "0-20") {
+// 				filter.speed = {
+// 					$lt: 20,
+// 				};
+// 			} else if (speed === "50-999") {
+// 				filter.speed = {
+// 					$gte: 50,
+// 				};
+// 			}
+// 		}
+
+// 		/////////////////////////////////////////////////////////
+// 		// AMBIENT FILTER
+// 		/////////////////////////////////////////////////////////
+
+// 		if (Array.isArray(ambient)) {
+// 			const ambientFilters = ambient.map((value) => {
+// 				if (value !== "string") {
+// 					return {
+// 						ambient: value,
+// 					};
+// 				}
+// 				return null;
+// 			});
+
+// 			filter.$and = [
+// 				...(filter.$and || []),
+// 				{
+// 					$or: ambientFilters.filter(
+// 						(ambientFilter) => ambientFilter !== null
+// 					),
+// 				},
+// 			];
+// 		} else if (typeof ambient === "string") {
+// 			if (ambient === "Outdoor") {
+// 				filter.ambient = "Outdoor";
+// 			} else if (ambient === "Indoor") {
+// 				filter.ambient = "Indoor";
+// 			} else if (ambient === "Both") {
+// 				filter.ambient = "Both";
+// 			}
+// 		}
+
+// 		/////////////////////////////////////////////////////////
+// 		// FOLLOW MODE FILTER
+// 		/////////////////////////////////////////////////////////
+
+// 		if (Array.isArray(followMode)) {
+// 			const followModeFilters = followMode.map((value) => {
+// 				if (value !== "string") {
+// 					return {
+// 						followMode: value,
+// 					};
+// 				}
+// 				return null;
+// 			});
+
+// 			filter.$and = [
+// 				...(filter.$and || []),
+// 				{
+// 					$or: followModeFilters.filter(
+// 						(followModeFilter) => followModeFilter !== null
+// 					),
+// 				},
+// 			];
+// 		} else if (typeof followMode === "string") {
+// 			if (followMode === "Yes") {
+// 				filter.followMode = "Yes";
+// 			} else if (followMode === "No") {
+// 				filter.followMode = "No";
+// 			}
+// 		}
+
+// 		/////////////////////////////////////////////////////////
+// 		// AUTO RETURN FILTER
+// 		/////////////////////////////////////////////////////////
+
+// 		if (Array.isArray(autoReturn)) {
+// 			const autoReturnFilters = autoReturn.map((value) => {
+// 				if (value !== "string") {
+// 					return {
+// 						autoReturn: value,
+// 					};
+// 				}
+// 				return null;
+// 			});
+
+// 			filter.$and = [
+// 				...(filter.$and || []),
+// 				{
+// 					$or: autoReturnFilters.filter(
+// 						(autoReturnFilter) => autoReturnFilter !== null
+// 					),
+// 				},
+// 			];
+// 		} else if (typeof autoReturn === "string") {
+// 			if (autoReturn === "Yes") {
+// 				filter.autoReturn = "Yes";
+// 			} else if (autoReturn === "No") {
+// 				filter.autoReturn = "No";
+// 			}
+// 		}
+
+// 		/////////////////////////////////////////////////////////
+// 		// WATER PROOF FILTER
+// 		/////////////////////////////////////////////////////////
+
+// 		if (Array.isArray(waterProof)) {
+// 			const waterProofFilters = waterProof.map((value) => {
+// 				if (value !== "string") {
+// 					return {
+// 						waterProof: value,
+// 					};
+// 				}
+// 				return null;
+// 			});
+
+// 			filter.$and = [
+// 				...(filter.$and || []),
+// 				{
+// 					$or: waterProofFilters.filter(
+// 						(waterProofFilter) => waterProofFilter !== null
+// 					),
+// 				},
+// 			];
+// 		} else if (typeof waterProof === "string") {
+// 			if (waterProof === "Yes") {
+// 				filter.waterProof = "Yes";
+// 			} else if (waterProof === "No") {
+// 				filter.waterProof = "No";
+// 			}
+// 		}
+
+// 		if (typeof category === "string") {
+// 			const categoryId = mongoose.Types.ObjectId.isValid(category)
+// 				? new mongoose.Types.ObjectId(category)
+// 				: null;
+// 			filter.category = categoryId;
+// 		}
 
 // 		// Query the database with the applied filters
+// 		console.log("RESULTS", filter);
 // 		const products = await Product.find(filter).populate("category").exec();
 
 // 		res.json(products);

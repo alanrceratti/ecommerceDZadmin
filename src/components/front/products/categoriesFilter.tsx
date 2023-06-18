@@ -33,7 +33,6 @@ export default function CategoriesFilter() {
 	function resetFilter() {
 		if (searchParams2 === "/products/all") {
 			location.reload();
-			console.log("refreshedi");
 		} else {
 			router.push("/products/all");
 			setIsOpen(false);
@@ -92,9 +91,7 @@ export default function CategoriesFilter() {
 
 	// Loop through the categoriesCount array and count the occurrences of each category
 	useEffect(() => {
-		console.log("USE EFFECT 1");
 		if (categoriesCount && categoriesCount.length > 0) {
-			console.log("USE EFFECT 1");
 			const counts: Record<string, number> = {};
 			categoriesCount.forEach((catcount) => {
 				if (catcount.category && catcount.category.name) {
@@ -107,7 +104,6 @@ export default function CategoriesFilter() {
 			});
 			setCategoryCounts(counts);
 		}
-		console.log("USE EFFECT 1");
 	}, [categoriesCount]);
 
 	// Map the categories array to create an array of category names with their respective counts
@@ -115,12 +111,9 @@ export default function CategoriesFilter() {
 	const allCategories = categories
 		.filter((category) => category?.name)
 		.map((category) => ({ key: category._id, value: category.name }));
-	console.log("allCategories 2222222");
 
 	const result = allCategories.map((category) => {
-		console.log("result 333333333");
 		if (category?.value) {
-			console.log("result 44444444444");
 			const count = categoryCounts[category?.value] || 0;
 			return {
 				value: category.value,
@@ -128,11 +121,7 @@ export default function CategoriesFilter() {
 				count: count > 0 ? `(${count})` : "(0)",
 			};
 		}
-		console.log("result 55555555555");
 	});
-
-	console.log("results", result);
-	console.log("allCategories", allCategories);
 
 	return (
 		<main className="w-fit ">
