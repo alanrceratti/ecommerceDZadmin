@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { mongooseConnect } from "../../../lib/mongoose";
 import { Product } from "../../../models/Product";
+import { Category } from "../../../models/Category";
 
 export default async function handle(
 	req: NextApiRequest,
@@ -9,7 +10,10 @@ export default async function handle(
 	await mongooseConnect();
 	try {
 		if (req.method === "GET") {
-			res.json(await Product.find().populate("category", "name"));
+			const categories = await Category.find();
+			if (categories) {
+				res.json(await Product.find().populate("category", "name"));
+			}
 		}
 	} catch (error) {
 		console.error("An error occurred:", error);
