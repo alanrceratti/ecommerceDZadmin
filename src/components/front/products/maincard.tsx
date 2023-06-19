@@ -14,6 +14,7 @@ export default function MainCard() {
 	const [noProducts, setNoProducts] = useState<boolean>(false);
 	const [loading, setLoading] = useState<boolean>(true);
 	const [bestSeller, setBestSeller] = useState<boolean>(false);
+	const [allOffers, setAllOffers] = useState<boolean>(false);
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(9);
 	const [sortBy, setSortBy] = useState<string>("");
@@ -42,6 +43,8 @@ export default function MainCard() {
 	};
 
 	const productOffers = async () => {
+		setAllOffers(true);
+
 		try {
 			const response = await fetch("/api/productsOffers");
 			const data = await response.json();
@@ -202,22 +205,23 @@ export default function MainCard() {
 								Best Sellers
 							</button>
 						</div>
-
-						<form className="btn-primaryy hover:!bg-white w-10/12 md:w-fit hover:!text-black flex justify-center items-center text-black !font-normal m-2">
-							<label>Sort By</label>
-							<select
-								value={sortBy}
-								onChange={handleSortByChange}
-							>
-								<option value="">Sort By</option>
-								<option value="priceLowToHigh">
-									Price: Low - High
-								</option>
-								<option value="priceHighToLow">
-									Price: High - Low
-								</option>
-							</select>
-						</form>
+						{!bestSeller && !allOffers && (
+							<form className="btn-primaryy hover:!bg-white w-10/12 md:w-fit hover:!text-black flex justify-center items-center text-black !font-normal m-2">
+								<label>Sort By</label>
+								<select
+									value={sortBy}
+									onChange={handleSortByChange}
+								>
+									<option value="">Sort By</option>
+									<option value="priceLowToHigh">
+										Price: Low - High
+									</option>
+									<option value="priceHighToLow">
+										Price: High - Low
+									</option>
+								</select>
+							</form>
+						)}
 					</div>
 				)}
 				{products && products.length > 0 ? (

@@ -75,7 +75,7 @@ table.basic a {
 }
 
 .btn-secondary {
-	@apply px-7 py-3 bg-orange text-white font-poppins font-semibold text-lg rounded-md mx-2 hover:bg-black hover:text-white transition-all duration-300;
+	@apply px-6 py-2 bg-orange text-white font-poppins font-semibold text-lg rounded-md mx-2 hover:bg-black hover:text-white transition-all duration-300;
 }
 
 .btn-secondary-mobile {
