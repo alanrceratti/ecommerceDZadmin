@@ -6,12 +6,14 @@ import Offers from "@/components/front/main/offers";
 export default function MainPage() {
 	return (
 		<>
-			<section className=" bg-center sm:h-[680px] xl:h-[900px] 2xl:h-[1000px]  min-h-[300px] flex items-center sm:justify-center flex-col bg-[url('/assets/header/bg-main.webp')] bg-cover ">
-				<div className="font-unisansheavy sm:text-6xl text-xl text-white  text-center flex flex-col gap-8 sm:gap-20 mx-8 sm:mx-20 ">
-					<h1 className="text-2xl sm:text-5xl ">
+			<section className=" bg-center sm:h-[680px] xl:h-[700px] 2xl:h-[800px]  min-h-[300px] flex items-center sm:justify-center flex-col bg-[url('/assets/header/bg-main.webp')] bg-cover ">
+				<div className="font-unisansheavy sm:text-6xl text-xl text-white  text-center flex flex-col gap-8 sm:gap-20 mx-8 sm:mx-32 ">
+					<h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl ">
 						Drones have changed the way we see the world.
 					</h1>
-					<h1>How it will change yours?</h1>
+					<h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl ">
+						How it will change yours?
+					</h1>
 				</div>
 				<div className="flex gap-10 mt-16">
 					<Link
