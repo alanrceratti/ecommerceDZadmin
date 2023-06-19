@@ -84,9 +84,13 @@ export default function Footer() {
 							<p>021 1234 4534</p>
 						</div>
 						<div className="footer-card">
-							<h1>INFORMATION</h1>
+							<h1 className="cursor-pointer">
+								<Link href={"info/information"}>
+									INFORMATION
+								</Link>
+							</h1>
 							<Link
-								href="/"
+								href={"/information"}
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Frequent Questions

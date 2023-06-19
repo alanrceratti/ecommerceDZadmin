@@ -1,0 +1,34 @@
+{
+	"questions": [
+		{
+			"id": "1",
+			"question": "Are drones legal to fly?",
+			"answer": "Yes, drones are legal to fly in many countries, but specific regulations and restrictions may vary. It's important to familiarize yourself with the drone laws and regulations in your country or region before flying. This includes understanding any restrictions on flight altitude, designated no-fly zones, and privacy considerations."
+		},
+		{
+			"id": "2",
+			"question": "What is the range of a drone?",
+			"answer": "Yes, drones are"
+		},
+		{
+			"id": "3",
+			"question": "How long can drones fly on a single charge?",
+			"answer": "Yes, drones are"
+		},
+		{
+			"id": "4",
+			"question": "Can I attach my own camera to a drone?",
+			"answer": "Yes, drones are"
+		},
+		{
+			"id": "5",
+			"question": "How do I maintain and care for my drone?",
+			"answer": "Yes, drones are"
+		},
+		{
+			"id": "6",
+			"question": "Can I get spare parts and accessories for my drone?",
+			"answer": "Yes, drones are"
+		}
+	]
+}

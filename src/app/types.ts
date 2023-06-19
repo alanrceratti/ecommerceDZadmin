@@ -57,3 +57,13 @@ export interface Filter {
 export interface Filters {
 	filters: Filter[];
 }
+
+export interface Faq {
+	id: string;
+	question: string;
+	answer: string;
+}
+
+export interface FAQtypes {
+	questions: Faq[];
+}
