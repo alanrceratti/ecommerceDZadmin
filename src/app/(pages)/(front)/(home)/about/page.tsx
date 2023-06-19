@@ -3,10 +3,12 @@ import Image from "next/image";
 export default function AboutUs() {
 	return (
 		<section className="bg-white font-poppins font-medium text-left">
-			<div className="flex flex-wrap justify-center sm:gap-12">
-				<div className="sm:mr-12 m-auto">
-					<div className="w-[300px]  ">
-						<h1 className="font-bold pb-3 mt-12">About Us</h1>
+			<div className="flex flex-wrap justify-center sm:items-center sm:gap-12">
+				<div className=" m-auto px-4">
+					<div className="w-[300px] md:w-[450px]  ">
+						<h1 className="font-bold pb-3 mt-12 sm:mt-16">
+							About Us
+						</h1>
 						<p>
 							At DroneZone, our love for drones began with a
 							shared passion for innovation, technology, and the
@@ -16,14 +18,14 @@ export default function AboutUs() {
 							and professionals alike.
 						</p>
 						<Image
-							src="/assets/about/owners2.png"
+							src="/assets/about/owners.webp"
 							alt="photo-of-owners"
 							width={350}
 							height={300}
 							className="my-8 mx-auto"
 						/>
 					</div>
-					<div className="w-[300px] ">
+					<div className="w-[300px] md:w-[450px] ">
 						<h1 className="font-bold py-4">Our Journey</h1>
 						<p>
 							It all started with a group of drone enthusiasts who
@@ -52,10 +54,10 @@ export default function AboutUs() {
 						/>
 					</div>
 				</div>
-				<hr className="hidden md:block h-3/6 sm:h-3/6 lg:h-full absolute w-[1px] bg-gray-300 border-none   "></hr>
-				<div className="sm:ml-12 m-auto">
-					<div className="w-[300px] mb-12 ">
-						<h1 className="font-bold pb-3 mt-4">Our Commitment</h1>
+				<hr className="hidden lg:block h-3/6 sm:h-3/6 lg:h-full absolute w-[1px] bg-gray-300 border-none   "></hr>
+				<div className="m-auto px-3">
+					<div className="w-[300px] md:w-[450px]  mb-12 sm:pt-24 ">
+						<h1 className="font-bold pb-3 mt-4 ">Our Commitment</h1>
 						<p>
 							We are committed to providing our customers with the
 							finest selection of drones that cater to their
@@ -66,7 +68,7 @@ export default function AboutUs() {
 							capabilities, we have the perfect drone for you.
 						</p>
 					</div>
-					<div className="w-[300px] ">
+					<div className="w-[300px] md:w-[450px] ">
 						<h1 className="font-bold pb-3 mt-4">
 							Exceptional Customer Experience
 						</h1>
@@ -82,13 +84,13 @@ export default function AboutUs() {
 						</p>
 						<Image
 							src="/assets/about/drone.webp"
-							alt="photo-of-owners"
+							alt="drone "
 							width={350}
 							height={300}
 							className="my-8 mx-auto"
 						/>
 					</div>
-					<div className="w-[300px] ">
+					<div className="w-[300px] md:w-[450px] ">
 						<h1 className="font-bold pb-3">
 							Quality and Innovation
 						</h1>
