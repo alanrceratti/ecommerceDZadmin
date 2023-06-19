@@ -189,41 +189,40 @@ export default function MainCard() {
 	return (
 		<>
 			<div className="  w-full text-center  bg-white min-h-[500px]   ">
-				{!mobile && (
-					<div className=" mt-2 h-fit w-full justify-center items-center hidden sm:flex">
-						<div className="flex h-fit w-fit  flex-wrap ">
-							<button
-								className=" btn-primaryy !text-red-600 m-2"
-								onClick={productOffers}
-							>
-								All Offers
-							</button>
-							<button
-								className=" btn-primaryy !text-green-600 m-2"
-								onClick={productsBestSellers}
-							>
-								Best Sellers
-							</button>
-						</div>
-						{!bestSeller && !allOffers && (
-							<form className="btn-primaryy hover:!bg-white w-10/12 md:w-fit hover:!text-black flex justify-center items-center text-black !font-normal m-2">
-								<label>Sort By</label>
-								<select
-									value={sortBy}
-									onChange={handleSortByChange}
-								>
-									<option value="">Sort By</option>
-									<option value="priceLowToHigh">
-										Price: Low - High
-									</option>
-									<option value="priceHighToLow">
-										Price: High - Low
-									</option>
-								</select>
-							</form>
-						)}
+				<div className=" mt-2 h-fit w-full justify-center items-center hidden sm:flex">
+					<div className="flex h-fit w-fit  flex-wrap ">
+						<button
+							className=" btn-primaryy !text-red-600 m-2"
+							onClick={productOffers}
+						>
+							All Offers
+						</button>
+						<button
+							className=" btn-primaryy !text-green-600 m-2"
+							onClick={productsBestSellers}
+						>
+							Best Sellers
+						</button>
 					</div>
-				)}
+					{!bestSeller && !allOffers && (
+						<form className="btn-primaryy hover:!bg-white w-10/12 md:w-fit hover:!text-black flex justify-center items-center text-black !font-normal m-2">
+							<label>Sort By</label>
+							<select
+								value={sortBy}
+								onChange={handleSortByChange}
+							>
+								<option value="">Sort By</option>
+								<option value="priceLowToHigh">
+									Price: Low - High
+								</option>
+								<option value="priceHighToLow">
+									Price: High - Low
+								</option>
+							</select>
+						</form>
+					)}
+				</div>
+
 				{products && products.length > 0 ? (
 					<>
 						<div className="flex flex-wrap items-center justify-center pt-9 ">

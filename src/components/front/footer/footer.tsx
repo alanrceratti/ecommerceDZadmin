@@ -10,7 +10,7 @@ export default function Footer() {
 
 	return (
 		<>
-			<hr className="h-[20px] w-4/5 border-none mb-2 ml-auto mr-auto   "></hr>
+			<hr className="h-[10px] w-4/5 border-none mb-2 ml-auto mr-auto   "></hr>
 			<div className="bg-black text-white ">
 				<div className="flex justify-center pb-8 ">
 					<aside className="hidden lg:block bg-white m-8 rounded-md ">
