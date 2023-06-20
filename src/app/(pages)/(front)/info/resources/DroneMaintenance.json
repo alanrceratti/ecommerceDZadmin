@@ -2,38 +2,38 @@
 	"questions": [
 		{
 			"id": "1",
-			"question": "Are drones legal to fly?",
-			"answer": "Yes, drones are legal to fly in the UK. However, there are certain regulations and guidelines that must be followed. The Civil Aviation Authority (CAA) governs the use of drones and sets rules to ensure safety and privacy. It is important to familiarize yourself with the CAA's regulations, such as obtaining the necessary permissions, maintaining visual line of sight, flying below 400 feet (120 meters), and avoiding restricted airspace or populated areas."
+			"question": "Pre-flight Check",
+			"answer": "- Inspect the drone for any visible physical damage, such as cracks or loose parts. \n- Ensure all propellers are securely attached and in good condition. \n- Check the battery level and verify that it is properly inserted. \n- Confirm that the remote controller is functioning correctly and has sufficient battery power. \n- Verify GPS signal strength and calibrate the compass if necessary. \n- Check that the firmware is up to date."
 		},
 		{
 			"id": "2",
-			"question": "What is the range of a drone?",
-			"answer": "The range of a drone can vary depending on its model and the technology used. In general, consumer-grade drones typically have a range of around 1-4 kilometers (0.6-2.5 miles). Professional-grade drones may have longer ranges, ranging from 5-10 kilometers (3-6 miles) or more. It's important to check the specifications of the specific drone you are interested in to determine its range."
+			"question": "Battery Care",
+			"answer": "- Use only manufacturer-recommended batteries for your drone. \n- Before each flight, inspect the battery for any signs of swelling or damage. \n- Follow proper charging practices and use the manufacturer's recommended charger. \n- Avoid overcharging or fully discharging the battery to extend its lifespan. \n- Store batteries in a cool, dry place at the recommended storage charge level."
 		},
 		{
 			"id": "3",
-			"question": "How long can drones fly on a single charge?",
-			"answer": "The flight time of a drone also varies based on the drone model and its battery capacity. Consumer drones usually have flight times ranging from 10-30 minutes on a single charge. Professional-grade drones may have longer flight times, typically ranging from 20-40 minutes or even more. However, it's worth noting that flight times can be affected by factors such as payload, weather conditions, and flying style."
+			"question": "Propeller Maintenance",
+			"answer": "- Regularly inspect the propellers for any signs of damage, such as cracks or chips. \n- Clean the propellers after each flight to remove dirt, debris, or residue. \n- Replace any damaged or worn-out propellers promptly to ensure safe and balanced flight."
 		},
 		{
 			"id": "4",
-			"question": "Can I attach my own camera to a drone?",
-			"answer": "Some drones are designed to accommodate the attachment of third-party cameras or have interchangeable camera systems. However, this capability depends on the specific drone model. It's essential to check the drone's specifications or consult with the manufacturer to confirm if it supports attaching your own camera. Additionally, it's important to ensure that any attached camera does not exceed the drone's weight or impact its stability."
+			"question": "Firmware Updates",
+			"answer": "- Stay updated with the latest firmware releases from the drone manufacturer.\n - Before updating, carefully read and follow the manufacturer's instructions.\n - Connect your drone to a reliable internet connection and use the recommended software or app for the update process.\n - Ensure that the drone battery has sufficient charge to complete the update."
 		},
 		{
 			"id": "5",
-			"question": "Are there any restrictions on flying drones in certain areas or near airports?",
-			"answer": "Yes, there are restrictions on flying drones in certain areas, including near airports. The CAA has designated no-fly zones and restricted airspace where drone operations are prohibited or heavily regulated. It is crucial to check the CAA's guidelines and use tools such as airspace maps or mobile apps to ensure compliance and avoid restricted areas."
+			"question": "Cleaning and Storage",
+			"answer": " - After each flight, gently clean the drone's body, landing gear, and camera (if applicable) using a soft, lint-free cloth. \n - Avoid using harsh chemicals or solvents that may damage the drone's components. \n - Store your drone in a dry, dust-free environment, ideally in a protective case or bag. \n - If your drone is foldable, make sure to properly fold and secure it for storage."
 		},
 		{
 			"id": "6",
-			"question": "What are the different types of drones available for purchase?",
-			"answer": "There are various types of drones available for purchase, including consumer drones, professional drones, racing drones, and specialized drones for specific purposes such as agriculture or surveying. Consumer drones are typically designed for recreational use and may have built-in cameras. Professional drones often offer advanced features and are suitable for commercial applications like aerial photography or inspection."
+			"question": "Flight Environment",
+			"answer": "- Choose suitable flying locations that are free from obstacles, power lines, and other potential hazards.\n - Consider weather conditions such as strong winds, rain, or extreme temperatures before flying.\n - Avoid flying in areas with electromagnetic interference, such as near radio towers or high-voltage power lines.\n - Respect local laws and regulations regarding drone operations and obtain necessary permissions if required."
 		},
 		{
 			"id": "7",
-			"question": "Can I fly a drone for commercial purposes, such as aerial photography or videography?",
-			"answer": "Yes, you can fly a drone for commercial purposes in the UK. However, you will need to obtain the necessary permissions and meet the requirements set by the CAA. This usually involves obtaining a Permission for Commercial Operation (PfCO) or complying with the updated regulations introduced in 2021, such as the Open Category or Specific Category certifications. It is important to understand and adhere to the specific regulations related to commercial drone operations."
+			"question": "Professional Servicing",
+			"answer": "- If you encounter persistent issues or notice significant performance problems with your drone, consider seeking professional servicing.\n - Contact the drone manufacturer's customer support or an authorized repair center for assistance.\n - Follow any warranty guidelines provided by the manufacturer for repair or servicing."
 		},
 		{
 			"id": "8",

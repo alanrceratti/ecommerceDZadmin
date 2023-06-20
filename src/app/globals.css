@@ -97,8 +97,8 @@ table.basic a {
 }
 
 .information h1 {
-	@apply mt-8 mx-4 text-left text-gray-900 text-xl font-bold;
+	@apply mt-8 mx-4 md:mx-0 text-left text-gray-900 text-xl font-bold;
 }
 .information p {
-	@apply text-lg mt-6 mx-4 text-left font-medium text-gray-800;
+	@apply text-lg mt-6 mx-4 md:mx-0 text-left font-medium text-gray-800;
 }

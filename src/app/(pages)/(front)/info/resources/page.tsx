@@ -51,10 +51,10 @@ export default function FooterLin() {
 					<br></br>
 					<br></br>
 					We cover topics such as drone types, features, camera
-					capabilities, flight performance, and more. Whether you're a
-					beginner or an experienced pilot, our Drone Buying
-					questionnaire will assist you in finding the perfect drone
-					that meets your requirements and fits your budget.
+					capabilities, flight performance, and more. Whether
+					you&apos;re a beginner or an experienced pilot, our Drone
+					Buying questionnaire will assist you in finding the perfect
+					drone that meets your requirements and fits your budget.
 					<br></br>
 					<br></br>
 					Start exploring our questionnaire today to unlock the
@@ -66,6 +66,13 @@ export default function FooterLin() {
 				<div className="flex justify-center items-start  flex-col ">
 					<div className="text-left information">
 						<h1>Drone Photography Tips</h1>
+						<h2 className="font-medium my-4">
+							Capture breathtaking aerial imagery with our expert
+							Drone Photography Tips. Whether you&apos;re a
+							beginner or an experienced drone pilot, these tips
+							will help you elevate your aerial photography skills
+							and create stunning visuals.
+						</h2>
 					</div>
 					{Tips.questions.map((question, index) => (
 						<div
@@ -119,9 +126,15 @@ export default function FooterLin() {
 									)}
 								</div>
 								{openedTips.includes(index) && (
-									<p className="text-left mx-4">
-										{question.answer}
-									</p>
+									<p
+										className="text-left mx-4"
+										dangerouslySetInnerHTML={{
+											__html: question.answer.replace(
+												/\n/g,
+												"<br>"
+											),
+										}}
+									></p>
 								)}
 							</div>
 						</div>
@@ -188,13 +201,26 @@ export default function FooterLin() {
 									)}
 								</div>
 								{openedMaintenance.includes(index) && (
-									<p className="text-left mx-4">
-										{question.answer}
-									</p>
+									<p
+										className="text-left mx-4"
+										dangerouslySetInnerHTML={{
+											__html: question.answer.replace(
+												/\n/g,
+												"<br>"
+											),
+										}}
+									></p>
 								)}
 							</div>
 						</div>
 					))}
+					<h3>
+						Remember, these tips serve as general guidelines.
+						It&apos;s essential to refer to your specific drone
+						model&apos;s user manual and follow the
+						manufacturer&apos;s recommendations for maintenance and
+						care.
+					</h3>
 				</div>
 			</section>
 		</section>
