@@ -90,31 +90,31 @@ export default function Footer() {
 								</Link>
 							</h1>
 							<Link
-								href={"/information"}
+								href="info/information/#FAQ"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Frequent Questions
 							</Link>
 							<Link
-								href="/"
+								href="info/information/#Shipping&Delivery"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Shipping and Delivery
 							</Link>
 							<Link
-								href="/"
+				href="info/information/#ReturnPolicy"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Return and Refund Policy
 							</Link>
 							<Link
-								href="/"
+						href="info/information/#PrivacyPolicy"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Privacy Policy
 							</Link>
 							<Link
-								href="/"
+					href="info/information/#Terms&Conditions"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Terms and Conditions
