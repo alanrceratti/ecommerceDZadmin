@@ -3,9 +3,8 @@ import { FAQtypes } from "@/app/types";
 import PhotoTips from "../resources/PhotoTips.json";
 import DroneMaintenance from "../resources/DroneMaintenance.json";
 import { useState } from "react";
-import Link from "next/link";
 
-export default function FooterLin() {
+export default function FooterResources() {
 	const Tips = PhotoTips as FAQtypes;
 	const Maintenance = DroneMaintenance as FAQtypes;
 
@@ -34,9 +33,9 @@ export default function FooterLin() {
 
 	console.log(openedTips);
 	return (
-		<section id="Shipping&Delivery" className="max-w-5xl ml-auto mr-auto">
+		<section className="max-w-5xl ml-auto mr-auto">
 			<hr className="h-[1px] w-full  bg-gray-300 border-none my-4"></hr>
-			<section id="Shipping&Delivery" className="information">
+			<section id="Dronebuying" className="information">
 				<h1>Drone Buying questionnaire</h1>
 				<p>
 					Our Drone Buying questionnaire is designed to help you make
@@ -66,7 +65,7 @@ export default function FooterLin() {
 				<div className="flex justify-center items-start  flex-col ">
 					<div className="text-left information">
 						<h1>Drone Photography Tips</h1>
-						<h2 className="font-medium my-4">
+						<h2 className="font-medium m-4">
 							Capture breathtaking aerial imagery with our expert
 							Drone Photography Tips. Whether you&apos;re a
 							beginner or an experienced drone pilot, these tips
@@ -142,7 +141,7 @@ export default function FooterLin() {
 				</div>
 			</section>
 			<hr className="h-[1px] w-full  bg-gray-300 border-none my-4"></hr>
-			<section id="FAQ">
+			<section id="DroneMaintenance">
 				<div className="flex justify-center items-start  flex-col ">
 					<div className="text-left information">
 						<h1>Drone Maintenance</h1>

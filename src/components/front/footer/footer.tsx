@@ -102,19 +102,19 @@ export default function Footer() {
 								Shipping and Delivery
 							</Link>
 							<Link
-				href="info/information/#ReturnPolicy"
+								href="info/information/#ReturnPolicy"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Return and Refund Policy
 							</Link>
 							<Link
-						href="info/information/#PrivacyPolicy"
+								href="info/information/#PrivacyPolicy"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Privacy Policy
 							</Link>
 							<Link
-					href="info/information/#Terms&Conditions"
+								href="info/information/#Terms&Conditions"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Terms and Conditions
@@ -124,19 +124,19 @@ export default function Footer() {
 						<div className="footer-card">
 							<h1>RESOURCES</h1>
 							<Link
-								href="/"
+								href="info/resources/#Dronebuying"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Drone Buying Guide
 							</Link>
 							<Link
-								href="/"
+								href="info/resources/#DroneTips"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Drone Photography Tips
 							</Link>
 							<Link
-								href="/"
+								href="info/resources/#DroneMaintenance"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Drone Maintenance
@@ -145,7 +145,8 @@ export default function Footer() {
 						<div className="footer-card">
 							<h1>SUPPORT</h1>
 							<Link
-								href="/"
+											href="info/support/#Tracking"
+
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Order Tracking

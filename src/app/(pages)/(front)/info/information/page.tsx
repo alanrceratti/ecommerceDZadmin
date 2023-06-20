@@ -4,7 +4,7 @@ import FAQ from "../information/FAQ.json";
 import { useState } from "react";
 import Link from "next/link";
 
-export default function FooterLin() {
+export default function FooterInfo() {
 	const faqs = FAQ as FAQtypes;
 
 	const [openedFAQ, setOpenedFAQ] = useState<number[]>([]);
