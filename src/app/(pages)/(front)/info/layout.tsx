@@ -8,21 +8,39 @@ export default function FooterLinks({
 }: {
 	children: React.ReactNode;
 }) {
-	const [active, setActive] = useState<string>("");
+	const [activeLink, setActiveLink] = useState<string>("");
 	const path = usePathname()?.split("/");
+	const link = path?.[2];
 
 	const handleClick = () => {};
+	console.log(link);
+
+	const active = "text-orange";
+	const inactive = "";
 
 	return (
 		<section className="bg-white font-bold text-center py-8">
 			<div>
-				<Link href={"info/information"} className="mx-2">
+				<Link
+					href={"info/information"}
+					className={`mx-2 ${
+						link === "information" ? active : inactive
+					}`}
+				>
 					INFORMATION
 				</Link>
-				<Link href={"info/resources"} className="mx-2">
+				<Link
+					href={"info/resources"}
+					className={`mx-2 ${
+						link === "resources" ? active : inactive
+					}`}
+				>
 					RESOURCES
 				</Link>
-				<Link href={"info/support"} className="mx-2">
+				<Link
+					href={"info/support"}
+					className={`mx-2 ${link === "support" ? active : inactive}`}
+				>
 					SUPPORT
 				</Link>
 			</div>
