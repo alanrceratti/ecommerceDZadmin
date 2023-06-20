@@ -145,26 +145,26 @@ export default function Footer() {
 						<div className="footer-card">
 							<h1>SUPPORT</h1>
 							<Link
-											href="info/support/#Tracking"
-
+								href="info/support/#Tracking"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Order Tracking
 							</Link>
 							<Link
-								href="/"
+								href="info/support/#Payment"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Payment Methods
 							</Link>
 							<Link
-								href="/"
+								href="info/support/#Warranty"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Warranty and Repairs
 							</Link>
 							<Link
-								href="/"
+																					href="info/support/#Support"
+
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Technical Support
