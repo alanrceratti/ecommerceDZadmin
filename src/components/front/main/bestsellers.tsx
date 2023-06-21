@@ -4,9 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { NewProductsProps } from "@/app/types";
 import useMedia from "@/app/hooks/useMedia";
-import BestSellersSkeleton from "./homePageSkeleton";
 import HomePageSkeleton from "./homePageSkeleton";
-import { Product } from "../../../../models/Product";
 
 export default function BestSellers() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
@@ -25,7 +23,7 @@ export default function BestSellers() {
 	useEffect(() => {
 		productsBestSellers();
 	}, []);
-	console.log(products);
+
 	return (
 		<>
 			<section className="h-fit ">

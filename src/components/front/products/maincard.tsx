@@ -73,12 +73,13 @@ export default function MainCard() {
 		setSortBy(selectedSortBy);
 		setPage(1);
 	};
-	console.log("page", page);
-	console.log("pageSize", pageSize);
-	console.log("products.length", products.length);
+	// console.log("page", page);
+	// console.log("pageSize", pageSize);
+	// console.log("products.length", products.length);
 
 	const canLoadMore = products.length === page * pageSize;
-	console.log("canLoadMore", products.length);
+	// console.log("canLoadMore", products.length);
+	// console.log("reconstructedURL", reconstructedURL);
 
 	useEffect(() => {
 		selectCategory(page);
@@ -120,7 +121,11 @@ export default function MainCard() {
 				} else if (!data) {
 					setNoProducts(true);
 				}
-			} else if (queryKeys.length >= 1 && queryKeys[0] !== "category") {
+			} else if (
+				queryKeys.length >= 1 &&
+				queryKeys[0] !== "category" &&
+				sortBy.length === 0
+			) {
 				setLoading(true);
 				const response = await fetch(
 					`/api/productsIndividualFilter?${reconstructedURL}`
@@ -132,10 +137,46 @@ export default function MainCard() {
 				} else if (!data) {
 					setNoProducts(true);
 				}
-			} else if (queryKeys.length > 1 && queryKeys[0] === "category") {
+			} else if (
+				queryKeys.length >= 1 &&
+				queryKeys[0] !== "category" &&
+				sortBy.length !== 0
+			) {
+				setLoading(true);
+				const response = await fetch(
+					`/api/productsIndividualFilter?${reconstructedURL}&sortBy=${sortBy}`
+				);
+				const data = await response.json();
+				if (data) {
+					setProducts(data);
+					setLoading(false);
+				} else if (!data) {
+					setNoProducts(true);
+				}
+			} else if (
+				queryKeys.length > 1 &&
+				queryKeys[0] === "category" &&
+				sortBy.length === 0
+			) {
 				setLoading(true);
 				const response = await fetch(
 					`/api/productsIndividualFilter?${reconstructedURL}`
+				);
+				const data = await response.json();
+				if (data) {
+					setProducts(data);
+					setLoading(false);
+				} else if (!data) {
+					setNoProducts(true);
+				}
+			} else if (
+				queryKeys.length > 1 &&
+				queryKeys[0] === "category" &&
+				sortBy.length !== 0
+			) {
+				setLoading(true);
+				const response = await fetch(
+					`/api/productsIndividualFilter?${reconstructedURL}&sortBy=${sortBy}`
 				);
 				const data = await response.json();
 				if (data) {
@@ -175,16 +216,7 @@ export default function MainCard() {
 		}
 	};
 
-	// useEffect(() => {
-	// 	selectCategory(currentPage);
-	// }, [path, reconstructedURL]);
-
-	// useEffect(() => {
-	// 	selectCategory();
-	// }, [path, reconstructedURL]);
-
-	// console.log("reconstructedURL", reconstructedURL);
-	console.log("sortBy", sortBy.length);
+	// console.log("sortBy", sortBy.length);
 
 	return (
 		<>

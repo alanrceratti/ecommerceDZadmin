@@ -1,19 +1,14 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 
 export default function FooterLinks({
 	children,
 }: {
 	children: React.ReactNode;
 }) {
-	const [activeLink, setActiveLink] = useState<string>("");
 	const path = usePathname()?.split("/");
 	const link = path?.[2];
-
-	const handleClick = () => {};
-	console.log(link);
 
 	const active = "text-orange";
 	const inactive = "";

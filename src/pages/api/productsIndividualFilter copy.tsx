@@ -396,17 +396,33 @@
 // 			}
 // 		}
 
+// 		// Query the database with the applied filters
+
+// 		// let query = await Product.find(filter).populate("category");
+
 // 		if (typeof category === "string") {
 // 			const categoryId = mongoose.Types.ObjectId.isValid(category)
 // 				? new mongoose.Types.ObjectId(category)
 // 				: null;
 // 			filter.category = categoryId;
 // 		}
+// 		const sortBy = req.query.sortBy as string;
+// 		let query = Product.find(filter).populate("category");
 
-// 		// Query the database with the applied filters
-// 		console.log("RESULTS", filter);
-// 		const products = await Product.find(filter).populate("category").exec();
+// 		if (sortBy) {
+// 			let sortOption: any = {};
+// 			if (sortBy === "priceLowToHigh") {
+// 				sortOption = { price: 1 }; // Sort by price: Low - High
+// 			} else if (sortBy === "priceHighToLow") {
+// 				sortOption = { price: -1 }; // Sort by price: High - Low
+// 			}
 
+// 			query = query.sort(sortOption);
+// 		}
+
+// 		const products = await query.exec();
 // 		res.json(products);
+
+// 		console.log("RESULTS", filter);
 // 	}
 // }
