@@ -4,6 +4,9 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { NewProductsProps } from "@/app/types";
 import useMedia from "@/app/hooks/useMedia";
+import BestSellersSkeleton from "./homePageSkeleton";
+import HomePageSkeleton from "./homePageSkeleton";
+import { Product } from "../../../../models/Product";
 
 export default function BestSellers() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
@@ -22,17 +25,18 @@ export default function BestSellers() {
 	useEffect(() => {
 		productsBestSellers();
 	}, []);
-
+	console.log(products);
 	return (
 		<>
-			{products ? (
-				<section className="h-fit ">
-					<h1 className="text-xl sm:text-3xl sm:mt-20 mt-2 text-gray-950 bg-gray-200  py-2 font-bold font-unisansheavy text-center">
-						BEST SELLERS
-					</h1>
-					<div className="flex justify-center   ">
-						<div className="flex items-center justify-start  overflow-auto ">
-							{products.map((product) => (
+			<section className="h-fit ">
+				<h1 className="text-xl sm:text-3xl sm:mt-20 mt-2 text-gray-950 bg-gray-200  py-2 font-bold font-unisansheavy text-center">
+					BEST SELLERS
+				</h1>
+
+				<div className="flex justify-center   ">
+					<div className="flex items-center justify-start  overflow-auto ">
+						{products.length > 0 ? (
+							products.map((product) => (
 								<div className="sm:p-8 p-2" key={product._id}>
 									<div className="w-[270px] sm:w-[340px] h-[340px] sm:h-[470px] text-center font-poppins text-black font-light shadow-2xl bg-gray950  rounded-md ">
 										<h2 className="sm:py-4 py-2 font-semibold text-white ">
@@ -149,26 +153,13 @@ export default function BestSellers() {
 										</div>
 									</div>
 								</div>
-							))}
-
-							{/* <svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								strokeWidth={1.5}
-								stroke="currentColor"
-								className="w-6 h-6 absolute right-2 sm:hidden"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M8.25 4.5l7.5 7.5-7.5 7.5"
-								/>
-							</svg> */}
-						</div>
+							))
+						) : (
+							<HomePageSkeleton />
+						)}
 					</div>
-				</section>
-			) : null}
+				</div>
+			</section>
 		</>
 	);
 }

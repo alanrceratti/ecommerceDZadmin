@@ -27,6 +27,7 @@ module.exports = {
 			},
 			animation: {
 				"pulse-fast": "pulse 1s linear infinite",
+				"pulse-medium": "pulse 1.3s linear infinite",
 			},
 		},
 	},

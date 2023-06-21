@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { NewProductsProps } from "@/app/types";
+import HomePageSkeleton from "./homePageSkeleton";
 
 export default function Offers() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
@@ -25,14 +26,14 @@ export default function Offers() {
 
 	return (
 		<>
-			{products ? (
-				<section className="h-fit ">
-					<h1 className="text-xl sm:text-3xl sm:mt-1 mt-2 text-slate-50 bg-red-700  py-2 font-bold font-unisansheavy text-center">
-						WEEK OFFERS
-					</h1>
-					<div className="flex justify-center bg-white  ">
-						<div className="flex items-center justify-start  overflow-auto bg-white">
-							{products.map((product) => (
+			<section className="h-fit ">
+				<h1 className="text-xl sm:text-3xl sm:mt-1 mt-2 text-slate-50 bg-red-700  py-2 font-bold font-unisansheavy text-center">
+					WEEK OFFERS
+				</h1>
+				<div className="flex justify-center bg-white  ">
+					<div className="flex items-center justify-start  overflow-auto bg-white">
+						{products.length > 0 ? (
+							products.map((product) => (
 								<div className="sm:p-8 p-2" key={product._id}>
 									<div className="w-[270px] sm:w-[340px] h-[340px] sm:h-[470px] text-center font-poppins text-black font-light shadow-2xl bg-white rounded-md ">
 										<h2 className="sm:py-4 py-2 font-semibold ">
@@ -155,26 +156,13 @@ export default function Offers() {
 										</div>
 									</div>
 								</div>
-							))}
-
-							{/* <svg
-								xmlns="http://www.w3.org/2000/svg"
-								fill="none"
-								viewBox="0 0 24 24"
-								strokeWidth={1.5}
-								stroke="currentColor"
-								className="w-6 h-6 absolute right-2 sm:hidden"
-							>
-								<path
-									strokeLinecap="round"
-									strokeLinejoin="round"
-									d="M8.25 4.5l7.5 7.5-7.5 7.5"
-								/>
-							</svg> */}
-						</div>
+							))
+						) : (
+							<HomePageSkeleton />
+						)}
 					</div>
-				</section>
-			) : null}
+				</div>
+			</section>
 		</>
 	);
 }
