@@ -38,35 +38,34 @@ export default function Footer() {
 							mobile ? "grid-cols-2" : "grid-cols-3"
 						} ${mobile2 ? "block" : null}  `}
 					>
-						{/* <div className="flex flex-wrap justify-center "> */}
 						<div className="footer-card">
 							<h1>SHOP</h1>
 							<Link
-								href="/"
+								href="/products/all"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								All Drones
 							</Link>
 							<Link
-								href="/"
+								href="/products/filter?category=646f26196df9ff6b006fcdeb"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
-								Camera Drones
+								Subaquatic
 							</Link>
 							<Link
-								href="/"
+								href="/products/filter?category=646e6bb9affb3bbaa0805fa6"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Beginner Drones
 							</Link>
 							<Link
-								href="/"
+								href="/products/filter?category=646e6c20affb3bbaa0805fbe"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Professional Drones
 							</Link>
 							<Link
-								href="/"
+								href="/products/filter?category=646e6c23affb3bbaa0805fc1"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Racing Drones
@@ -163,8 +162,7 @@ export default function Footer() {
 								Warranty and Repairs
 							</Link>
 							<Link
-																					href="info/support/#Support"
-
+								href="info/support/#Support"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Technical Support
@@ -173,31 +171,30 @@ export default function Footer() {
 						<div className="footer-card">
 							<h1>SOCIAL</h1>
 							<Link
-								href="/"
+								href="https://facebook.com/"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Facebook
 							</Link>
 							<Link
-								href="/"
+								href="https://twitter.com/"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Twitter
 							</Link>
 							<Link
-								href="/"
+								href="https://www.instagram.com/"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Instagram
 							</Link>
 							<Link
-								href="/"
+								href="https://www.youtube.com/"
 								className="block font-poppins font-light hover:text-orange w-fit"
 							>
 								Youtube
 							</Link>
 						</div>
-						{/* </div> */}
 					</main>
 				</div>
 			</div>
