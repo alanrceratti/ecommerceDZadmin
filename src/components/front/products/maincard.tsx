@@ -3,11 +3,12 @@ import useMedia from "@/app/hooks/useMedia";
 import { NewProductsProps } from "@/app/types";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Loading from "@/components/front/products/loadingComponents";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import NoProductsLoad from "./noProductsLoad";
+import { CartContext } from "@/app/context/CartContext";
 
 export default function MainCard() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
@@ -15,6 +16,14 @@ export default function MainCard() {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [bestSeller, setBestSeller] = useState<boolean>(false);
 	const [allOffers, setAllOffers] = useState<boolean>(false);
+	const {
+		cartItems,
+		setCartProducts,
+		addToCart,
+		removeFromCart,
+		addProduct,
+	} = useContext(CartContext);
+
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(9);
 	const [sortBy, setSortBy] = useState<string>("");
@@ -80,6 +89,10 @@ export default function MainCard() {
 	const canLoadMore = products.length === page * pageSize;
 	// console.log("canLoadMore", products.length);
 	// console.log("reconstructedURL", reconstructedURL);
+
+	function addProductToCart(product: NewProductsProps) {
+		addProduct(product._id);
+	}
 
 	useEffect(() => {
 		selectCategory(page);
@@ -472,7 +485,14 @@ export default function MainCard() {
 											</div>
 											<hr className="h-[1px] w-4/5 bg-gray-300 border-none my-2 ml-auto mr-auto "></hr>
 											<div className="flex justify-center items-center gap-4">
-												<button className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl">
+												<button
+													className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl"
+													onClick={() =>
+														addProductToCart(
+															product
+														)
+													}
+												>
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
 														fill="none"

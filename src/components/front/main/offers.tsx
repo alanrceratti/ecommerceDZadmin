@@ -2,13 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { NewProductsProps } from "@/app/types";
 import HomePageSkeleton from "./homePageSkeleton";
+import { CartContext } from "@/app/context/CartContext";
 
 export default function Offers() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
+	const { addProduct } = useContext(CartContext);
 
 	const productOffers = async () => {
 		try {
@@ -128,7 +130,14 @@ export default function Offers() {
 											</div>
 											<hr className="h-[1px] w-4/5 bg-gray-300 border-none my-2 ml-auto mr-auto "></hr>
 											<div className="flex justify-center items-center gap-4">
-												<button className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl">
+												<button
+													className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl"
+													onClick={() =>
+														addProduct(
+															product?._id || ""
+														)
+													}
+												>
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
 														fill="none"

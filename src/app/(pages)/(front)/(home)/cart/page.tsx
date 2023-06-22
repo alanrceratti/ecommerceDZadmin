@@ -1,8 +1,10 @@
 "use client";
+import { CartContext } from "@/app/context/CartContext";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 export default function Cart() {
+	const { cartItems, addToCart, removeFromCart } = useContext(CartContext);
 	const [count, setCount] = useState<number>(0);
 
 	return (
@@ -31,18 +33,18 @@ export default function Cart() {
 								<h3>Quantity</h3>
 								<div className="flex gap-4 justify-center items-center  mt-4">
 									<button
-										onClick={() => setCount(count + 1)}
+										onClick={addToCart}
 										className="px-3 py-1 bg-black text-white rounded-md"
 									>
 										+
 									</button>
 									<div className="bg-gray-300 w-8 rounded-md ">
-										<p className="text-center">{count}</p>
+										<p className="text-center">
+											{cartItems}
+										</p>
 									</div>
 									<button
-										onClick={() =>
-											count > 0 && setCount(count - 1)
-										}
+										onClick={removeFromCart}
 										className="px-3 py-1 bg-black text-white rounded-md"
 									>
 										-
