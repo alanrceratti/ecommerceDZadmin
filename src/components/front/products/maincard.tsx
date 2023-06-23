@@ -20,7 +20,7 @@ export default function MainCard() {
 		cartItems,
 		setCartProducts,
 		addToCart,
-		removeFromCart,
+
 		addProduct,
 	} = useContext(CartContext);
 
@@ -487,11 +487,11 @@ export default function MainCard() {
 											<div className="flex justify-center items-center gap-4">
 												<button
 													className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl"
-													onClick={() =>
-														addProductToCart(
-															product._id
-														)
-													}
+													// onClick={() =>
+													// 	addProductToCart(
+													// 		product._id
+													// 	)
+													// }
 												>
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
