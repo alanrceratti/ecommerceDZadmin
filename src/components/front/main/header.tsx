@@ -10,7 +10,7 @@ export default function HeaderNav() {
 	const [isInView, setIsInView] = useState(false);
 	const [prevScroll, setPrevScroll] = useState(0);
 	const [isOpen, setIsOpen] = useState(false);
-	const { cartProducts } = useContext(CartContext);
+	// const { cartProducts } = useContext(CartContext);
 
 	function handleMenu() {
 		setIsOpen((isOpen) => !isOpen);
@@ -143,13 +143,13 @@ export default function HeaderNav() {
 							height={60}
 							className="min-h-[60px] min-w-[60px]"
 						/>
-						{cartProducts.length > 0 ? (
+						{/* {cartProducts.length > 0 ? (
 							<h1 className="text-orange -mt-5  text-center">
 								{cartProducts.length}
 							</h1>
 						) : (
 							<h1 className="text-white -mt-5  text-center"></h1>
-						)}
+						)} */}
 					</Link>
 				</div>
 			</header>

@@ -90,8 +90,8 @@ export default function MainCard() {
 	// console.log("canLoadMore", products.length);
 	// console.log("reconstructedURL", reconstructedURL);
 
-	function addProductToCart(product: NewProductsProps) {
-		addProduct(product._id);
+	function addProductToCart(productId: string) {
+		addProduct(productId);
 	}
 
 	useEffect(() => {
@@ -489,7 +489,7 @@ export default function MainCard() {
 													className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl"
 													onClick={() =>
 														addProductToCart(
-															product
+															product._id
 														)
 													}
 												>
