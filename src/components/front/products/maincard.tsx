@@ -9,6 +9,8 @@ import Loading from "@/components/front/products/loadingComponents";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import NoProductsLoad from "./noProductsLoad";
 import { CartContext } from "@/app/context/CartContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function MainCard() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
@@ -79,6 +81,7 @@ export default function MainCard() {
 
 	function addToCart(productId: string) {
 		addProductToCart(productId as NewProductsProps);
+		toast.success("Flying to your cart...");
 	}
 
 	useEffect(() => {
@@ -472,6 +475,18 @@ export default function MainCard() {
 											</div>
 											<hr className="h-[1px] w-4/5 bg-gray-300 border-none my-2 ml-auto mr-auto "></hr>
 											<div className="flex justify-center items-center gap-4">
+												<ToastContainer
+													position="top-right"
+													autoClose={3000}
+													hideProgressBar={false}
+													newestOnTop={false}
+													closeOnClick
+													rtl={false}
+													pauseOnFocusLoss
+													draggable
+													pauseOnHover
+													theme="dark"
+												/>
 												<button
 													className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl"
 													onClick={() =>

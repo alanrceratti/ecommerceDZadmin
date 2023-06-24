@@ -8,6 +8,7 @@ interface CartContext {
 	addProductToCart: (newProduct: NewProductsProps) => void;
 	plusOneProduct: (newProduct: NewProductsProps) => void;
 	lessOneProduct: (newProduct: NewProductsProps) => void;
+	removeProduct: (newProduct: NewProductsProps) => void;
 }
 
 export const CartContext = createContext<CartContext>({
@@ -16,6 +17,7 @@ export const CartContext = createContext<CartContext>({
 	addProductToCart: () => {},
 	plusOneProduct: () => {},
 	lessOneProduct: () => {},
+	removeProduct: () => {},
 });
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -23,12 +25,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
 	let initialCartProducts: NewProductsProps[] = [];
 
-	if (typeof window !== "undefined") {
-		const savedCart = localStorage.getItem("cart");
-		if (savedCart) {
-			initialCartProducts = JSON.parse(savedCart);
-		}
-	}
+	// if (typeof window !== "undefined") {
+	// 	const savedCart = localStorage.getItem("cart");
+	// 	if (savedCart) {
+	// 		initialCartProducts = JSON.parse(savedCart);
+	// 	}
+	// }
 
 	const [cartProducts, setCartProducts] =
 		useState<NewProductsProps[]>(initialCartProducts);
@@ -37,11 +39,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 		setCartProducts((prev) => [...prev, newProduct]);
 	}
 
-	useEffect(() => {
-		if (cartProducts?.length > 0 && typeof window !== "undefined") {
-			localStorage.setItem("cart", JSON.stringify(cartProducts));
-		}
-	}, [cartProducts]);
+	// useEffect(() => {
+	// 	if (cartProducts?.length > 0 && typeof window !== "undefined") {
+	// 		localStorage.setItem("cart", JSON.stringify(cartProducts));
+	// 	}
+	// }, [cartProducts]);
 
 	function plusOneProduct(newProduct: NewProductsProps) {
 		setCartProducts((prev) => [...prev, newProduct]);
@@ -56,7 +58,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 			return prev;
 		});
 	}
-	console.log("SDASDASD", cartProducts);
+	function removeProduct(newProduct: NewProductsProps) {
+		setCartProducts((prev) => {
+			return prev.filter((value) => value !== newProduct);
+		});
+	}
+
 	return (
 		<CartContext.Provider
 			value={{
@@ -65,6 +72,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 				addProductToCart,
 				plusOneProduct,
 				lessOneProduct,
+				removeProduct,
 			}}
 		>
 			{children}

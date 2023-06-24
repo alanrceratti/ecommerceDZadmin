@@ -2,15 +2,18 @@
 import { CartContext } from "@/app/context/CartContext";
 import { CartProps, NewProductsProps } from "@/app/types";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useContext, useState, useEffect } from "react";
+import { forEachChild } from "typescript";
 
 export default function Cart() {
-	const { cartProducts, plusOneProduct, lessOneProduct } =
+	const { cartProducts, plusOneProduct, lessOneProduct, removeProduct } =
 		useContext(CartContext);
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const [updatedProducts, setUpdatedProducts] = useState<
 		{ _id: string; count: number }[]
 	>([]);
+	const route = useRouter();
 
 	useEffect(() => {
 		const updatedCart = Array.from(new Set(cartProducts)).join("&id=");
@@ -28,7 +31,7 @@ export default function Cart() {
 		};
 
 		fetchData();
-	}, [cartProducts]);
+	}, [cartProducts.length, cartProducts]);
 
 	function plusProduct(productId: string) {
 		plusOneProduct(productId as NewProductsProps);
@@ -38,105 +41,178 @@ export default function Cart() {
 		lessOneProduct(productId as NewProductsProps);
 	}
 
+	function removeOneProduct(productId: string) {
+		removeProduct(productId as NewProductsProps);
+	}
+
+	let total = 0;
+	for (const productId of cartProducts) {
+		const product = products.find((p) => p._id === productId);
+		const price =
+			(product?.offer && product?.offerPrice) ||
+			(!product?.offer && product?.price) ||
+			0;
+		total += price;
+	}
+
+	const totalPrice = (total / 100).toLocaleString(undefined, {
+		minimumFractionDigits: 2,
+	});
+
 	return (
-		<section className="bg-gray950 pl-8 ">
-			<h1 className="text-3xl font-bold pt-16 text-white ">
+		<section className="bg-gray950 lg:pl-8 lg:pb-32  ">
+			<h1 className="lg:text-3xl text-xl font-bold lg:pt-16 pt-4 text-white ml-4 ">
 				Shopping Cart
 			</h1>
-			<div className="flex justify-center items-start mt-16 gap-4 ">
+			<div className="flex justify-center items-center lg:items-start mt-16 gap-4 flex-col lg:flex-row ">
 				<div className=" flex gap-10 relative  justify-center pb-16 p-4 rounded-md bg-white">
-					<table>
-						<thead>
-							<tr>
-								<th>Product Details</th>
-								<th>Quantity</th>
-								<th>Total</th>
-							</tr>
-						</thead>
+					{total > 0 ? (
+						<>
+							<table>
+								<thead>
+									<tr>
+										<th>Product Details</th>
+										<th>Quantity</th>
+										<th>Total</th>
+									</tr>
+								</thead>
 
-						<tbody>
-							{products.map((product) => (
-								<tr key={product._id}>
-									<td className="font-bold text-center font-po">
-										{product.name}
-										{product.images && (
-											<Image
-												src={product?.images[0]}
-												alt="drone"
-												width={160}
-												height={160}
-												className="rounded-md shadow-2xl border border-black border-opacity-40"
-											/>
-										)}
-									</td>
-									<td>
-										<div className="m-20">
-											<div className="flex gap-4 justify-center items-center  ">
-												<>
+								<tbody className="">
+									{products.map((product) => (
+										<tr key={product._id}>
+											<td className="font-bold text-center pt-4">
+												{product.name}
+												<div></div>
+												<div className="w-[120px] h-[120px] sm:w-[150px] sm:h-[150px] relative m-auto">
+													{product.images && (
+														<Image
+															src={
+																product
+																	?.images[0]
+															}
+															alt="drone"
+															fill
+															className="ml-auto mr-auto rounded-md object-cover"
+															sizes="(max-width: 280px) 100vw"
+														/>
+													)}
+												</div>
+											</td>
+											<td>
+												<div className="lg:m-20 pt-8">
+													<div className="flex lg:gap-4 gap-1 justify-center items-center  ">
+														<>
+															<button
+																className="px-3 py-1 bg-black text-white rounded-md"
+																onClick={() =>
+																	product._id &&
+																	lessProduct(
+																		product?._id
+																	)
+																}
+															>
+																-
+															</button>
+														</>
+														<div className="bg-gray-300 w-8 rounded-md ">
+															<p className="text-center">
+																{
+																	cartProducts.filter(
+																		(id) =>
+																			id ===
+																			product._id
+																	).length
+																}
+															</p>
+														</div>
+														<button
+															className="px-3 py-1 bg-black text-white rounded-md"
+															onClick={() =>
+																product._id &&
+																plusProduct(
+																	product?._id
+																)
+															}
+														>
+															+
+														</button>
+													</div>
 													<button
-														className="px-3 py-1 bg-black text-white rounded-md"
+														className="lg:pt-12 "
 														onClick={() =>
 															product._id &&
-															lessProduct(
-																product?._id
+															removeOneProduct(
+																product._id
 															)
 														}
 													>
-														-
+														Remove
 													</button>
-												</>
-												<div className="bg-gray-300 w-8 rounded-md ">
-													<p className="text-center">
-														{
+												</div>
+											</td>
+											<td>
+												£
+												{product.offer &&
+													product.offerPrice &&
+													(
+														(product.offerPrice *
 															cartProducts.filter(
 																(id) =>
 																	id ===
 																	product._id
-															).length
+															).length) /
+														100
+													).toLocaleString(
+														undefined,
+														{
+															minimumFractionDigits: 2,
 														}
-													</p>
-												</div>
-												<button
-													className="px-3 py-1 bg-black text-white rounded-md"
-													onClick={() =>
-														product._id &&
-														plusProduct(
-															product?._id
-														)
-													}
-												>
-													+
-												</button>
-											</div>
-											<button className="pt-12">
-												Remove
-											</button>
-										</div>
-									</td>
-									<td>
-										£
-										{product.price &&
-											(
-												(product.price *
-													cartProducts.filter(
-														(id) =>
-															id === product._id
-													).length) /
-												100
-											).toLocaleString(undefined, {
-												minimumFractionDigits: 2,
-											})}
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-					<hr className="h-[1px] w-full  bg-gray-300 border-none my-4 absolute top-8"></hr>
+													)}
+												{!product.offer &&
+													product.price &&
+													(
+														(product.price *
+															cartProducts.filter(
+																(id) =>
+																	id ===
+																	product._id
+															).length) /
+														100
+													).toLocaleString(
+														undefined,
+														{
+															minimumFractionDigits: 2,
+														}
+													)}
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+							<hr className="h-[1px] w-full  bg-gray-300 border-none my-4 absolute top-8"></hr>
+						</>
+					) : (
+						total <= 0 && (
+							<div className="w-[320px] h-[200px] text-center ">
+								<h1 className="text-lg">Your cart is empty.</h1>
+
+								<h1 className="text-lg mt-4">
+									Go back and find your drone!
+								</h1>
+								<button
+									className="btn-primary mt-8"
+									onClick={() => route.push("/products/all")}
+								>
+									Find my Drone
+								</button>
+							</div>
+						)
+					)}
 				</div>
 
 				<div>
-					{products.length > 0 && (
-						<div className="bg-white w-[300px] rounded-md px-3 pb-32 ">
+					{total > 0 && (
+						<div className="bg-white w-[300px] rounded-md px-3  ">
 							<div className="w-full text-center">
 								<button className="btn-primary my-4">
 									Go To Checkout
@@ -147,10 +223,8 @@ export default function Cart() {
 
 							<div>
 								<div className="flex gap-4 justify-between">
-									<p className="opacity-60">Sub-total</p>
-									{products.map((value) => (
-										<p key={value._id}></p>
-									))}
+									<p className="opacity-60">Sub-total</p>£
+									{totalPrice}
 								</div>
 								<div className="flex gap-4 justify-between">
 									<p className="opacity-60">Shipping</p>
@@ -161,9 +235,17 @@ export default function Cart() {
 									<h3 className="opacity-70 font-medium">
 										Estimated Total
 									</h3>
-									<p>£199</p>
+									<p> {totalPrice}</p>
 								</div>
-								<p className="opacity-40">Have a promo code?</p>
+								<div className="">
+									<input
+										className="opacity-60"
+										placeholder="Have a promo code?"
+									/>
+									<button className="px-3 py-1 bg-slate-200 rounded-md opacity-60 text-slate-600">
+										Add
+									</button>
+								</div>
 							</div>
 						</div>
 					)}
