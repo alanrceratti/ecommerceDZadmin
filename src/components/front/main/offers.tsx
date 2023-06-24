@@ -10,7 +10,7 @@ import { CartContext } from "@/app/context/CartContext";
 
 export default function Offers() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
-	const { addProduct } = useContext(CartContext);
+	const { addProductToCart } = useContext(CartContext);
 
 	const productOffers = async () => {
 		try {
@@ -133,8 +133,9 @@ export default function Offers() {
 												<button
 													className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl"
 													onClick={() =>
-														addProduct(
-															product?._id || ""
+														addProductToCart(
+															(product?._id as NewProductsProps) ||
+																""
 														)
 													}
 												>

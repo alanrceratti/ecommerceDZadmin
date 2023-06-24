@@ -10,7 +10,7 @@ import { CartContext } from "@/app/context/CartContext";
 export default function BestSellers() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const mobile = useMedia("(max-width: 640px)");
-	const { addProduct } = useContext(CartContext);
+	const { addProductToCart } = useContext(CartContext);
 
 	const productsBestSellers = async () => {
 		try {
@@ -128,8 +128,9 @@ export default function BestSellers() {
 												<button
 													className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl"
 													onClick={() =>
-														addProduct(
-															product?._id || ""
+														addProductToCart(
+															(product?._id as NewProductsProps) ||
+																""
 														)
 													}
 												>
