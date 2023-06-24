@@ -17,11 +17,10 @@ export default function MainCard() {
 	const [bestSeller, setBestSeller] = useState<boolean>(false);
 	const [allOffers, setAllOffers] = useState<boolean>(false);
 	const {
-		cartItems,
 		setCartProducts,
-		addToCart,
 
-		addProduct,
+		cartProducts,
+		addProductToCart,
 	} = useContext(CartContext);
 
 	const [page, setPage] = useState(1);
@@ -63,13 +62,6 @@ export default function MainCard() {
 		}
 	};
 
-	// console.log("params", params);
-	// console.log("categoryPath", categoryPath);
-	// console.log("categoryPath2", categoryPath2);
-	// console.log("queryKeysLENGTH", queryKeys.length);
-	// console.log("queryKeys", queryKeys[0]);
-	// console.log("Reconstructed URL:", reconstructedURL);
-
 	const handleLoadMore = () => {
 		const nextPage = page + 1;
 		setPage(nextPage);
@@ -82,17 +74,34 @@ export default function MainCard() {
 		setSortBy(selectedSortBy);
 		setPage(1);
 	};
-	// console.log("page", page);
-	// console.log("pageSize", pageSize);
-	// console.log("products.length", products.length);
 
 	const canLoadMore = products.length === page * pageSize;
-	// console.log("canLoadMore", products.length);
-	// console.log("reconstructedURL", reconstructedURL);
 
-	function addProductToCart(productId: string) {
-		addProduct(productId);
+	function addToCart(productId: string) {
+		addProductToCart(productId);
+
+		// const existingProduct = cartProducts.find(
+		// 	(item) => item._id === productId
+		// );
+
+		// if (existingProduct) {
+		// 	const updatedCartProducts = cartProducts.map((product) =>
+		// 		product._id === productId
+		// 			? {
+		// 					...product,
+		// 					quantity: product.quantity && product.quantity + 1,
+		// 			  }
+		// 			: product
+		// 	);
+		// 	setCartProducts(updatedCartProducts);
+		// } else {
+		// 	setCartProducts((prev) => [
+		// 		...prev,
+		// 		{ _id: productId, quantity: 1 },
+		// 	]);
+		// }
 	}
+	console.log(cartProducts, "LIST");
 
 	useEffect(() => {
 		selectCategory(page);
@@ -487,11 +496,10 @@ export default function MainCard() {
 											<div className="flex justify-center items-center gap-4">
 												<button
 													className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl"
-													// onClick={() =>
-													// 	addProductToCart(
-													// 		product._id
-													// 	)
-													// }
+													onClick={() =>
+														product._id &&
+														addToCart(product._id)
+													}
 												>
 													<svg
 														xmlns="http://www.w3.org/2000/svg"

@@ -1,57 +1,57 @@
 "use client";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { NewProductsProps } from "../types";
 
 interface CartContext {
-	cartItems: number;
-	addToCart: () => void;
 	setCartProducts: React.Dispatch<React.SetStateAction<NewProductsProps[]>>;
-	setCartItems: React.Dispatch<React.SetStateAction<number>>;
 	cartProducts: NewProductsProps[];
-	addProduct: (productId: string) => void;
+	addProductToCart: (newProduct: NewProductsProps) => void;
+	plusOneProduct: (newProduct: NewProductsProps) => void;
 }
 
 export const CartContext = createContext<CartContext>({
-	cartItems: 0,
-	addToCart: () => {},
 	setCartProducts: () => {},
 	cartProducts: [],
-	addProduct: (productId: string) => [],
-	setCartItems: () => {},
+	addProductToCart: () => {},
+	plusOneProduct: () => {},
 });
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 	children,
 }) => {
-	const [cartItems, setCartItems] = useState<number>(1);
-	const [cartProducts, setCartProducts] = useState<NewProductsProps[]>([]);
+	let initialCartProducts: NewProductsProps[] = [];
 
-	const addToCart = () => {
-		setCartItems(cartItems + 1);
-	};
-
-	function addProduct(productId: string) {
-		setCartProducts((prev) => {
-			const newProduct: NewProductsProps = {
-				_id: productId,
-				// Add other properties as needed
-			};
-			return [...prev, newProduct];
-		});
+	if (typeof window !== "undefined") {
+		const savedCart = localStorage.getItem("cart");
+		if (savedCart) {
+			initialCartProducts = JSON.parse(savedCart);
+		}
 	}
 
-	console.log("teste", cartProducts);
+	const [cartProducts, setCartProducts] =
+		useState<NewProductsProps[]>(initialCartProducts);
 
+	function addProductToCart(newProduct: NewProductsProps) {
+		setCartProducts((prev) => [...prev, newProduct]);
+	}
+
+	useEffect(() => {
+		if (cartProducts?.length > 0 && typeof window !== "undefined") {
+			localStorage.setItem("cart", JSON.stringify(cartProducts));
+		}
+	}, [cartProducts]);
+
+	function plusOneProduct(newProduct: NewProductsProps) {
+		setCartProducts((prev) => [...prev, newProduct]);
+	}
+	console.log("SDASDASD", cartProducts);
 	return (
 		<CartContext.Provider
 			value={{
-				cartItems,
 				setCartProducts,
 				cartProducts,
-				addToCart,
-
-				addProduct,
-				setCartItems,
+				addProductToCart,
+				plusOneProduct,
 			}}
 		>
 			{children}

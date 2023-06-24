@@ -11,10 +11,10 @@ export default async function handle(
 	await mongooseConnect();
 
 	if (req.method === "GET") {
-		if (req.query?.cartProducts) {
-			const query = { _id: { $in: req.query.cartProducts } };
+		if (req.query?.id) {
+			const query = { _id: { $in: req.query.id } };
 
-			res.json(query);
+			res.json(await Product.find(query));
 		}
 	}
 }

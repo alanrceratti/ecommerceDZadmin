@@ -16,6 +16,15 @@ export interface DataProps {
 	category: string;
 }
 
+export interface CartProps {
+	name: string;
+	price: number;
+	ids: CartId[];
+}
+export interface CartId {
+	id: string;
+}
+
 export interface NewProductsProps {
 	name?: string;
 	description?: string;
@@ -36,6 +45,7 @@ export interface NewProductsProps {
 	bestSeller?: boolean;
 	offer?: boolean;
 	offerPrice?: number;
+	quantity?: number;
 }
 
 export interface Categories {
