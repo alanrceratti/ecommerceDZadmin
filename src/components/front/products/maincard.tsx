@@ -78,30 +78,8 @@ export default function MainCard() {
 	const canLoadMore = products.length === page * pageSize;
 
 	function addToCart(productId: string) {
-		addProductToCart(productId);
-
-		// const existingProduct = cartProducts.find(
-		// 	(item) => item._id === productId
-		// );
-
-		// if (existingProduct) {
-		// 	const updatedCartProducts = cartProducts.map((product) =>
-		// 		product._id === productId
-		// 			? {
-		// 					...product,
-		// 					quantity: product.quantity && product.quantity + 1,
-		// 			  }
-		// 			: product
-		// 	);
-		// 	setCartProducts(updatedCartProducts);
-		// } else {
-		// 	setCartProducts((prev) => [
-		// 		...prev,
-		// 		{ _id: productId, quantity: 1 },
-		// 	]);
-		// }
+		addProductToCart(productId as NewProductsProps);
 	}
-	console.log(cartProducts, "LIST");
 
 	useEffect(() => {
 		selectCategory(page);

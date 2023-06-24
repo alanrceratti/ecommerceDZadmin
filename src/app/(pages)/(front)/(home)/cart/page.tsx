@@ -1,6 +1,6 @@
 "use client";
 import { CartContext } from "@/app/context/CartContext";
-import { NewProductsProps } from "@/app/types";
+import { CartProps, NewProductsProps } from "@/app/types";
 import Image from "next/image";
 import { useContext, useState, useEffect } from "react";
 
@@ -29,11 +29,8 @@ export default function Cart() {
 		fetchData();
 	}, [cartProducts]);
 
-	// function plusProduct(productId: string) {
-	// 	plusOneProduct(productId);
-	// }
-	function plusProduct(productId: NewProductsProps) {
-		plusOneProduct(productId);
+	function plusProduct(productId: string) {
+		plusOneProduct(productId as NewProductsProps);
 	}
 	return (
 		<section className="bg-gray950 pl-8 ">
