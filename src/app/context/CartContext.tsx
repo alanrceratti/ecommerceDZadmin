@@ -7,6 +7,7 @@ interface CartContext {
 	cartProducts: NewProductsProps[];
 	addProductToCart: (newProduct: NewProductsProps) => void;
 	plusOneProduct: (newProduct: NewProductsProps) => void;
+	lessOneProduct: (newProduct: NewProductsProps) => void;
 }
 
 export const CartContext = createContext<CartContext>({
@@ -14,6 +15,7 @@ export const CartContext = createContext<CartContext>({
 	cartProducts: [],
 	addProductToCart: () => {},
 	plusOneProduct: () => {},
+	lessOneProduct: () => {},
 });
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -44,6 +46,16 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 	function plusOneProduct(newProduct: NewProductsProps) {
 		setCartProducts((prev) => [...prev, newProduct]);
 	}
+
+	function lessOneProduct(newProduct: NewProductsProps) {
+		setCartProducts((prev) => {
+			const position = prev.indexOf(newProduct);
+			if (position !== -1) {
+				return prev.filter((value, index) => index !== position);
+			}
+			return prev;
+		});
+	}
 	console.log("SDASDASD", cartProducts);
 	return (
 		<CartContext.Provider
@@ -52,6 +64,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 				cartProducts,
 				addProductToCart,
 				plusOneProduct,
+				lessOneProduct,
 			}}
 		>
 			{children}

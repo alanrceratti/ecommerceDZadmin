@@ -5,7 +5,8 @@ import Image from "next/image";
 import { useContext, useState, useEffect } from "react";
 
 export default function Cart() {
-	const { cartProducts, plusOneProduct } = useContext(CartContext);
+	const { cartProducts, plusOneProduct, lessOneProduct } =
+		useContext(CartContext);
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const [updatedProducts, setUpdatedProducts] = useState<
 		{ _id: string; count: number }[]
@@ -32,6 +33,11 @@ export default function Cart() {
 	function plusProduct(productId: string) {
 		plusOneProduct(productId as NewProductsProps);
 	}
+
+	function lessProduct(productId: string) {
+		lessOneProduct(productId as NewProductsProps);
+	}
+
 	return (
 		<section className="bg-gray950 pl-8 ">
 			<h1 className="text-3xl font-bold pt-16 text-white ">
@@ -67,7 +73,15 @@ export default function Cart() {
 										<div className="m-20">
 											<div className="flex gap-4 justify-center items-center  ">
 												<>
-													<button className="px-3 py-1 bg-black text-white rounded-md">
+													<button
+														className="px-3 py-1 bg-black text-white rounded-md"
+														onClick={() =>
+															product._id &&
+															lessProduct(
+																product?._id
+															)
+														}
+													>
 														-
 													</button>
 												</>
@@ -100,7 +114,6 @@ export default function Cart() {
 										</div>
 									</td>
 									<td>
-										{" "}
 										£
 										{product.price &&
 											(
