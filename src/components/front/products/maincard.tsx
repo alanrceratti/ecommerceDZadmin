@@ -9,8 +9,7 @@ import Loading from "@/components/front/products/loadingComponents";
 import { Tooltip as ReactTooltip } from "react-tooltip";
 import NoProductsLoad from "./noProductsLoad";
 import { CartContext } from "@/app/context/CartContext";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 
 export default function MainCard() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
@@ -81,7 +80,6 @@ export default function MainCard() {
 
 	function addToCart(productId: string) {
 		addProductToCart(productId as NewProductsProps);
-		toast.success("Flying to your cart...");
 	}
 
 	useEffect(() => {

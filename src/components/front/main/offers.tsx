@@ -7,6 +7,7 @@ import { useContext, useEffect, useState } from "react";
 import { NewProductsProps } from "@/app/types";
 import HomePageSkeleton from "./homePageSkeleton";
 import { CartContext } from "@/app/context/CartContext";
+import { ToastContainer } from "react-toastify";
 
 export default function Offers() {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
@@ -130,6 +131,18 @@ export default function Offers() {
 											</div>
 											<hr className="h-[1px] w-4/5 bg-gray-300 border-none my-2 ml-auto mr-auto "></hr>
 											<div className="flex justify-center items-center gap-4">
+												<ToastContainer
+													position="top-right"
+													autoClose={3000}
+													hideProgressBar={false}
+													newestOnTop={false}
+													closeOnClick
+													rtl={false}
+													pauseOnFocusLoss
+													draggable
+													pauseOnHover
+													theme="dark"
+												/>
 												<button
 													className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl"
 													onClick={() =>

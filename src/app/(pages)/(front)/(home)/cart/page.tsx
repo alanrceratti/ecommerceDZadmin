@@ -1,10 +1,9 @@
 "use client";
 import { CartContext } from "@/app/context/CartContext";
-import { CartProps, NewProductsProps } from "@/app/types";
+import { NewProductsProps } from "@/app/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useContext, useState, useEffect } from "react";
-import { forEachChild } from "typescript";
 
 export default function Cart() {
 	const { cartProducts, plusOneProduct, lessOneProduct, removeProduct } =

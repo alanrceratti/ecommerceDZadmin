@@ -1,6 +1,8 @@
 "use client";
 import { createContext, useEffect, useState } from "react";
 import { NewProductsProps } from "../types";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface CartContext {
 	setCartProducts: React.Dispatch<React.SetStateAction<NewProductsProps[]>>;
@@ -37,6 +39,16 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
 	function addProductToCart(newProduct: NewProductsProps) {
 		setCartProducts((prev) => [...prev, newProduct]);
+		toast.success("Flying to your cart...", {
+			position: "top-right",
+			autoClose: 3000,
+			hideProgressBar: false,
+			closeOnClick: true,
+			pauseOnHover: true,
+			draggable: true,
+			progress: undefined,
+			theme: "light",
+		});
 	}
 
 	// useEffect(() => {
@@ -64,6 +76,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 		});
 	}
 
+	console.log("SDASDASD", cartProducts);
 	return (
 		<CartContext.Provider
 			value={{
