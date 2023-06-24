@@ -60,7 +60,7 @@ export default function Cart() {
 	});
 
 	return (
-		<section className="bg-gray950 lg:pl-8 lg:pb-32  ">
+		<section className="bg-gray950 lg:pl-8 lg:pb-32 pb-8  ">
 			<h1 className="lg:text-3xl text-xl font-bold lg:pt-16 pt-4 text-white ml-4 ">
 				Shopping Cart
 			</h1>
@@ -212,7 +212,7 @@ export default function Cart() {
 
 				<div>
 					{total > 0 && (
-						<div className="bg-white w-[300px] rounded-md px-3  ">
+						<div className="bg-white w-[300px] rounded-md p-4  ">
 							<div className="w-full text-center">
 								<button className="btn-primary my-4">
 									Go To Checkout
