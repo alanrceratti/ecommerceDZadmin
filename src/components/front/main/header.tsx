@@ -4,6 +4,7 @@ import Link from "next/link";
 import useMedia from "@/app/hooks/useMedia";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "@/app/context/CartContext";
+import RegisterForm from "./registerForm";
 
 export default function HeaderNav() {
 	const mobile = useMedia("(max-width: 990px)");
@@ -11,13 +12,14 @@ export default function HeaderNav() {
 	const [prevScroll, setPrevScroll] = useState(0);
 	const [isOpen, setIsOpen] = useState(false);
 	const { cartProducts } = useContext(CartContext);
+	const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
 	function handleMenu() {
 		setIsOpen((isOpen) => !isOpen);
 	}
 
 	const handleScroll = () => {
-		const currentScroll = window.pageYOffset;
+		const currentScroll = window.scrollY;
 		setIsInView(currentScroll <= prevScroll);
 		setPrevScroll(currentScroll);
 		if (currentScroll < 150) {
@@ -25,9 +27,20 @@ export default function HeaderNav() {
 		}
 	};
 
+	const openRegister = () => {
+		setIsRegisterOpen((isRegisterOpen) => !isRegisterOpen);
+	};
+
+	const closeRegister = () => {
+		console.log("Closing register");
+		setIsRegisterOpen(false);
+	};
+
 	useEffect(() => {
-		window.addEventListener("scroll", handleScroll);
-		return () => window.removeEventListener("scroll", handleScroll);
+		if (!isRegisterOpen) {
+			window.addEventListener("scroll", handleScroll);
+			return () => window.removeEventListener("scroll", handleScroll);
+		}
 	});
 
 	return (
@@ -120,7 +133,10 @@ export default function HeaderNav() {
 									<button className="btn-primaryy-mobile mb-2 mt-2">
 										Login
 									</button>
-									<button className="btn-primaryy-mobile ">
+									<button
+										className="btn-primaryy-mobile "
+										onClick={() => openRegister()}
+									>
 										Register
 									</button>
 								</div>
@@ -132,9 +148,20 @@ export default function HeaderNav() {
 					{!mobile ? (
 						<>
 							<button className="btn-primaryy">Login</button>
-							<button className="btn-primaryy">Register</button>
+							<button
+								className="btn-primaryy"
+								onClick={() => openRegister()}
+							>
+								Register
+							</button>
 						</>
 					) : null}
+					{isRegisterOpen && (
+						<RegisterForm
+							closeRegister={closeRegister}
+							setIsRegisterOpen={setIsRegisterOpen}
+						/>
+					)}
 					<Link href={"/cart"} className="flex flex-col">
 						<Image
 							src="/assets/header/cart.svg"
