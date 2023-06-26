@@ -1,7 +1,7 @@
 "use client";
 import useOutsideClick from "@/app/hooks/useOnClickOutside";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type RegisterFormProps = {
 	setIsRegisterOpen: (isOpen: boolean) => void;
@@ -21,6 +21,36 @@ export default function RegisterForm({
 	useOutsideClick(ref, () => {
 		setIsRegisterOpen(false);
 	});
+	useEffect(() => {
+		console.log(email, password, repeatPassword);
+	}, [email, repeatPassword, password]);
+
+	const handleFormSubmit = async (event) => {
+		event.preventDefault();
+
+		try {
+			// Send a POST request to the backend API
+			const response = await .post("/api/register", {
+				email,
+				password,
+				repeatPassword,
+			});
+
+			// Handle the response as per your application logic
+			console.log(response);
+
+			// Reset the form fields
+			setEmail("");
+			setPassword("");
+			setRepeatPassword("");
+
+			// Redirect to a success page or perform any other actions
+		} catch (error) {
+			// Handle registration error
+			console.error("Registration failed:", error);
+		}
+	};
+
 	return (
 		<section className="flex justify-center items-center w-full h-full fixed top-0 left-0 text-black z-50">
 			<div className="bg-gray-50 p-2 w-3/6 rounded-md" ref={ref}>
@@ -43,7 +73,7 @@ export default function RegisterForm({
 				</div>
 
 				<form
-					action="/action_page.php"
+					onSubmit={handleFormSubmit}
 					className="w-full ml-auto mr-auto border border-gray-400 rounded-md"
 				>
 					<div className="m-4 ">
@@ -58,6 +88,10 @@ export default function RegisterForm({
 								name="email"
 								id="email"
 								required
+								onChange={(event) =>
+									setEmail(event?.target.value)
+								}
+								value={email}
 							/>
 
 							<label htmlFor="psw">
@@ -69,6 +103,10 @@ export default function RegisterForm({
 								name="psw"
 								id="psw"
 								required
+								onChange={(event) =>
+									setPassword(event?.target.value)
+								}
+								value={password}
 							/>
 
 							<label htmlFor="psw-repeat">
@@ -80,6 +118,10 @@ export default function RegisterForm({
 								name="psw-repeat"
 								id="psw-repeat"
 								required
+								onChange={(event) =>
+									setRepeatPassword(event?.target.value)
+								}
+								value={repeatPassword}
 							/>
 						</div>
 						<p className="text-sm">
@@ -93,6 +135,7 @@ export default function RegisterForm({
 							<button
 								type="submit"
 								className="btn-secondary !m-0  "
+                
 							>
 								Register
 							</button>
