@@ -76,7 +76,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 		});
 	}
 
-	console.log("SDASDASD", cartProducts);
 	return (
 		<CartContext.Provider
 			value={{

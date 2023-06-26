@@ -5,6 +5,8 @@ import useMedia from "@/app/hooks/useMedia";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "@/app/context/CartContext";
 import RegisterForm from "./registerForm";
+import LoginForm from "./loginForm";
+import { useRouter } from "next/navigation";
 
 export default function HeaderNav() {
 	const mobile = useMedia("(max-width: 990px)");
@@ -13,6 +15,9 @@ export default function HeaderNav() {
 	const [isOpen, setIsOpen] = useState(false);
 	const { cartProducts } = useContext(CartContext);
 	const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+	const [isLoginOpen, setIsLoginOpen] = useState(false);
+
+	const route = useRouter();
 
 	function handleMenu() {
 		setIsOpen((isOpen) => !isOpen);
@@ -30,10 +35,16 @@ export default function HeaderNav() {
 	const openRegister = () => {
 		setIsRegisterOpen((isRegisterOpen) => !isRegisterOpen);
 	};
+	const openLogin = () => {
+		setIsLoginOpen((isLoginOpen) => !isLoginOpen);
+	};
 
 	const closeRegister = () => {
-		console.log("Closing register");
 		setIsRegisterOpen(false);
+	};
+
+	const closeLogin = () => {
+		setIsLoginOpen(false);
 	};
 
 	useEffect(() => {
@@ -147,21 +158,21 @@ export default function HeaderNav() {
 				<div className="flex items-center gap-4">
 					{!mobile ? (
 						<>
-							<button className="btn-primaryy">Login</button>
 							<button
 								className="btn-primaryy"
-								onClick={() => openRegister()}
+								onClick={() => route.push("/login")}
+							>
+								Login
+							</button>
+							<button
+								className="btn-primaryy"
+								onClick={() => route.push("/register")}
 							>
 								Register
 							</button>
 						</>
 					) : null}
-					{isRegisterOpen && (
-						<RegisterForm
-							closeRegister={closeRegister}
-							setIsRegisterOpen={setIsRegisterOpen}
-						/>
-					)}
+
 					<Link href={"/cart"} className="flex flex-col">
 						<Image
 							src="/assets/header/cart.svg"

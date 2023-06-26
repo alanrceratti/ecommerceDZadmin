@@ -3,17 +3,17 @@ import useOutsideClick from "@/app/hooks/useOnClickOutside";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-export default function RegisterForm() {
+export default function LoginForm() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [repeatPassword, setRepeatPassword] = useState("");
+
 	const ref = useRef<HTMLDivElement | null>(null);
 
 	const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = async (
 		event
 	) => {
 		event.preventDefault();
-		console.log(email, password, repeatPassword);
+		console.log(email, password);
 		// 	// Send a POST request to the backend API
 		try {
 			const response = await fetch("/api/registerUser", {
@@ -21,7 +21,7 @@ export default function RegisterForm() {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ email, password, repeatPassword }),
+				body: JSON.stringify({ email, password }),
 			});
 			const data = await response.json();
 			console.log(data);
@@ -90,40 +90,23 @@ export default function RegisterForm() {
 							<label htmlFor="psw-repeat">
 								<b>Repeat Password</b>
 							</label>
-							<input
-								type="password"
-								placeholder="Repeat Password"
-								name="psw-repeat"
-								id="psw-repeat"
-								required
-								onChange={(event) =>
-									setRepeatPassword(event?.target.value)
-								}
-								value={repeatPassword}
-							/>
 						</div>
-						<p className="text-sm">
-							By creating an account you agree to our{" "}
-							<Link href="#" className="text-blue-600">
-								Terms & Privacy
-							</Link>
-							.
-						</p>
+
 						<div className="w-full mt-8 ">
 							<button
 								type="submit"
 								className="btn-secondary !m-0  "
 							>
-								Register
+								Login
 							</button>
 						</div>
 					</div>
 
 					<div className="m-4">
 						<p>
-							Already have an account?{" "}
-							<Link href="/login" className="text-blue-600">
-								Sign in
+							Don&apos;t have an account?{" "}
+							<Link href="/register" className="text-blue-600">
+								Register
 							</Link>
 							.
 						</p>
