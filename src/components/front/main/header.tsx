@@ -4,9 +4,8 @@ import Link from "next/link";
 import useMedia from "@/app/hooks/useMedia";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "@/app/context/CartContext";
-import RegisterForm from "./registerForm";
-import LoginForm from "./loginForm";
 import { useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 
 export default function HeaderNav() {
 	const mobile = useMedia("(max-width: 990px)");
@@ -14,10 +13,14 @@ export default function HeaderNav() {
 	const [prevScroll, setPrevScroll] = useState(0);
 	const [isOpen, setIsOpen] = useState(false);
 	const { cartProducts } = useContext(CartContext);
-	const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-	const [isLoginOpen, setIsLoginOpen] = useState(false);
+	// const [isRegisterOpen, setIsRegisterOpen] = useState(false);
 
 	const route = useRouter();
+	const { data } = useSession();
+
+	useEffect(() => {
+		console.log(data, "SESSION");
+	}, [data]);
 
 	function handleMenu() {
 		setIsOpen((isOpen) => !isOpen);
@@ -32,26 +35,9 @@ export default function HeaderNav() {
 		}
 	};
 
-	const openRegister = () => {
-		setIsRegisterOpen((isRegisterOpen) => !isRegisterOpen);
-	};
-	const openLogin = () => {
-		setIsLoginOpen((isLoginOpen) => !isLoginOpen);
-	};
-
-	const closeRegister = () => {
-		setIsRegisterOpen(false);
-	};
-
-	const closeLogin = () => {
-		setIsLoginOpen(false);
-	};
-
 	useEffect(() => {
-		if (!isRegisterOpen) {
-			window.addEventListener("scroll", handleScroll);
-			return () => window.removeEventListener("scroll", handleScroll);
-		}
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
 	});
 
 	return (
@@ -63,15 +49,16 @@ export default function HeaderNav() {
 					mobile ? "h-[70px]" : "h-[100px]"
 				}`}
 			>
-				<Link href={"/"} className=" mr-20">
+				<Link href={"/"} className=" md:mr-20 mr-4">
 					<Image
 						src="/assets/header/DroneZone.svg"
 						alt="Logo"
 						width={100}
 						height={100}
-						className="min-h-[100px] min-w-[100px]"
+						className=" min-w-[100px] "
 					/>
 				</Link>
+
 				{!mobile ? (
 					<nav className="flex gap-8 ">
 						<Link href={"/"} className="hover">
@@ -89,6 +76,13 @@ export default function HeaderNav() {
 					</nav>
 				) : (
 					<>
+						<div>
+							{data?.user && (
+								<h2 className="text-base">
+									Hi, {data?.user.name}
+								</h2>
+							)}
+						</div>
 						<div className=" ml-auto pr-4 relative ">
 							<button
 								onClick={handleMenu}
@@ -141,39 +135,73 @@ export default function HeaderNav() {
 											Contact
 										</Link>
 									</nav>
-									<button className="btn-primaryy-mobile mb-2 mt-2">
-										Login
-									</button>
-									<button
-										className="btn-primaryy-mobile "
-										onClick={() => openRegister()}
-									>
-										Register
-									</button>
+									{data?.user ? (
+										<div className="flex flex-col">
+											<button
+												onClick={() => signOut()}
+												className="btn-primaryy-mobile "
+											>
+												Logout
+											</button>
+										</div>
+									) : (
+										<div className="flex flex-col">
+											<Link
+												href="/login"
+												className="btn-primaryy-mobile mb-2 mt-2"
+												onClick={() => setIsOpen(false)}
+											>
+												Login
+											</Link>
+											<Link
+												href="/register"
+												className="btn-primaryy-mobile "
+											>
+												Register
+											</Link>
+										</div>
+									)}
 								</div>
 							) : null}
 						</div>
 					</>
 				)}
 				<div className="flex items-center gap-4">
-					{!mobile ? (
-						<>
-							<button
-								className="btn-primaryy"
-								onClick={() => route.push("/login")}
-							>
-								Login
-							</button>
-							<button
-								className="btn-primaryy"
-								onClick={() => route.push("/register")}
-							>
-								Register
-							</button>
-						</>
-					) : null}
+					{!mobile && data?.user ? (
+						<div className="flex flex-col gap-2">
+							<div className="flex flex-row items-center gap-2">
+								<div>
+									{data?.user && (
+										<h2 className="text-base">
+											Hi, {data?.user.name}
+										</h2>
+									)}
+								</div>
+								<button
+									onClick={() => signOut()}
+									className="btn-third mb-2 mt-2 "
+								>
+									Logout
+								</button>
+							</div>
+						</div>
+					) : (
+						!mobile && (
+							<>
+								<Link
+									href="/login"
+									className="btn-third mb-2 mt-2"
+								>
+									Login
+								</Link>
+								<Link href="/register" className="btn-third ">
+									Register
+								</Link>
+							</>
+						)
+					)}
 
-					<Link href={"/cart"} className="flex flex-col">
+					<Link href={"/cart"} className="flex flex-col mb-4">
 						<Image
 							src="/assets/header/cart.svg"
 							alt="Logo"

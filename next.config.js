@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	webpack(config) {
+		config.experiments = { ...config.experiments, topLevelAwait: true };
+		return config;
+	},
 	experimental: {
+		serverComponentsExternalPackages: ["mongoose"],
 		appDir: true,
 		fontLoaders: [
 			{ loader: "@next/font/google", options: { subset: ["latin"] } },

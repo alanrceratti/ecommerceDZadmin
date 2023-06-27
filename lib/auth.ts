@@ -2,11 +2,43 @@ import { NextApiRequest, NextApiResponse } from "next";
 import NextAuth, { AuthOptions, Session, getServerSession } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import Credentials from "next-auth/providers/credentials";
+import bcrypt from "bcrypt";
+
+import { User } from "../models/User";
+import { mongooseConnect } from "../lib/mongoose";
 
 const adminEmails = ["alanrceratti@gmail.com"];
 
+mongooseConnect(); // Call the mongooseConnect function before defining authOptions
+
 export const authOptions: AuthOptions = {
+	session: {
+		strategy: "jwt",
+	},
 	providers: [
+		Credentials({
+			credentials: {
+				email: { label: "Email", type: "text", placeholder: "Email" },
+				password: { label: "Password", type: "password" },
+			},
+			async authorize(credentials: Record<string, string> = {}, req) {
+				const { email, password } = credentials;
+				const user = await User.findOne({ email });
+				if (!user) {
+					throw new Error("Invalid Email");
+				}
+				const isPasswordMatch = await bcrypt.compare(
+					password,
+					user.password
+				);
+				if (!isPasswordMatch) {
+					// Fix: Check if password doesn't match
+					throw new Error("Invalid Password");
+				}
+				return user;
+			},
+		}),
 		GithubProvider({
 			clientId: process.env.GITHUB_ID as string,
 			clientSecret: process.env.GITHUB_SECRET as string,
@@ -14,27 +46,21 @@ export const authOptions: AuthOptions = {
 		GoogleProvider({
 			clientId: process.env.GOOGLE_CLIENT_ID as string,
 			clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-			// authorization: {
-			// 	params: {
-			// 		prompt: "consent",
-			// 		access_type: "offline",
-			// 		response_type: "code",
-			// 	},
-			// },
 		}),
 	],
 	callbacks: {
-		session({ session, token, user }): Promise<Session> {
-			if (adminEmails.includes(session.user.email)) {
-				return Promise.resolve(session);
+		async session({ session, token, user }): Promise<Session> {
+			if (session.user.email) {
+				return session;
 			} else {
-				return Promise.reject(new Error("Access denied"));
+				throw new Error("Access denied");
 			}
 		},
 	},
 
 	secret: process.env.NEXTAUTH_SECRET,
 };
+
 export default NextAuth(authOptions);
 
 export async function isAdminRequest(

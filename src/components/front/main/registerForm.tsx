@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export default function RegisterForm() {
+	const [name, setName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [repeatPassword, setRepeatPassword] = useState("");
@@ -13,7 +14,7 @@ export default function RegisterForm() {
 		event
 	) => {
 		event.preventDefault();
-		console.log(email, password, repeatPassword);
+
 		// 	// Send a POST request to the backend API
 		try {
 			const response = await fetch("/api/registerUser", {
@@ -21,7 +22,7 @@ export default function RegisterForm() {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ email, password, repeatPassword }),
+				body: JSON.stringify({ name, email, password }),
 			});
 			const data = await response.json();
 			console.log(data);
@@ -57,6 +58,20 @@ export default function RegisterForm() {
 					<div className="m-4 ">
 						<p>Please fill in this form to create an account.</p>
 						<div className="my-4">
+							<label htmlFor="name">
+								<b>Name</b>
+							</label>
+							<input
+								type="text"
+								placeholder="Enter name"
+								name="name"
+								id="name"
+								required
+								onChange={(event) =>
+									setName(event?.target.value)
+								}
+								value={name}
+							/>
 							<label htmlFor="email">
 								<b>Email</b>
 							</label>

@@ -2,29 +2,43 @@
 import useOutsideClick from "@/app/hooks/useOnClickOutside";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { signIn } from "next-auth/react";
+import { Session } from "inspector";
+import { useRouter } from "next/navigation";
 
 export default function LoginForm() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-
+	const [wrongCredentials, setWrongCredentials] = useState(false);
+	const router = useRouter();
 	const ref = useRef<HTMLDivElement | null>(null);
+
+	const handleGoBackTwice = () => {
+		window.history.go(-1);
+	};
 
 	const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = async (
 		event
 	) => {
 		event.preventDefault();
-		console.log(email, password);
+
 		// 	// Send a POST request to the backend API
 		try {
-			const response = await fetch("/api/registerUser", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify({ email, password }),
+			const data = await signIn("credentials", {
+				email,
+				password,
+				redirect: false,
 			});
-			const data = await response.json();
-			console.log(data);
+			if (data?.error === null) {
+				setWrongCredentials(false);
+				handleGoBackTwice();
+				setEmail("");
+				setPassword("");
+			} else if (data?.error !== null) {
+				setWrongCredentials(true);
+
+				console.log(data);
+			}
 		} catch (error) {
 			console.log(error);
 		}
@@ -93,6 +107,11 @@ export default function LoginForm() {
 						</div>
 
 						<div className="w-full mt-8 ">
+							{wrongCredentials && (
+								<p className="text-sm text-red-600">
+									*Wrong email or password, please try again.
+								</p>
+							)}
 							<button
 								type="submit"
 								className="btn-secondary !m-0  "

@@ -2,10 +2,12 @@
 import { NewProductsProps } from "@/app/types";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import SimilarProducts from "@/components/front/products/similarProducts";
 import Loading from "@/components/front/products/loadingComponents";
+import { CartContext } from "@/app/context/CartContext";
+import { ToastContainer } from "react-toastify";
 
 export default function ProductDetails() {
 	const [product, setProduct] = useState<NewProductsProps>();
@@ -13,6 +15,7 @@ export default function ProductDetails() {
 	const path = usePathname();
 	const idPath = path?.split("/")[3];
 	const router = useRouter();
+	const { addProductToCart } = useContext(CartContext);
 
 	const selectedProduct = async () => {
 		try {
@@ -25,6 +28,10 @@ export default function ProductDetails() {
 			setIsLoading(false);
 		}
 	};
+
+	function addToCart(productId: string) {
+		addProductToCart(productId as NewProductsProps);
+	}
 
 	useEffect(() => {
 		selectedProduct();
@@ -147,8 +154,25 @@ export default function ProductDetails() {
 													*Finance available
 												</p>
 											</div>
-
-											<button className="btn-third !bg-orange items-center !text-lg  !text-black hover:!text-white hover:!bg-black flex gap-1 shadow-xl">
+											<ToastContainer
+												position="top-right"
+												autoClose={3000}
+												hideProgressBar={false}
+												newestOnTop={false}
+												closeOnClick
+												rtl={false}
+												pauseOnFocusLoss
+												draggable
+												pauseOnHover
+												theme="dark"
+											/>
+											<button
+												className="btn-third !bg-orange items-center !text-lg  !text-black hover:!text-white hover:!bg-black flex gap-1 shadow-xl"
+												onClick={() =>
+													product._id &&
+													addToCart(product._id)
+												}
+											>
 												<svg
 													xmlns="http://www.w3.org/2000/svg"
 													fill="none"

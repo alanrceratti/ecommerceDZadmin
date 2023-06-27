@@ -19,7 +19,6 @@ export default function MainCard() {
 	const [allOffers, setAllOffers] = useState<boolean>(false);
 	const {
 		setCartProducts,
-
 		cartProducts,
 		addProductToCart,
 	} = useContext(CartContext);

@@ -1,10 +1,10 @@
-import "./globals.css";
+import "../../globals.css";
 import { Poppins } from "next/font/google";
 import localFont from "next/font/local";
-import { NextAuthProvider } from "./providers";
 import HeaderNav from "@/components/front/main/header";
 import Footer from "@/components/front/footer/footer";
-import { CartProvider } from "./context/CartContext";
+import { CartProvider } from "@/app/context/CartContext";
+import { NextAuthProvider } from "@/app/providers";
 
 const poppins = Poppins({
 	subsets: ["latin"],
@@ -15,7 +15,7 @@ const poppins = Poppins({
 const unisansheavy = localFont({
 	src: [
 		{
-			path: "../../public/fonts/UniSansHeavy.otf",
+			path: "../../../../public/fonts/UniSansHeavy.otf",
 		},
 	],
 	variable: "--font-unisansheavy",
@@ -24,7 +24,7 @@ const unisansheavy = localFont({
 const unisansthin = localFont({
 	src: [
 		{
-			path: "../../public/fonts/UniSansThin.otf",
+			path: "../../../../public/fonts/UniSansThin.otf",
 		},
 	],
 	variable: "--font-unisansthin",
@@ -47,7 +47,10 @@ const RootLayout = ({ children }: RootLayoutProps) => {
 				className={`${poppins.variable} ${unisansheavy.variable} ${unisansthin.variable} bg-gray900 `}
 			>
 				<CartProvider>
-					<NextAuthProvider>{children}</NextAuthProvider>
+					<NextAuthProvider>
+						<HeaderNav />
+						{children} <Footer />
+					</NextAuthProvider>
 				</CartProvider>
 			</body>
 		</html>

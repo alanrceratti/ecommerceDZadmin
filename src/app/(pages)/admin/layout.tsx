@@ -1,12 +1,13 @@
 "use client";
 import Nav from "@/components/nav";
-import { useSession, signIn } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 import { ReactNode } from "react";
 
 function Layout({ children }: { children: ReactNode }) {
+	const adminEmails = ["alanrceratti@gmail.com"];
 	const { data: session } = useSession();
 
-	if (session) {
+	if (session && adminEmails.includes(session.user.email)) {
 		return (
 			<section className="bg-black800 min-h-screen text-white flex">
 				<Nav />
@@ -15,6 +16,8 @@ function Layout({ children }: { children: ReactNode }) {
 				</div>
 			</section>
 		);
+	} else if (session && !adminEmails.includes(session.user.email)) {
+		signOut();
 	}
 	return (
 		<section>
