@@ -39,7 +39,15 @@ export default function Offers() {
 							products.map((product) => (
 								<div className="sm:p-8 p-2" key={product._id}>
 									<div className="w-[270px] sm:w-[340px] h-[340px] sm:h-[470px] text-center font-poppins text-black font-light shadow-2xl bg-white rounded-md ">
-										<h2 className="sm:py-4 py-2 font-semibold ">
+										<h2
+											className="sm:py-4 py-2 font-semibold cursor-pointer "
+											onClick={() =>
+												window.open(
+													`/product/details/${product._id}`,
+													"_blank"
+												)
+											}
+										>
 											{product.name}
 										</h2>
 										<div>
@@ -49,7 +57,13 @@ export default function Offers() {
 														src={product?.images[0]}
 														alt="drone"
 														fill
-														className="ml-auto mr-auto rounded-md object-cover"
+														className="ml-auto mr-auto rounded-md object-cover cursor-pointer"
+														onClick={() =>
+															window.open(
+																`/product/details/${product._id}`,
+																"_blank"
+															)
+														}
 													/>
 												)}
 											</div>
@@ -144,7 +158,7 @@ export default function Offers() {
 													theme="dark"
 												/>
 												<button
-													className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl"
+													className="btn-third items-center !bg-orange  !text-white hover:!bg-amber-400 flex gap-1 shadow-xl"
 													onClick={() =>
 														addProductToCart(
 															(product?._id as NewProductsProps) ||
@@ -171,7 +185,7 @@ export default function Offers() {
 
 												<Link
 													href={`/product/details/${product._id}`}
-													className="btn-third !bg-white !text-black hover:!bg-orange shadow-md shadow-slate-300 "
+													className="btn-third !bg-white !text-black hover:!text-orange shadow-md shadow-slate-300 "
 												>
 													View More
 												</Link>

@@ -17,11 +17,8 @@ export default function MainCard() {
 	const [loading, setLoading] = useState<boolean>(true);
 	const [bestSeller, setBestSeller] = useState<boolean>(false);
 	const [allOffers, setAllOffers] = useState<boolean>(false);
-	const {
-		setCartProducts,
-		cartProducts,
-		addProductToCart,
-	} = useContext(CartContext);
+	const { setCartProducts, cartProducts, addProductToCart } =
+		useContext(CartContext);
 
 	const [page, setPage] = useState(1);
 	const [pageSize, setPageSize] = useState(9);
@@ -220,7 +217,7 @@ export default function MainCard() {
 
 	return (
 		<>
-			<div className="  w-full text-center  bg-white min-h-[500px]   ">
+			<div className="  w-full text-center  bg-white min-h-[500px]    ">
 				<div className=" mt-2 h-fit w-full justify-center items-center hidden sm:flex">
 					<div className="flex h-fit w-fit  flex-wrap ">
 						<button
@@ -268,7 +265,13 @@ export default function MainCard() {
 													: product.offer
 													? "text-red-600"
 													: ""
-											} sm:py-4 py-2 font-semibold text-black`}
+											} sm:py-4 py-2 font-semibold text-black cursor-pointer `}
+											onClick={() =>
+												window.open(
+													`/product/details/${product._id}`,
+													"_blank"
+												)
+											}
 										>
 											{product.name}
 										</h2>
@@ -279,8 +282,14 @@ export default function MainCard() {
 														src={product?.images[0]}
 														alt="drone"
 														fill
-														className="ml-auto mr-auto rounded-md object-cover"
+														className="ml-auto mr-auto rounded-md object-cover cursor-pointer"
 														sizes="(max-width: 280px) 100vw"
+														onClick={() =>
+															window.open(
+																`/product/details/${product._id}`,
+																"_blank"
+															)
+														}
 													/>
 												)}
 											</div>
@@ -300,7 +309,7 @@ export default function MainCard() {
 														place="bottom"
 														content="Maximum speed"
 														variant="dark"
-														delayShow={500}
+														delayShow={300}
 													/>
 												</div>
 												<div className="flex gap-1 items-center ">
@@ -317,7 +326,7 @@ export default function MainCard() {
 														place="bottom"
 														content="Maximum Range For Control"
 														variant="dark"
-														delayShow={500}
+														delayShow={300}
 													/>
 												</div>
 												<div className="flex gap-1  items-center ">
@@ -334,7 +343,7 @@ export default function MainCard() {
 														place="bottom"
 														content="Camera Quality"
 														variant="dark"
-														delayShow={500}
+														delayShow={300}
 													/>
 												</div>
 												<div className="flex gap-1 items-center ">
@@ -351,7 +360,7 @@ export default function MainCard() {
 														place="bottom"
 														content="Battery Duration"
 														variant="dark"
-														delayShow={500}
+														delayShow={300}
 													/>
 												</div>{" "}
 												<div className="flex gap-1 items-center ">
@@ -368,7 +377,7 @@ export default function MainCard() {
 														place="bottom"
 														content="Water Proof"
 														variant="dark"
-														delayShow={500}
+														delayShow={300}
 													/>
 												</div>{" "}
 												<div className="flex gap-1 items-center ">
@@ -385,7 +394,7 @@ export default function MainCard() {
 														place="bottom"
 														content="Drone Weight"
 														variant="dark"
-														delayShow={500}
+														delayShow={300}
 													/>
 												</div>
 											</div>
@@ -485,7 +494,7 @@ export default function MainCard() {
 													theme="dark"
 												/>
 												<button
-													className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl"
+													className="btn-third items-center !bg-orange  !text-white hover:!bg-amber-400 flex gap-1 shadow-xl"
 													onClick={() =>
 														product._id &&
 														addToCart(product._id)
@@ -510,7 +519,7 @@ export default function MainCard() {
 
 												<Link
 													href={`/product/details/${product._id}`}
-													className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl"
+													className="btn-third items-center  flex gap-1 shadow-xl"
 												>
 													View More
 												</Link>

@@ -40,7 +40,15 @@ export default function BestSellers() {
 							products.map((product) => (
 								<div className="sm:p-8 p-2" key={product._id}>
 									<div className="w-[270px] sm:w-[340px] h-[340px] sm:h-[470px] text-center font-poppins text-black font-light shadow-2xl bg-gray950  rounded-md ">
-										<h2 className="sm:py-4 py-2 font-semibold text-white ">
+										<h2
+											className="sm:py-4 py-2 font-semibold text-white cursor-pointer "
+											onClick={() =>
+												window.open(
+													`/product/details/${product._id}`,
+													"_blank"
+												)
+											}
+										>
 											{product.name}
 										</h2>
 										<div>
@@ -50,8 +58,14 @@ export default function BestSellers() {
 														src={product?.images[0]}
 														alt="drone"
 														fill
-														className="ml-auto mr-auto rounded-md object-cover"
+														className="ml-auto mr-auto rounded-md object-cover cursor-pointer"
 														sizes="(max-width: 280px) 100vw"
+														onClick={() =>
+															window.open(
+																`/product/details/${product._id}`,
+																"_blank"
+															)
+														}
 													/>
 												)}
 											</div>
@@ -139,7 +153,7 @@ export default function BestSellers() {
 													theme="dark"
 												/>
 												<button
-													className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl"
+													className="btn-third items-center !bg-orange  !text-white hover:!bg-amber-400 flex gap-1 shadow-xl"
 													onClick={() =>
 														addProductToCart(
 															(product?._id as NewProductsProps) ||
@@ -166,7 +180,7 @@ export default function BestSellers() {
 
 												<Link
 													href={`/product/details/${product._id}`}
-													className="btn-third !bg-white !text-black hover:!bg-orange   "
+													className="btn-third !bg-white !text-black hover:!text-orange   "
 												>
 													View More
 												</Link>

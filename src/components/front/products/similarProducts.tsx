@@ -1,14 +1,16 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NewProductsProps } from "@/app/types";
 import useMedia from "@/app/hooks/useMedia";
+import { CartContext } from "@/app/context/CartContext";
 
 export default function SimilarProducts({ Category }: { Category: string }) {
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const mobile = useMedia("(max-width: 640px)");
 	const currentcategory = Category;
+	const { addProductToCart } = useContext(CartContext);
 
 	const selectedProduct = () => {
 		fetch("/api/similarProducts?id=" + currentcategory)
@@ -20,6 +22,10 @@ export default function SimilarProducts({ Category }: { Category: string }) {
 				console.error(error);
 			});
 	};
+
+	function addToCart(productId: string) {
+		addProductToCart(productId as NewProductsProps);
+	}
 
 	useEffect(() => {
 		if (currentcategory) {
@@ -39,7 +45,15 @@ export default function SimilarProducts({ Category }: { Category: string }) {
 							{products.map((product) => (
 								<div className="sm:p-8 p-2" key={product._id}>
 									<div className="w-[270px] sm:w-[340px] h-[340px] sm:h-[470px] text-center font-poppins text-black font-light shadow-2xl bg-gray950  rounded-md ">
-										<h2 className="sm:py-4 py-2 font-semibold text-white ">
+										<h2
+											className="sm:py-4 py-2 font-semibold text-white cursor-pointer"
+											onClick={() =>
+												window.open(
+													`/product/details/${product._id}`,
+													"_blank"
+												)
+											}
+										>
 											{product.name}
 										</h2>
 										<div>
@@ -49,7 +63,13 @@ export default function SimilarProducts({ Category }: { Category: string }) {
 														src={product?.images[0]}
 														alt="drone"
 														fill
-														className="ml-auto mr-auto rounded-md object-cover"
+														className="ml-auto mr-auto rounded-md object-cover cursor-pointer"
+														onClick={() =>
+															window.open(
+																`/product/details/${product._id}`,
+																"_blank"
+															)
+														}
 													/>
 												)}
 											</div>
@@ -124,7 +144,13 @@ export default function SimilarProducts({ Category }: { Category: string }) {
 											</div>
 											<hr className="h-[1px] w-4/5 bg-gray-300 border-none my-2 ml-auto mr-auto "></hr>
 											<div className="flex justify-center items-center gap-4">
-												<button className="btn-third items-center !bg-black !text-white hover:!bg-orange flex gap-1 shadow-xl">
+												<button
+													className="btn-third items-center !bg-orange  !text-white hover:!bg-amber-400 flex gap-1 shadow-xl"
+													onClick={() =>
+														product._id &&
+														addToCart(product._id)
+													}
+												>
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
 														fill="none"
@@ -143,8 +169,8 @@ export default function SimilarProducts({ Category }: { Category: string }) {
 												</button>
 
 												<Link
-													href={`products/details/${product._id}`}
-													className="btn-third !bg-white !text-black hover:!bg-orange   "
+													href={`product/details/${product._id}`}
+													className="btn-third !bg-white !text-black hover:!text-orange   "
 												>
 													View More
 												</Link>
