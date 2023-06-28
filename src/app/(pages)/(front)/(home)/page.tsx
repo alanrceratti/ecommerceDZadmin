@@ -2,10 +2,12 @@ import BestSellers from "@/components/front/main/bestsellers";
 import Image from "next/image";
 import Link from "next/link";
 import Offers from "@/components/front/main/offers";
+import HeaderNav from "@/components/front/main/header";
 
 export default function MainPage() {
 	return (
 		<>
+			<HeaderNav />
 			<section className=" bg-center sm:h-[680px] xl:h-[700px] 2xl:h-[800px]  min-h-[300px] flex items-center sm:justify-center flex-col bg-[url('/assets/header/bg-main.webp')] bg-cover ">
 				<div className="font-unisansheavy sm:text-6xl text-xl text-white pb-16 text-center flex flex-col gap-8 sm:gap-20 mx-8 sm:mx-32 ">
 					<h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl mt-16  ">
@@ -65,6 +67,7 @@ export default function MainPage() {
 			</section>
 			<BestSellers />
 			<Offers />
+			<footer />
 		</>
 	);
 }
