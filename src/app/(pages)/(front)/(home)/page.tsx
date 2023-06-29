@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Offers from "@/components/front/main/offers";
 import HeaderNav from "@/components/front/main/header";
+import Footer from "@/components/front/footer/footer";
 
 export default function MainPage() {
 	return (
@@ -67,7 +68,7 @@ export default function MainPage() {
 			</section>
 			<BestSellers />
 			<Offers />
-			<footer />
+			<Footer />
 		</>
 	);
 }

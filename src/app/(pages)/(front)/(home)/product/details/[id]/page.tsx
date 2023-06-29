@@ -44,7 +44,7 @@ export default function ProductDetails() {
 			) : (
 				<>
 					{product && (
-						<div className="w-full max-w-[1440px] m-auto ">
+						<div className="w-full max-w-[1440px] m-auto  ">
 							<div className="m-4">
 								<button
 									onClick={() => router.back()}
@@ -59,7 +59,7 @@ export default function ProductDetails() {
 												src={product?.images[0]}
 												alt="drone"
 												fill
-												className="ml-auto mr-auto rounded-md object-cover border-[4px] sm:border-[4px] border-white border-opacity-50"
+												className="ml-auto mr-auto rounded-md object-cover border-[4px] sm:border-[4px] border-white border-opacity-50 -z-10"
 											/>
 										)}
 									</div>
