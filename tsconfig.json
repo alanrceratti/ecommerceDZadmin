@@ -1,5 +1,6 @@
 {
 	"compilerOptions": {
+		"downlevelIteration": true,
 		"target": "es5",
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
@@ -31,7 +32,9 @@
 		"types/**/*.ts",
 		".next/types/**/*.ts",
 		"src/app/api/auth/[...nextauth].ts",
-		"lib/mongodb.ts"
-, "src/app/hooks/useMedia.jsx", "src/app/hooks/useOnClickOutside.jsx"	],
+		"lib/mongodb.ts",
+		"src/app/hooks/useMedia.jsx",
+		"src/app/hooks/useOnClickOutside.jsx"
+	],
 	"exclude": ["node_modules"]
 }

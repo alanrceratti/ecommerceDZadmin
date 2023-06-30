@@ -4,6 +4,7 @@ import { NewProductsProps } from "@/app/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useContext, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 export default function Cart() {
 	const { cartProducts, plusOneProduct, lessOneProduct, removeProduct } =
@@ -13,6 +14,7 @@ export default function Cart() {
 		{ _id: string; count: number }[]
 	>([]);
 	const route = useRouter();
+	const session = useSession();
 
 	useEffect(() => {
 		const updatedCart = Array.from(new Set(cartProducts)).join("&id=");
@@ -57,6 +59,8 @@ export default function Cart() {
 	const totalPrice = (total / 100).toLocaleString(undefined, {
 		minimumFractionDigits: 2,
 	});
+
+	console.log("SESSION", session.data?.user.name);
 
 	return (
 		<section className="bg-gray950 lg:pl-8 lg:pb-32 pb-8  ">
@@ -212,40 +216,50 @@ export default function Cart() {
 				<div>
 					{total > 0 && (
 						<div className="bg-white w-[300px] rounded-md p-4  ">
-							<div className="w-full text-center">
-								<button className="btn-primary my-4">
-									Go To Checkout
-								</button>
-							</div>
-
-							<h2 className="font-semibold">Order Summary</h2>
-
-							<div>
-								<div className="flex gap-4 justify-between">
-									<p className="opacity-60">Sub-total</p>£
-									{totalPrice}
-								</div>
-								<div className="flex gap-4 justify-between">
-									<p className="opacity-60">Shipping</p>
-									<p>FREE</p>
-								</div>
-								<hr className="h-[1px] w-full  bg-gray-300 border-none my-4 "></hr>
-								<div className="flex gap-4 justify-between">
-									<h3 className="opacity-70 font-medium">
-										Estimated Total
-									</h3>
-									<p> {totalPrice}</p>
-								</div>
-								<div className="">
-									<input
-										className="opacity-60"
-										placeholder="Have a promo code?"
-									/>
-									<button className="px-3 py-1 bg-slate-200 rounded-md opacity-60 text-slate-600">
-										Add
+							<form method="post" action={"/api/checkout"}>
+								<div className="w-full text-center">
+									<button
+										className="btn-primary my-4"
+										type="submit"
+									>
+										Go To Checkout
 									</button>
 								</div>
-							</div>
+
+								<h2 className="font-semibold">Order Summary</h2>
+
+								<div>
+									<div className="flex gap-4 justify-between">
+										<p className="opacity-60">Sub-total</p>£
+										{totalPrice}
+									</div>
+									<div className="flex gap-4 justify-between">
+										<p className="opacity-60">Shipping</p>
+										<p>FREE</p>
+									</div>
+									<hr className="h-[1px] w-full  bg-gray-300 border-none my-4 "></hr>
+									<div className="flex gap-4 justify-between">
+										<h3 className="opacity-70 font-medium">
+											Estimated Total
+										</h3>
+										<p> {totalPrice}</p>
+									</div>
+									<div className="">
+										<input
+											className="opacity-60"
+											placeholder="Have a promo code?"
+										/>
+										<button className="px-3 py-1 bg-slate-200 rounded-md opacity-60 text-slate-600">
+											Add
+										</button>
+									</div>
+									<input
+										name="products"
+										type="hidden"
+										value={cartProducts.join(",")}
+									/>
+								</div>
+							</form>
 						</div>
 					)}
 				</div>

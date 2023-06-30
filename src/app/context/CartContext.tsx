@@ -27,12 +27,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 }) => {
 	let initialCartProducts: NewProductsProps[] = [];
 
-	// if (typeof window !== "undefined") {
-	// 	const savedCart = localStorage.getItem("cart");
-	// 	if (savedCart) {
-	// 		initialCartProducts = JSON.parse(savedCart);
-	// 	}
-	// }
+	if (typeof window !== "undefined") {
+		const savedCart = localStorage.getItem("cart");
+		if (savedCart) {
+			initialCartProducts = JSON.parse(savedCart);
+		}
+	}
 
 	const [cartProducts, setCartProducts] =
 		useState<NewProductsProps[]>(initialCartProducts);
@@ -51,11 +51,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 		});
 	}
 
-	// useEffect(() => {
-	// 	if (cartProducts?.length > 0 && typeof window !== "undefined") {
-	// 		localStorage.setItem("cart", JSON.stringify(cartProducts));
-	// 	}
-	// }, [cartProducts]);
+	useEffect(() => {
+		if (cartProducts?.length > 0 && typeof window !== "undefined") {
+			localStorage.setItem("cart", JSON.stringify(cartProducts));
+		}
+	}, [cartProducts]);
 
 	function plusOneProduct(newProduct: NewProductsProps) {
 		setCartProducts((prev) => [...prev, newProduct]);
