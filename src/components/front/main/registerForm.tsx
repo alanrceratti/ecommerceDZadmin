@@ -1,6 +1,7 @@
 "use client";
 import useOutsideClick from "@/app/hooks/useOnClickOutside";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 export default function RegisterForm() {
@@ -9,6 +10,7 @@ export default function RegisterForm() {
 	const [password, setPassword] = useState("");
 	const [repeatPassword, setRepeatPassword] = useState("");
 	const ref = useRef<HTMLDivElement | null>(null);
+	const router = useRouter();
 
 	const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = async (
 		event
@@ -25,7 +27,7 @@ export default function RegisterForm() {
 				body: JSON.stringify({ name, email, password }),
 			});
 			const data = await response.json();
-			console.log(data);
+			router.push("/");
 		} catch (error) {
 			console.log(error);
 		}

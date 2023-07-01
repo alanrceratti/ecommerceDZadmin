@@ -11,6 +11,7 @@ interface CartContext {
 	plusOneProduct: (newProduct: NewProductsProps) => void;
 	lessOneProduct: (newProduct: NewProductsProps) => void;
 	removeProduct: (newProduct: NewProductsProps) => void;
+	clearCart: () => void;
 }
 
 export const CartContext = createContext<CartContext>({
@@ -20,6 +21,7 @@ export const CartContext = createContext<CartContext>({
 	plusOneProduct: () => {},
 	lessOneProduct: () => {},
 	removeProduct: () => {},
+	clearCart: () => {},
 });
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -76,6 +78,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 		});
 	}
 
+	function clearCart() {
+		setCartProducts([]);
+	}
+
 	return (
 		<CartContext.Provider
 			value={{
@@ -85,6 +91,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 				plusOneProduct,
 				lessOneProduct,
 				removeProduct,
+				clearCart,
 			}}
 		>
 			{children}

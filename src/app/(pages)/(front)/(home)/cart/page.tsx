@@ -7,8 +7,13 @@ import { useContext, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 
 export default function Cart() {
-	const { cartProducts, plusOneProduct, lessOneProduct, removeProduct } =
-		useContext(CartContext);
+	const {
+		cartProducts,
+		plusOneProduct,
+		lessOneProduct,
+		removeProduct,
+		clearCart,
+	} = useContext(CartContext);
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const [updatedProducts, setUpdatedProducts] = useState<
 		{ _id: string; count: number }[]
@@ -61,29 +66,7 @@ export default function Cart() {
 	const totalPrice = (total / 100).toLocaleString(undefined, {
 		minimumFractionDigits: 2,
 	});
-	if (typeof window !== "undefined") {
-		if (window.location.href.includes("success")) {
-			return (
-				<>
-					<div className="bg-white text-center h-[250px] ">
-						<h1 className="md:text-4xl text-2xl text-green-800 font-unisansheavy pt-8">
-							Payment successful!
-						</h1>
-						<h1 className="md:text-2xl text-xl pb-8 font-poppins font-light">
-							We are preparing your order, soon you will receive
-							our email...
-						</h1>
-						<button
-							className="btn-primary"
-							onClick={() => router.push("products/all")}
-						>
-							Shop more
-						</button>
-					</div>
-				</>
-			);
-		}
-	}
+
 	function handleCheckout() {
 		setOpenAlert(true);
 	}
@@ -115,6 +98,31 @@ export default function Cart() {
 			}
 		} catch (error) {
 			console.error("An error occurred:", error);
+		}
+	}
+
+	if (typeof window !== "undefined") {
+		if (window.location.href.includes("success")) {
+			clearCart();
+			return (
+				<>
+					<div className="bg-white text-center h-[250px] ">
+						<h1 className="md:text-4xl text-2xl text-green-800 font-unisansheavy pt-8">
+							Payment successful!
+						</h1>
+						<h1 className="md:text-2xl text-xl pb-8 font-poppins font-light">
+							We are preparing your order, soon you will receive
+							our email...
+						</h1>
+						<button
+							className="btn-primary"
+							onClick={() => router.push("products/all")}
+						>
+							Shop more
+						</button>
+					</div>
+				</>
+			);
 		}
 	}
 
