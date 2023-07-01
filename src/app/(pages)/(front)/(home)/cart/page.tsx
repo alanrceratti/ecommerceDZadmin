@@ -68,11 +68,11 @@ export default function Cart() {
 		minimumFractionDigits: 2,
 	});
 
-	function handleCheckout() {
-		setOpenAlert(true);
-	}
+	// function handleCheckout() {
+	// 	setOpenAlert(true);
+	// }
 
-	async function handleAfterAlert() {
+	async function handleCheckout() {
 		setOpenAlert(false);
 		if (!session.data) {
 			router.push("/login");
@@ -116,7 +116,7 @@ export default function Cart() {
 							our email...
 						</h1>
 
-						<Link className="btn-primary" href="products/all">
+						<Link className="btn-primary" href="/products/all">
 							Shop more
 						</Link>
 					</div>
@@ -146,7 +146,7 @@ export default function Cart() {
 						<div className="pt-8">
 							<button
 								className="btn-primary"
-								onClick={handleAfterAlert}
+								// onClick={handleAfterAlert}
 							>
 								OK
 							</button>
