@@ -34,10 +34,11 @@ export default function LoginForm() {
 				handleGoBackTwice();
 				setEmail("");
 				setPassword("");
+				setTimeout(() => {
+					window.location.reload();
+				}, 2000);
 			} else if (data?.error !== null) {
 				setWrongCredentials(true);
-
-				console.log(data);
 			}
 		} catch (error) {
 			console.log(error);
@@ -69,7 +70,7 @@ export default function LoginForm() {
 					className="w-full ml-auto mr-auto border border-gray-400 rounded-md"
 				>
 					<div className="m-4 ">
-						<p>Please fill in this form to create an account.</p>
+						<p>Please Login with your account details</p>
 						<div className="my-4">
 							<label htmlFor="email">
 								<b>Email</b>
@@ -100,10 +101,6 @@ export default function LoginForm() {
 								}
 								value={password}
 							/>
-
-							<label htmlFor="psw-repeat">
-								<b>Repeat Password</b>
-							</label>
 						</div>
 
 						<div className="w-full mt-8 ">

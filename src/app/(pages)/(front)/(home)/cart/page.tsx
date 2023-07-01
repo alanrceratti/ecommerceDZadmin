@@ -13,7 +13,9 @@ export default function Cart() {
 	const [updatedProducts, setUpdatedProducts] = useState<
 		{ _id: string; count: number }[]
 	>([]);
-	const route = useRouter();
+	const [openAlert, setOpenAlert] = useState<boolean>(false);
+	const router = useRouter();
+
 	const session = useSession();
 
 	useEffect(() => {
@@ -59,11 +61,92 @@ export default function Cart() {
 	const totalPrice = (total / 100).toLocaleString(undefined, {
 		minimumFractionDigits: 2,
 	});
+	if (typeof window !== "undefined") {
+		if (window.location.href.includes("success")) {
+			return (
+				<>
+					<div className="bg-white text-center h-[250px] ">
+						<h1 className="md:text-4xl text-2xl text-green-800 font-unisansheavy pt-8">
+							Payment successful!
+						</h1>
+						<h1 className="md:text-2xl text-xl pb-8 font-poppins font-light">
+							We are preparing your order, soon you will receive
+							our email...
+						</h1>
+						<button
+							className="btn-primary"
+							onClick={() => router.push("products/all")}
+						>
+							Shop more
+						</button>
+					</div>
+				</>
+			);
+		}
+	}
+	function handleCheckout() {
+		setOpenAlert(true);
+	}
 
-	console.log("SESSION", session.data?.user.name);
+	async function handleAfterAlert() {
+		setOpenAlert(false);
+		if (!session.data) {
+			router.push("/login");
+		}
+		const requestBody = {
+			products: cartProducts.join(","),
+			session: session, // Include the session data in the request body
+		};
+
+		try {
+			const response = await fetch("/api/checkout", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(requestBody),
+			});
+
+			if (response.ok) {
+				const { url } = await response.json();
+				router.push(url); // Redirect to the checkout URL
+			} else {
+				console.error("Failed to initiate checkout");
+			}
+		} catch (error) {
+			console.error("An error occurred:", error);
+		}
+	}
 
 	return (
 		<section className="bg-gray950 lg:pl-8 lg:pb-32 pb-8  ">
+			{openAlert && (
+				<>
+					<div className="absolute text-white bg-black bg-opacity-90 w-full h-full text-center z-50 overflow-hidden flex flex-col justify-center items-center">
+						<h1 className="w-[300px]">
+							Please copy this card number details if you would
+							like to test the checkout:
+						</h1>
+						<h2>
+							Number: <b>4242424242424242</b>
+						</h2>
+						<h3>
+							MM/YY: <b>12/24</b>
+						</h3>
+						<h4>
+							CVC:<b>123</b>
+						</h4>
+						<div className="pt-8">
+							<button
+								className="btn-primary"
+								onClick={handleAfterAlert}
+							>
+								OK
+							</button>
+						</div>
+					</div>
+				</>
+			)}
 			<h1 className="lg:text-3xl text-xl font-bold lg:pt-16 pt-4 text-white ml-4 ">
 				Shopping Cart
 			</h1>
@@ -204,7 +287,7 @@ export default function Cart() {
 								</h1>
 								<button
 									className="btn-primary mt-8"
-									onClick={() => route.push("/products/all")}
+									onClick={() => router.push("/products/all")}
 								>
 									Find my Drone
 								</button>
@@ -216,11 +299,11 @@ export default function Cart() {
 				<div>
 					{total > 0 && (
 						<div className="bg-white w-[300px] rounded-md p-4  ">
-							<form method="post" action={"/api/checkout"}>
+							<form method="post">
 								<div className="w-full text-center">
 									<button
 										className="btn-primary my-4"
-										type="submit"
+										onClick={handleCheckout}
 									>
 										Go To Checkout
 									</button>

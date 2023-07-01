@@ -1,9 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { mongooseConnect } from "../../../lib/mongoose";
 import { Product } from "../../../models/Product";
-import { Category } from "../../../models/Category";
 import { Order } from "../../../models/Order";
-import { useSession } from "next-auth/react";
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
@@ -17,7 +15,7 @@ export default async function handle(
 			return;
 		} else {
 			const { products, session } = req.body;
-			if (!session || !session.data.user) {
+			if (!session || !session.data) {
 				res.status(400).json({ error: "Invalid session data" });
 				return;
 			}
@@ -32,9 +30,8 @@ export default async function handle(
 					(p) => p._id.toString() === productId
 				);
 				const quantity =
-					productsIds.filter(
-						(id: string) => id === (productId as string)
-					)?.length || 0;
+					productsIds.filter((id: string) => id === productId)
+						?.length || 0;
 				if (quantity > 0 && productInfo) {
 					line_items.push({
 						quantity,
@@ -48,8 +45,8 @@ export default async function handle(
 			}
 			const orderDoc = await Order.create({
 				line_items,
-				name: session?.data?.user.name,
-				email: session?.data?.user.email,
+				name: session.data.user.name,
+				email: session.data.user.email,
 				paid: false,
 			});
 
@@ -57,6 +54,23 @@ export default async function handle(
 				line_items,
 				mode: "payment",
 				customer_email: session.data.user.email,
+				payment_method_types: ["card"],
+
+				// custom_text: {
+				// 	shipping_address: {
+				// 		message:
+				// 			"Use this card for checkout: 4242424242424242. MM/YY = 12/24. CVC = 123",
+				// 	},
+				// 	submit: {
+				// 		message:
+				// 			"We'll email you instructions on how to get started.",
+				// 	},
+				// },
+				// for customer to provide address
+				// shipping_address_collection: {
+				// 	allowed_countries: ["GB"],
+				// },
+
 				success_url: process.env.PUBLIC_URL + "/cart?success=1",
 				cancel_url: process.env.PUBLIC_URL + "/cart?cancel=1",
 				metadata: {
@@ -65,9 +79,8 @@ export default async function handle(
 			});
 
 			res.json({
-				url: session.url,
+				url: sessionStripe.url, // Corrected to sessionStripe.url instead of session.url
 			});
-			// res.json(orderDoc);
 		}
 	} catch (error) {
 		console.error("An error occurred:", error);
