@@ -13,7 +13,7 @@ export default function Cart() {
 		plusOneProduct,
 		lessOneProduct,
 		removeProduct,
-		clearCart,
+		setCartProducts,
 	} = useContext(CartContext);
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const [updatedProducts, setUpdatedProducts] = useState<
@@ -52,6 +52,14 @@ export default function Cart() {
 
 	function removeOneProduct(productId: string) {
 		removeProduct(productId as NewProductsProps);
+	}
+
+	function redirectCheckout() {
+		if (localStorage.getItem("cart")) {
+			localStorage.removeItem("cart");
+		}
+		setCartProducts([]);
+		router.push("/");
 	}
 
 	let total = 0;
@@ -104,7 +112,6 @@ export default function Cart() {
 
 	if (typeof window !== "undefined") {
 		if (window.location.href.includes("success")) {
-			clearCart();
 			return (
 				<>
 					<div className="bg-white text-center h-[250px] ">
@@ -116,9 +123,12 @@ export default function Cart() {
 							our email...
 						</h1>
 
-						<Link className="btn-primary" href="products/all">
+						<button
+							className="btn-primary"
+							onClick={redirectCheckout}
+						>
 							Shop more
-						</Link>
+						</button>
 					</div>
 				</>
 			);
