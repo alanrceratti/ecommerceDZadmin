@@ -78,9 +78,14 @@ export default async function handle(
 				},
 			});
 
-			res.json({
-				url: sessionStripe.url, // Corrected to sessionStripe.url instead of session.url
+			// 	res.json({
+			// 		url: sessionStripe.url, // Corrected to sessionStripe.url instead of session.url
+			// 	});
+			// }
+			res.writeHead(303, {
+				Location: sessionStripe.url,
 			});
+			res.end();
 		}
 	} catch (error) {
 		console.error("An error occurred:", error);
