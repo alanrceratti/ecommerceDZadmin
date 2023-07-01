@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useContext, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function Cart() {
 	const {
@@ -114,12 +115,10 @@ export default function Cart() {
 							We are preparing your order, soon you will receive
 							our email...
 						</h1>
-						<button
-							className="btn-primary"
-							onClick={() => router.push("products/all")}
-						>
+
+						<Link className="btn-primary" href="products/all">
 							Shop more
-						</button>
+						</Link>
 					</div>
 				</>
 			);
