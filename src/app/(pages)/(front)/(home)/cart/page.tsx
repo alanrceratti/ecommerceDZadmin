@@ -310,7 +310,7 @@ export default function Cart() {
 								<div className="w-full text-center">
 									<button
 										className="btn-primary my-4"
-										onClick={handleCheckout}
+										onClick={() => handleCheckout}
 									>
 										Go To Checkout
 									</button>
