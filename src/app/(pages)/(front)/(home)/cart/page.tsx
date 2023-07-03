@@ -129,7 +129,7 @@ export default function Cart() {
 			}
 		} catch (error) {
 			console.error("An error occurred during checkout:", error);
-			console.error(error.stack);
+
 			throw error; // rethrow the error to see the full stack trace
 		}
 	}
