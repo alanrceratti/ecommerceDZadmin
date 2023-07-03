@@ -77,6 +77,7 @@ export default async function handle(
 				url: sessionStripe.url,
 				sessionId: sessionStripe.id,
 			});
+      console.log("URL", sessionStripe.url)
 		} catch (error) {
 			res.status(500).json({ error: "An error occurred" });
 		}

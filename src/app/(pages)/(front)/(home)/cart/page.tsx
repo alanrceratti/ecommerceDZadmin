@@ -77,17 +77,18 @@ export default function Cart() {
 	});
 
 	function handleCheckout() {
-		setOpenAlert(true);
-	}
-
-	async function handleAfterAlert() {
-		setOpenAlert(false);
-
 		if (!session.data) {
 			router.push("/login");
 			return;
 		}
+		// setOpenAlert(true);
+		else if (session.data) {
+			handleAfterAlert();
+		}
+	}
 
+	async function handleAfterAlert() {
+		// setOpenAlert(false);
 		const requestBody = {
 			products: cartProducts.join(","),
 			session: session,
@@ -179,7 +180,7 @@ export default function Cart() {
 						<div className="pt-8">
 							<button
 								className="btn-primary"
-								onClick={handleAfterAlert}
+								onClick={handleCheckout}
 							>
 								OK
 							</button>
