@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useContext, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
+import { loadStripe } from "@stripe/stripe-js";
 
 export default function Cart() {
 	const {
@@ -82,34 +82,57 @@ export default function Cart() {
 
 	async function handleAfterAlert() {
 		setOpenAlert(false);
+
 		if (!session.data) {
 			router.push("/login");
+			return;
 		}
+
 		const requestBody = {
 			products: cartProducts.join(","),
-			session: session, // Include the session data in the request body
+			session: session,
 		};
 
 		try {
-			const response = await fetch("/api/checkout", {
+			const res = await fetch("/api/checkout", {
 				method: "POST",
+				body: JSON.stringify(requestBody),
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify(requestBody),
 			});
 
-			if (response.ok) {
-				const { url } = await response.json();
-				router.push(url); // Redirect to the checkout URL
+			if (!res.ok) {
+				throw new Error("Failed to initiate checkout");
+			}
+
+			const stripe = await loadStripe(
+				"pk_test_51NOlUIKsMrbItMxilJRd0NDAccjwfjUypS31CQr9H700YY8brif8ujmtPYxso6tSbeYWYvGfl3XOw0Cpo4lc9wkK00h7G3dtvO"
+			);
+
+			const json = await res.json();
+			console.log("API Response:", json);
+
+			const { sessionId } = json;
+			console.log("Session ID:", sessionId);
+
+			if (stripe) {
+				if (sessionId) {
+					stripe.redirectToCheckout({
+						sessionId: sessionId,
+					});
+				} else {
+					throw new Error("Failed to retrieve valid session ID");
+				}
 			} else {
-				console.error("Failed to initiate checkout");
+				throw new Error("Failed to load Stripe");
 			}
 		} catch (error) {
-			console.error("An error occurred:", error);
+			console.error("An error occurred during checkout:", error);
+			console.error(error.stack);
+			throw error; // rethrow the error to see the full stack trace
 		}
 	}
-
 	if (typeof window !== "undefined") {
 		if (window.location.href.includes("success")) {
 			return (

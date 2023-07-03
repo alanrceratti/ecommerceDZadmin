@@ -1,24 +1,28 @@
+"use client";
 import { NextApiRequest, NextApiResponse } from "next";
 import { mongooseConnect } from "../../../lib/mongoose";
 import { Product } from "../../../models/Product";
 import { Order } from "../../../models/Order";
-
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+import Stripe from "stripe";
 
 export default async function handle(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-	try {
-		if (req.method !== "POST") {
-			res.json("Not POST request");
+	const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+		apiVersion: "2022-11-15",
+	});
+
+	if (req.method !== "POST") {
+		res.json("Not POST request");
+		return;
+	} else {
+		const { products, session } = req.body;
+		if (!session || !session.data) {
+			res.status(400).json({ error: "Invalid session data" });
 			return;
-		} else {
-			const { products, session } = req.body;
-			if (!session || !session.data) {
-				res.status(400).json({ error: "Invalid session data" });
-				return;
-			}
+		}
+		try {
 			await mongooseConnect();
 			const productsIds = products.split(",");
 			const uniqueIds = [...new Set(productsIds)];
@@ -55,22 +59,6 @@ export default async function handle(
 				mode: "payment",
 				customer_email: session.data.user.email,
 				payment_method_types: ["card"],
-
-				// custom_text: {
-				// 	shipping_address: {
-				// 		message:
-				// 			"Use this card for checkout: 4242424242424242. MM/YY = 12/24. CVC = 123",
-				// 	},
-				// 	submit: {
-				// 		message:
-				// 			"We'll email you instructions on how to get started.",
-				// 	},
-				// },
-				// for customer to provide address
-				// shipping_address_collection: {
-				// 	allowed_countries: ["GB"],
-				// },
-
 				success_url: process.env.PUBLIC_URL + "/cart?success=1",
 				cancel_url: process.env.PUBLIC_URL + "/cart?cancel=1",
 				metadata: {
@@ -79,11 +67,11 @@ export default async function handle(
 			});
 
 			res.json({
-				url: sessionStripe.url, // Corrected to sessionStripe.url instead of session.url
+				url: sessionStripe.url,
+				sessionId: sessionStripe.id,
 			});
+		} catch (error) {
+			res.status(500).json({ error: "An error occurred" });
 		}
-	} catch (error) {
-		console.error("An error occurred:", error);
-		res.status(500).json({ error: "Internal Server Error" });
 	}
 }
