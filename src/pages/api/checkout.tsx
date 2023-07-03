@@ -65,7 +65,14 @@ export default async function handle(
 					orderId: orderDoc._id.toString(),
 				},
 			});
-
+			res.setHeader(
+				"Access-Control-Allow-Methods",
+				"GET,OPTIONS,PATCH,DELETE,POST,PUT"
+			);
+			res.setHeader(
+				"Access-Control-Allow-Headers",
+				"X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+			);
 			res.json({
 				url: sessionStripe.url,
 				sessionId: sessionStripe.id,
