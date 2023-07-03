@@ -119,9 +119,8 @@ export default function Cart() {
 
 			if (stripe) {
 				if (sessionId) {
-					stripe.redirectToCheckout({
-						sessionId: sessionId,
-					});
+					const { url } = await json;
+					router.push(url); // Redirect to the checkout URL
 				} else {
 					throw new Error("Failed to retrieve valid session ID");
 				}
@@ -130,6 +129,7 @@ export default function Cart() {
 			}
 		} catch (error) {
 			console.error("An error occurred during checkout:", error);
+			// console.error(error.stack);
 
 			throw error; // rethrow the error to see the full stack trace
 		}
