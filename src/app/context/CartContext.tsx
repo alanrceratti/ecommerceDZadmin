@@ -40,11 +40,11 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 	function addProductToCart(newProduct: NewProductsProps) {
 		setCartProducts((prev) => [...prev, newProduct]);
 		toast.success("Flying to your cart...", {
-			position: "top-right",
-			autoClose: 3000,
+			position: "top-center",
+			autoClose: 2000,
 			hideProgressBar: false,
 			closeOnClick: true,
-			pauseOnHover: true,
+			pauseOnHover: false,
 			draggable: true,
 			progress: undefined,
 			theme: "light",
