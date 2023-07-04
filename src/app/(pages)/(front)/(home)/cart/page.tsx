@@ -7,6 +7,10 @@ import { useContext, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { loadStripe } from "@stripe/stripe-js";
 
+const stripe = loadStripe(
+	"pk_test_51NOlUIKsMrbItMxilJRd0NDAccjwfjUypS31CQr9H700YY8brif8ujmtPYxso6tSbeYWYvGfl3XOw0Cpo4lc9wkK00h7G3dtvO"
+);
+
 export default function Cart() {
 	const {
 		cartProducts,
@@ -107,25 +111,17 @@ export default function Cart() {
 				throw new Error("Failed to initiate checkout");
 			}
 
-			const stripe = await loadStripe(
-				"pk_test_51NOlUIKsMrbItMxilJRd0NDAccjwfjUypS31CQr9H700YY8brif8ujmtPYxso6tSbeYWYvGfl3XOw0Cpo4lc9wkK00h7G3dtvO"
-			);
-
 			const json = await res.json();
 			console.log("API Response:", json);
 
 			const { sessionId } = json;
 			console.log("Session ID:", sessionId);
 
-			if (stripe) {
-				if (sessionId) {
-					const { url } = await json;
-					router.push(url); // Redirect to the checkout URL
-				} else {
-					throw new Error("Failed to retrieve valid session ID");
-				}
+			if (sessionId) {
+				const { url } = await json;
+				router.push(url); // Redirect to the checkout URL
 			} else {
-				throw new Error("Failed to load Stripe");
+				throw new Error("Failed to retrieve valid session ID");
 			}
 		} catch (error) {
 			console.error("An error occurred during checkout:", error);
