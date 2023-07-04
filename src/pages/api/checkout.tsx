@@ -5,11 +5,9 @@ import { Product } from "../../../models/Product";
 import { Order } from "../../../models/Order";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!,
-  {
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 	apiVersion: "2022-11-15",
-}
-  );
+});
 export default async function handle(
 	req: NextApiRequest,
 	res: NextApiResponse
@@ -74,13 +72,14 @@ export default async function handle(
 			// 	"Access-Control-Allow-Headers",
 			// 	"X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
 			// );
-			res.json({
-				url: sessionStripe.url,
-				sessionId: sessionStripe.id,
+			res.status(200).json(sessionStripe);
+			console.log("URLllll", sessionStripe.url);
+		} catch (error: any) {
+			console.log(error);
+			res.status(500).json({
+				error: "An error occurred",
+				message: error.message,
 			});
-			console.log("URL", sessionStripe.url);
-		} catch (error) {
-			res.status(500).json({ error: "An error occurred" });
 		}
 	}
 }
