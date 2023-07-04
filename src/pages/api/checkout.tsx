@@ -8,10 +8,19 @@ import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 	apiVersion: "2022-11-15",
 });
+
 export default async function handle(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
+	res.setHeader(
+		"Access-Control-Allow-Methods",
+		"GET,OPTIONS,PATCH,DELETE,POST,PUT"
+	);
+	res.setHeader(
+		"Access-Control-Allow-Headers",
+		"X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version"
+	);
 	if (req.method !== "POST") {
 		res.json("Not POST request");
 		return;
