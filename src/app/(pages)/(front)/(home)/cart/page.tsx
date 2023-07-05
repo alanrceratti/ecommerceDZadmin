@@ -1,48 +1,199 @@
 "use client";
-import { useEffect, useState } from "react";
-import { loadStripe, Stripe } from "@stripe/stripe-js";
+import { CartContext } from "@/app/context/CartContext";
+import { NewProductsProps } from "@/app/types";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useContext, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { loadStripe } from "@stripe/stripe-js";
 
-export default function Checkout() {
-	const [stripe, setStripe] = useState<Stripe | null>(null);
+export default function Cart() {
+	const {
+		cartProducts,
+		plusOneProduct,
+		lessOneProduct,
+		removeProduct,
+		setCartProducts,
+	} = useContext(CartContext);
+	const [products, setProducts] = useState<NewProductsProps[]>([]);
+	const [updatedProducts, setUpdatedProducts] = useState<
+		{ _id: string; count: number }[]
+	>([]);
+	const [openAlert, setOpenAlert] = useState<boolean>(false);
+	const router = useRouter();
 
-	const initializeStripe = async () => {
-		const stripeInstance = await loadStripe(
-			"pk_test_51NOlUIKsMrbItMxilJRd0NDAccjwfjUypS31CQr9H700YY8brif8ujmtPYxso6tSbeYWYvGfl3XOw0Cpo4lc9wkK00h7G3dtvO"
-		);
-		setStripe(stripeInstance);
-	};
+	const session = useSession();
 
-	const handleCheckout = async () => {
-		if (!stripe) {
-			console.error("Stripe is not initialized.");
-			initializeStripe();
+	useEffect(() => {
+		const updatedCart = Array.from(new Set(cartProducts)).join("&id=");
+
+		const fetchData = async () => {
+			if (updatedCart.length > 0) {
+				const response = await fetch(
+					`/api/cartProducts?id=${updatedCart}`
+				);
+				const data = await response.json();
+				if (data) {
+					setProducts(data);
+				}
+			}
+		};
+
+		fetchData();
+	}, [cartProducts.length, cartProducts]);
+
+	function plusProduct(productId: string) {
+		plusOneProduct(productId as NewProductsProps);
+	}
+
+	function lessProduct(productId: string) {
+		lessOneProduct(productId as NewProductsProps);
+	}
+
+	function removeOneProduct(productId: string) {
+		removeProduct(productId as NewProductsProps);
+	}
+
+	function redirectCheckout() {
+		if (localStorage.getItem("cart")) {
+			localStorage.removeItem("cart");
+		}
+		setCartProducts([]);
+		router.push("/");
+	}
+
+	let total = 0;
+	for (const productId of cartProducts) {
+		const product = products.find((p) => p._id === productId);
+		const price =
+			(product?.offer && product?.offerPrice) ||
+			(!product?.offer && product?.price) ||
+			0;
+		total += price;
+	}
+
+	const totalPrice = (total / 100).toLocaleString(undefined, {
+		minimumFractionDigits: 2,
+	});
+
+	function handleCheckout() {
+		if (!session.data) {
+			router.push("/login");
 			return;
 		}
-
-		const response = await fetch("/api/checkout", {
-			method: "POST",
-		});
-
-		const { sessionId } = await response.json();
-
-		const { error } = await stripe.redirectToCheckout({
-			sessionId,
-		});
-
-		if (error) {
-			console.error(error);
+		// setOpenAlert(true);
+		else if (session.data) {
+			handleAfterAlert();
 		}
-	};
+	}
+
+	async function handleAfterAlert() {
+		// setOpenAlert(false);
+		const requestBody = {
+			products: cartProducts.join(","),
+			session: session,
+		};
+
+		try {
+			const res = await fetch("/api/checkout", {
+				method: "POST",
+				body: JSON.stringify(requestBody),
+				headers: {
+					"Content-Type": "application/json",
+				},
+			});
+
+			if (!res.ok) {
+				throw new Error("Failed to initiate checkout");
+			}
+
+			const stripe = await loadStripe(
+				"pk_test_51NOlUIKsMrbItMxilJRd0NDAccjwfjUypS31CQr9H700YY8brif8ujmtPYxso6tSbeYWYvGfl3XOw0Cpo4lc9wkK00h7G3dtvO"
+			);
+
+			const json = await res.json();
+			console.log("API Response:", json);
+
+			const { id } = json;
+			console.log("Session ID:", id);
+
+			if (stripe) {
+				if (id) {
+					stripe.redirectToCheckout({
+						sessionId: id,
+					});
+				} else {
+					throw new Error("Failed to retrieve valid session ID");
+				}
+			} else {
+				throw new Error("Failed to load Stripe");
+			}
+		} catch (error) {
+			console.error("An error occurred during checkout:", error);
+
+			throw error; // rethrow the error to see the full stack trace
+		}
+	}
+	if (typeof window !== "undefined") {
+		if (window.location.href.includes("success")) {
+			return (
+				<>
+					<div className="bg-white text-center h-[250px] ">
+						<h1 className="md:text-4xl text-2xl text-green-800 font-unisansheavy pt-8">
+							Payment successful!
+						</h1>
+						<h1 className="md:text-2xl text-xl pb-8 font-poppins font-light">
+							We are preparing your order, soon you will receive
+							our email...
+						</h1>
+
+						<button
+							className="btn-primary"
+							onClick={redirectCheckout}
+						>
+							Shop more
+						</button>
+					</div>
+				</>
+			);
+		}
+	}
 
 	return (
 		<section className="bg-gray950 lg:pl-8 lg:pb-32 pb-8  ">
-		
+			{/* {openAlert && (
+				<>
+					<div className="absolute text-white bg-black bg-opacity-90 w-full h-full text-center z-50 overflow-hidden flex flex-col justify-center items-center">
+						<h1 className="w-[300px]">
+							Please copy this card number details if you would
+							like to test the checkout:
+						</h1>
+						<h2>
+							Number: <b>4242424242424242</b>
+						</h2>
+						<h3>
+							MM/YY: <b>12/24</b>
+						</h3>
+						<h4>
+							CVC:<b>123</b>
+						</h4>
+						<div className="pt-8">
+							<button
+								className="btn-primary"
+								onClick={handleCheckout}
+							>
+								OK
+							</button>
+						</div>
+					</div>
+				</>
+			)} */}
 			<h1 className="lg:text-3xl text-xl font-bold lg:pt-16 pt-4 text-white ml-4 ">
 				Shopping Cart
 			</h1>
 			<div className="flex justify-center items-center lg:items-start mt-16 gap-4 flex-col lg:flex-row ">
 				<div className=" flex gap-10 relative  justify-center pb-16 p-4 rounded-md bg-white">
-					{/* {total > 0 ? (
+					{total > 0 ? (
 						<>
 							<table>
 								<thead>
@@ -183,56 +334,54 @@ export default function Checkout() {
 								</button>
 							</div>
 						)
-					)} */}
+					)}
 				</div>
 
 				<div>
-					{/* {total > 0 && ( */}
+					{total > 0 && (
 						<div className="bg-white w-[300px] rounded-md p-4  ">
-							<form method="post">
-								<div className="w-full text-center">
-									<button
-										className="btn-primary my-4"
-										onClick={handleCheckout}
-									>
-										Go To Checkout
+							<div className="w-full text-center">
+								<button
+									className="btn-primary my-4"
+									onClick={handleCheckout}
+								>
+									Go To Checkout
+								</button>
+							</div>
+
+							<h2 className="font-semibold">Order Summary</h2>
+
+							<div>
+								<div className="flex gap-4 justify-between">
+									<p className="opacity-60">Sub-total</p>£
+									{totalPrice}
+								</div>
+								<div className="flex gap-4 justify-between">
+									<p className="opacity-60">Shipping</p>
+									<p>FREE</p>
+								</div>
+								<hr className="h-[1px] w-full  bg-gray-300 border-none my-4 "></hr>
+								<div className="flex gap-4 justify-between">
+									<h3 className="opacity-70 font-medium">
+										Estimated Total
+									</h3>
+									<p> {totalPrice}</p>
+								</div>
+								<div className="">
+									<input
+										className="opacity-60"
+										placeholder="Have a promo code?"
+									/>
+									<button className="px-3 py-1 bg-slate-200 rounded-md opacity-60 text-slate-600">
+										Add
 									</button>
 								</div>
-
-								<h2 className="font-semibold">Order Summary</h2>
-
-								<div>
-									<div className="flex gap-4 justify-between">
-										<p className="opacity-60">Sub-total</p>£
-										{/* {totalPrice} */}
-									</div>
-									<div className="flex gap-4 justify-between">
-										<p className="opacity-60">Shipping</p>
-										<p>FREE</p>
-									</div>
-									<hr className="h-[1px] w-full  bg-gray-300 border-none my-4 "></hr>
-									<div className="flex gap-4 justify-between">
-										<h3 className="opacity-70 font-medium">
-											Estimated Total
-										</h3>
-										{/* <p> {totalPrice}</p> */}
-									</div>
-									<div className="">
-										<input
-											className="opacity-60"
-											placeholder="Have a promo code?"
-										/>
-										<button className="px-3 py-1 bg-slate-200 rounded-md opacity-60 text-slate-600">
-											Add
-										</button>
-									</div>
-									<input
-										name="products"
-										type="hidden"
-										// value={cartProducts.join(",")}
-									/>
-								</div>
-							</form>
+								<input
+									name="products"
+									type="hidden"
+									value={cartProducts.join(",")}
+								/>
+							</div>
 						</div>
 					)}
 				</div>
