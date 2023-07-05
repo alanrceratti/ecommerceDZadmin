@@ -344,7 +344,7 @@ export default function Cart() {
 								<div className="w-full text-center">
 									<button
 										className="btn-primary my-4"
-										onClick={handleAfterAlert}
+										onClick={handleCheckout}
 									>
 										Go To Checkout
 									</button>
