@@ -6,9 +6,7 @@
 // 	const [stripe, setStripe] = useState<Stripe | null>(null);
 
 // 	const initializeStripe = async () => {
-// 		const stripeInstance = await loadStripe(
-// 			"pk_test_51NOlUIKsMrbItMxilJRd0NDAccjwfjUypS31CQr9H700YY8brif8ujmtPYxso6tSbeYWYvGfl3XOw0Cpo4lc9wkK00h7G3dtvO"
-// 		);
+// 		const stripeInstance = await loadStripe("pk_test_51NOlUIKsMrbItMxilJRd0NDAccjwfjUypS31CQr9H700YY8brif8ujmtPYxso6tSbeYWYvGfl3XOw0Cpo4lc9wkK00h7G3dtvO");
 // 		setStripe(stripeInstance);
 // 	};
 
