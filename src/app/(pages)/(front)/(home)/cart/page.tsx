@@ -1,87 +1,21 @@
 "use client";
-import { CartContext } from "@/app/context/CartContext";
-import { NewProductsProps } from "@/app/types";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useContext, useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
-import { loadStripe } from "@stripe/stripe-js";
-import Stripe from "stripe";
+import { useEffect, useState } from "react";
+import { loadStripe, Stripe } from "@stripe/stripe-js";
 
 export default function Checkout() {
-	const {
-		cartProducts,
-		plusOneProduct,
-		lessOneProduct,
-		removeProduct,
-		setCartProducts,
-	} = useContext(CartContext);
-	const [products, setProducts] = useState<NewProductsProps[]>([]);
-	const [updatedProducts, setUpdatedProducts] = useState<
-		{ _id: string; count: number }[]
-	>([]);
+	const [stripe, setStripe] = useState<Stripe | null>(null);
 
-	const router = useRouter();
-	const session = useSession();
-
-	useEffect(() => {
-		const updatedCart = Array.from(new Set(cartProducts)).join("&id=");
-
-		const fetchData = async () => {
-			if (updatedCart.length > 0) {
-				const response = await fetch(
-					`/api/cartProducts?id=${updatedCart}`
-				);
-				const data = await response.json();
-				if (data) {
-					setProducts(data);
-				}
-			}
-		};
-
-		fetchData();
-	}, [cartProducts.length, cartProducts]);
-
-	function plusProduct(productId: string) {
-		plusOneProduct(productId as NewProductsProps);
-	}
-
-	function lessProduct(productId: string) {
-		lessOneProduct(productId as NewProductsProps);
-	}
-
-	function removeOneProduct(productId: string) {
-		removeProduct(productId as NewProductsProps);
-	}
-
-	function redirectCheckout() {
-		if (localStorage.getItem("cart")) {
-			localStorage.removeItem("cart");
-		}
-		setCartProducts([]);
-		router.push("/");
-	}
-
-	let total = 0;
-	for (const productId of cartProducts) {
-		const product = products.find((p) => p._id === productId);
-		const price =
-			(product?.offer && product?.offerPrice) ||
-			(!product?.offer && product?.price) ||
-			0;
-		total += price;
-	}
-
-	const totalPrice = (total / 100).toLocaleString(undefined, {
-		minimumFractionDigits: 2,
-	});
-
-	const handleCheckout = async () => {
-		const stripe = await loadStripe(
+	const initializeStripe = async () => {
+		const stripeInstance = await loadStripe(
 			"pk_test_51NOlUIKsMrbItMxilJRd0NDAccjwfjUypS31CQr9H700YY8brif8ujmtPYxso6tSbeYWYvGfl3XOw0Cpo4lc9wkK00h7G3dtvO"
 		);
+		setStripe(stripeInstance);
+	};
+
+	const handleCheckout = async () => {
 		if (!stripe) {
 			console.error("Stripe is not initialized.");
+			initializeStripe();
 			return;
 		}
 
@@ -121,7 +55,7 @@ export default function Checkout() {
 						<div className="pt-8">
 							<button
 								className="btn-primary"
-								onClick={handleCheckout}
+								onClick={handleAfterAlert}
 							>
 								OK
 							</button>
@@ -134,7 +68,7 @@ export default function Checkout() {
 			</h1>
 			<div className="flex justify-center items-center lg:items-start mt-16 gap-4 flex-col lg:flex-row ">
 				<div className=" flex gap-10 relative  justify-center pb-16 p-4 rounded-md bg-white">
-					{total > 0 ? (
+					{/* {total > 0 ? (
 						<>
 							<table>
 								<thead>
@@ -275,58 +209,58 @@ export default function Checkout() {
 								</button>
 							</div>
 						)
-					)}
+					)}*/}
 				</div>
 
 				<div>
-					{total > 0 && (
-						<div className="bg-white w-[300px] rounded-md p-4  ">
-							<form method="post">
-								<div className="w-full text-center">
-									<button
-										className="btn-primary my-4"
-										onClick={handleCheckout}
-									>
-										Go To Checkout
+					{/* {total > 0 && ( */}
+					<div className="bg-white w-[300px] rounded-md p-4  ">
+						<form method="post">
+							<div className="w-full text-center">
+								<button
+									className="btn-primary my-4"
+									onClick={handleCheckout}
+								>
+									Go To Checkout
+								</button>
+							</div>
+
+							<h2 className="font-semibold">Order Summary</h2>
+
+							<div>
+								<div className="flex gap-4 justify-between">
+									<p className="opacity-60">Sub-total</p>£
+									{/* {totalPrice} */}
+								</div>
+								<div className="flex gap-4 justify-between">
+									<p className="opacity-60">Shipping</p>
+									<p>FREE</p>
+								</div>
+								<hr className="h-[1px] w-full  bg-gray-300 border-none my-4 "></hr>
+								<div className="flex gap-4 justify-between">
+									<h3 className="opacity-70 font-medium">
+										Estimated Total
+									</h3>
+									{/* <p> {totalPrice}</p> */}
+								</div>
+								<div className="">
+									<input
+										className="opacity-60"
+										placeholder="Have a promo code?"
+									/>
+									<button className="px-3 py-1 bg-slate-200 rounded-md opacity-60 text-slate-600">
+										Add
 									</button>
 								</div>
-
-								<h2 className="font-semibold">Order Summary</h2>
-
-								<div>
-									<div className="flex gap-4 justify-between">
-										<p className="opacity-60">Sub-total</p>£
-										{totalPrice}
-									</div>
-									<div className="flex gap-4 justify-between">
-										<p className="opacity-60">Shipping</p>
-										<p>FREE</p>
-									</div>
-									<hr className="h-[1px] w-full  bg-gray-300 border-none my-4 "></hr>
-									<div className="flex gap-4 justify-between">
-										<h3 className="opacity-70 font-medium">
-											Estimated Total
-										</h3>
-										<p> {totalPrice}</p>
-									</div>
-									<div className="">
-										<input
-											className="opacity-60"
-											placeholder="Have a promo code?"
-										/>
-										<button className="px-3 py-1 bg-slate-200 rounded-md opacity-60 text-slate-600">
-											Add
-										</button>
-									</div>
-									<input
-										name="products"
-										type="hidden"
-										value={cartProducts.join(",")}
-									/>
-								</div>
-							</form>
-						</div>
-					)}
+								<input
+									name="products"
+									type="hidden"
+									// value={cartProducts.join(",")}
+								/>
+							</div>
+						</form>
+					</div>
+					{/* )} */}
 				</div>
 			</div>
 		</section>
