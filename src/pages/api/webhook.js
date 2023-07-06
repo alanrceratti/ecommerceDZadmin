@@ -6,8 +6,7 @@ import { Order } from "../../../models/Order";
 export default async function handle(req, res) {
 	await mongooseConnect();
 
-	const endpointSecret =
-		"whsec_bb8674cd3cc4694156406a467076c64161f76d7131c7f10aa014b9d1e1ed470d";
+	const endpointSecret = process.env.SIGNING_STRIPE_SECRET;
 	const sig = req.headers["stripe-signature"];
 	const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 		apiVersion: "2022-11-15",
