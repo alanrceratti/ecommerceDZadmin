@@ -65,7 +65,7 @@ export default function Orders() {
 											order.paid
 												? "text-green-600"
 												: "text-red-600"
-										}, px-2`}
+										} px-2`}
 									>
 										{order.paid ? "Yes" : "No"}
 									</td>
