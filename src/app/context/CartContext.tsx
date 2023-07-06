@@ -11,6 +11,7 @@ interface CartContext {
 	plusOneProduct: (newProduct: NewProductsProps) => void;
 	lessOneProduct: (newProduct: NewProductsProps) => void;
 	removeProduct: (newProduct: NewProductsProps) => void;
+	clearCart: () => void;
 }
 
 export const CartContext = createContext<CartContext>({
@@ -20,6 +21,7 @@ export const CartContext = createContext<CartContext>({
 	plusOneProduct: () => {},
 	lessOneProduct: () => {},
 	removeProduct: () => {},
+	clearCart: () => {},
 });
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
@@ -52,8 +54,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 	}
 
 	useEffect(() => {
-		if (cartProducts?.length > 0 && typeof window !== "undefined") {
-			localStorage.setItem("cart", JSON.stringify(cartProducts));
+		if (typeof window !== "undefined") {
+			if (cartProducts?.length > 0) {
+				localStorage.setItem("cart", JSON.stringify(cartProducts));
+			} else {
+				localStorage.removeItem("cart");
+			}
 		}
 	}, [cartProducts]);
 
@@ -76,6 +82,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 		});
 	}
 
+	function clearCart() {
+		if (cartProducts.length > 0) {
+			setCartProducts([]);
+		}
+	}
+
 	return (
 		<CartContext.Provider
 			value={{
@@ -85,6 +97,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 				plusOneProduct,
 				lessOneProduct,
 				removeProduct,
+				clearCart,
 			}}
 		>
 			{children}

@@ -14,6 +14,7 @@ export default function Cart() {
 		lessOneProduct,
 		removeProduct,
 		setCartProducts,
+		clearCart,
 	} = useContext(CartContext);
 	const [products, setProducts] = useState<NewProductsProps[]>([]);
 	const [updatedProducts, setUpdatedProducts] = useState<
@@ -139,7 +140,7 @@ export default function Cart() {
 			if (localStorage.getItem("cart")) {
 				localStorage.removeItem("cart");
 			}
-			setCartProducts([]);
+			clearCart();
 			return (
 				<>
 					<div className="bg-white text-center h-[250px] ">
