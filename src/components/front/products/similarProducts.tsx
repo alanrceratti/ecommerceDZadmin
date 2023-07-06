@@ -124,7 +124,7 @@ export default function SimilarProducts({ Category }: { Category: string }) {
 													</h3>
 													<p>Or Pay monthly</p>
 												</div>
-												{mobile ? (
+												{/* {mobile ? (
 													<Image
 														src="/assets/svgs/heart.svg"
 														alt="drone"
@@ -140,7 +140,7 @@ export default function SimilarProducts({ Category }: { Category: string }) {
 														height={25}
 														className="cursor-pointer"
 													/>
-												)}
+												)} */}
 											</div>
 											<hr className="h-[1px] w-4/5 bg-gray-300 border-none my-2 ml-auto mr-auto "></hr>
 											<div className="flex justify-center items-center gap-4">

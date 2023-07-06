@@ -461,7 +461,7 @@ export default function MainCard() {
 														<p>Or Pay monthly</p>
 													</div>
 												)}
-												{mobile ? (
+												{/* {mobile ? (
 													<Image
 														src="/assets/svgs/heart-black.svg"
 														alt="drone"
@@ -477,7 +477,7 @@ export default function MainCard() {
 														height={25}
 														className="cursor-pointer opacity-50"
 													/>
-												)}
+												)} */}
 											</div>
 											<hr className="h-[1px] w-4/5 bg-gray-300 border-none my-2 ml-auto mr-auto "></hr>
 											<div className="flex justify-center items-center gap-4">

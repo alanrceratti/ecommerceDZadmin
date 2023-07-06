@@ -136,6 +136,10 @@ export default function Cart() {
 	}
 	if (typeof window !== "undefined") {
 		if (window.location.href.includes("success")) {
+			if (localStorage.getItem("cart")) {
+				localStorage.removeItem("cart");
+			}
+			setCartProducts([]);
 			return (
 				<>
 					<div className="bg-white text-center h-[250px] ">
