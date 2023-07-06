@@ -46,42 +46,46 @@ export default function Orders() {
 			<table className="w-full">
 				<thead>
 					<tr>
-						<td>ID</td>
+						<td>Data</td>
+						<td>Paid</td>
 						<td>Recipients</td>
 						<td>Products</td>
 					</tr>
 				</thead>
 				<tbody>
 					{orders &&
-						orders.map(
-							(order: Order) =>
-								order.paid === true && (
-									<tr key={order._id}>
-										<td>{order.createdAt}</td>
+						orders.map((order: Order) => (
+							<tr key={order._id}>
+								<td>{order.createdAt}</td>
+								<td
+									className={
+										order.paid
+											? "text-green-600"
+											: "text-red-600"
+									}
+								>
+									{order.paid ? "Yes" : "No"}
+								</td>
 
-										<td>
-											{order.name}
-											<br></br>
-											{order.email}
-										</td>
-										<td>
-											{order.line_items.map(
-												(line, index) => (
-													<h1 key={index}>
-														{
-															line.price_data
-																?.product_data
-																?.name
-														}{" "}
-														x {line.quantity}
-													</h1>
-												)
-											)}
-										</td>
-										{/* <td className="text-center flex gap-2 justify-center mx-2"> */}
-									</tr>
-								)
-						)}
+								<td>
+									{order.name}
+									<br></br>
+									{order.email}
+								</td>
+								<td>
+									{order.line_items.map((line, index) => (
+										<h1 key={index}>
+											{
+												line.price_data?.product_data
+													?.name
+											}{" "}
+											x {line.quantity}
+										</h1>
+									))}
+								</td>
+								{/* <td className="text-center flex gap-2 justify-center mx-2"> */}
+							</tr>
+						))}
 				</tbody>
 			</table>
 		</section>

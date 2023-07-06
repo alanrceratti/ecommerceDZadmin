@@ -35,6 +35,6 @@
 		"lib/mongodb.ts",
 		"src/app/hooks/useMedia.jsx",
 		"src/app/hooks/useOnClickOutside.jsx"
-	],
+, "src/pages/api/webhook.js"	],
 	"exclude": ["node_modules"]
 }

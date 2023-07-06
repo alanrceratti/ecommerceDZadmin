@@ -63,6 +63,7 @@ export default async function handle(
 				cancel_url: `${req.headers.origin}/cart?cancel=1`,
 				metadata: {
 					orderId: orderDoc._id.toString(),
+					test: "ok",
 				},
 			});
 
