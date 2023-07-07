@@ -30,6 +30,7 @@ Some of the libraries used:
 -   Products tab for managing product listings (add, edit, delete)
 -   Categories tab for managing product categories (add, edit, delete)
 -   Orders tab providing detailed information about current orders
+-   Easy updating for Offers and Best sellers products
 
 #### For Users:
 
