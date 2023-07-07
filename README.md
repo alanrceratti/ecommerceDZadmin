@@ -95,19 +95,19 @@ In conclusion, developing an e-commerce platform like Drone Zone taught me inval
 
 
 - **Home page**
-![App Screenshot](https://dronezone-admin.s3.eu-west-2.amazonaws.com/Drone-zone+prints+git/home-page.webp)
+![App Screenshot](https://dronezone-admin.s3.eu-west-2.amazonaws.com/Drone-zone+prints+git/homepage.png)
 
 
 - **Product details view**
-![App Screenshot](https://dronezone-admin.s3.eu-west-2.amazonaws.com/Drone-zone+prints+git/detail.webp)
+![App Screenshot](https://dronezone-admin.s3.eu-west-2.amazonaws.com/Drone-zone+prints+git/productdetails.png)
 
 
-- **About section**
-![App Screenshot](https://dronezone-admin.s3.eu-west-2.amazonaws.com/Drone-zone+prints+git/aboutus.webp)
+- **Products list**
+![App Screenshot](https://dronezone-admin.s3.eu-west-2.amazonaws.com/Drone-zone+prints+git/productspage.png)
 
 
 - **404 Error page**
-![App Screenshot](https://dronezone-admin.s3.eu-west-2.amazonaws.com/Drone-zone+prints+git/404page.webp)
+![App Screenshot](https://dronezone-admin.s3.eu-west-2.amazonaws.com/Drone-zone+prints+git/404error.png)
 
 ## Roadmap
 
@@ -116,5 +116,5 @@ In the future there may be some integrations and more features like:
 - Settings page for user to update name, address, etc
 - User page to follow current order status
 - Reset password option
-- Products rating and review section
-- Admin dashboard with option to mark as *Send* to the customer
+
+- Admin dashboard with option to mark as Send to the customer
