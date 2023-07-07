@@ -116,5 +116,5 @@ In the future there may be some integrations and more features like:
 - Settings page for user to update name, address, etc
 - User page to follow current order status
 - Reset password option
-
-- Admin dashboard with option to mark as Send to the customer
+- Products rating and review section
+- Admin dashboard with option to mark as *Send* to the customer
