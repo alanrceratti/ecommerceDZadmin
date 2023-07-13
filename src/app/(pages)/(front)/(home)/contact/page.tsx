@@ -36,17 +36,18 @@ export default function Contact() {
 	};
 
 	return (
-		<section className="flex gap-8 bg-white justify-center  pt-8">
-			<div className="w-[500px]   ">
+		<section className="lg:flex gap-8 bg-white lg:justify-center pt-8 px-4  ">
+			<div className="lg:w-[500px] mx-auto   ">
 				<h1 className="font-unisansheavy text-2xl text-center">
 					Don&apos;t worry, we are here to help
 				</h1>
-				<div className="rounded-2xl w-[500px] h-[400px] relative">
+				<div className="rounded-2xl relative">
 					<Image
 						src="/assets/contact.webp"
 						alt="contactImage"
-						fill={true}
-						className="object-center rounded-md "
+						width={500}
+						height={400}
+						className="object-center rounded-md mx-auto lg:mt-7 "
 					/>
 				</div>
 			</div>
@@ -54,12 +55,13 @@ export default function Contact() {
 			<form
 				ref={form}
 				onSubmit={sendEmail}
-				className="text-lg font-poppins bg-white  "
+				className="text-lg font-poppins bg-white w-[320px] 	sm:w-[500px] mx-auto  "
 			>
-				<h1 className="font-unisansheavy text-2xl text-center">
+				<h1 className="font-unisansheavy text-2xl text-center lg:mt-0 mt-4">
 					Drop you message
 				</h1>
-				<div className="flex gap-3 mt-4">
+
+				<div className="flex gap-3 mt-4 ">
 					<label htmlFor="name" className="block mb-6 ">
 						<span>Your name*</span>
 						<input
@@ -104,7 +106,7 @@ export default function Contact() {
 					<button
 						type="submit"
 						className={`
-								 h-10 px-5 font-poppins font-bold  rounded-lg transition-colors duration-150 focus:shadow-outline hover:bg-amber-400 bg-orange hover:text-black hover:font-bold `}
+								 h-10 px-5 font-poppins font-bold  rounded-lg transition-colors duration-150 mb-4 focus:shadow-outline hover:bg-amber-400 bg-orange hover:text-black hover:font-bold `}
 					>
 						Send
 					</button>
