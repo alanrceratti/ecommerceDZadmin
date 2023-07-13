@@ -12,11 +12,14 @@ export default async function handle(
 
 	if (req.method === "GET") {
 		if (req.query?.id) {
-			const product = await Product.findOne({ _id: req.query.id })
-				.populate("category") // Populate the "category" field
-				.exec();
-
-			res.json(product);
+			const productsCount = await Product.countDocuments();
+			if (productsCount > 0) {
+				const product = await Product.findOne({ _id: req.query.id })
+					.populate("category") // Populate the "category" field
+					.exec();
+				res.json(product);
+				
+			}
 		}
 	}
 }
