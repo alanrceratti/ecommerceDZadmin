@@ -11,7 +11,7 @@ export default async function handle(
 	await mongooseConnect();
 
 	if (req.method === "GET") {
-		const cidade = await Product.find();
+		const product = await Product.find();
 		const products = await Product.find({ bestSeller: true });
 
 		res.json(products);

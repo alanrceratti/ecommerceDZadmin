@@ -18,9 +18,7 @@ export default function HeaderNav() {
 	const route = useRouter();
 	const { data } = useSession();
 
-	useEffect(() => {
-		console.log(data, "SESSION");
-	}, [data]);
+	useEffect(() => {}, [data]);
 
 	function handleMenu() {
 		setIsOpen((isOpen) => !isOpen);

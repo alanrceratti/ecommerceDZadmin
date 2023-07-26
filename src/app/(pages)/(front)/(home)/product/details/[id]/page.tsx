@@ -25,7 +25,7 @@ export default function ProductDetails() {
 			setIsLoading(false);
 		} catch (error) {
 			console.error(error);
-			setIsLoading(false);
+			setIsLoading(true);
 		}
 	};
 
@@ -35,7 +35,8 @@ export default function ProductDetails() {
 
 	useEffect(() => {
 		selectedProduct();
-	}, []);
+	}, [idPath]);
+	console.log(idPath, "ADDDD");
 
 	return (
 		<main>
