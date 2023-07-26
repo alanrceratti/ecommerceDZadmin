@@ -232,7 +232,7 @@ export default function Cart() {
 											</td>
 											<td>
 												<div className="lg:m-20 pt-8">
-													<div className="flex lg:gap-4 gap-1 justify-center items-center  ">
+													<div className="flex lg:gap-4 sm:mx-16 mx-2 gap-1 justify-center items-center  ">
 														<>
 															<button
 																className="px-3 py-1 bg-black text-white rounded-md"
@@ -270,7 +270,7 @@ export default function Cart() {
 														</button>
 													</div>
 													<button
-														className="lg:pt-12 "
+														className="lg:pt-12 sm:mx-16 mx-2"
 														onClick={() =>
 															product._id &&
 															removeOneProduct(

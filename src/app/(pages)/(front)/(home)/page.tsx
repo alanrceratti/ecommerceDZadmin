@@ -25,12 +25,12 @@ export default function MainPage() {
 					>
 						Shop All
 					</Link>
-					<Link
+					{/* <Link
 						href={"/products/all"}
 						className="sm:px-6 px-3  sm:py-2 py-2 bg-orange text-white font-poppins sm:font-semibold  font-medium text-base sm:text-lg rounded-md  hover:bg-black hover:text-white transition-all duration-300 "
 					>
 						Find Yours
-					</Link>
+					</Link> */}
 				</div>
 			</section>
 			<section>
